@@ -1,0 +1,21 @@
+[project]
+name = "brief"
+version = "0.1.0"
+description = "A morning digest of AI sources, judged by Haiku, with the evaluation suite that keeps the judge honest."
+readme = "README.md"
+requires-python = ">=3.12"
+license = "Apache-2.0"
+license-files = ["LICENSE"]
+dependencies = [
+    "anthropic>=1.0.0",
+    "feedparser>=6.0.14",
+    # `brief.judge()` renders the same template the suite does, so the
+    # application depends on digline for that — not only the tests.
+    "digline>=0.1.1,<0.2",
+]
+
+[dependency-groups]
+dev = [
+    # Only the suite talks to the provider through digline.
+    "digline-anthropic>=0.1,<0.2",
+]

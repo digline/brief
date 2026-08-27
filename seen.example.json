@@ -1,0 +1,114 @@
+{
+  "https://magazine.sebastianraschka.com/p/controlling-reasoning-effort-in-llms": {
+    "source": "Ahead of AI (Raschka)",
+    "title": "Controlling Reasoning Effort in LLMs",
+    "link": "https://magazine.sebastianraschka.com/p/controlling-reasoning-effort-in-llms",
+    "score": 4,
+    "reason": "Esplora i meccanismi di ragionamento nei LLM con implicazioni dirette per l'engineering in produzione e l'ottimizzazione dei costi computazionali.",
+    "judged_at": "2026-08-24T06:20:27+00:00",
+    "shown": true,
+    "marked": true,
+    "read": true,
+    "read_at": "2026-08-24T08:58:56+00:00",
+    "summary": "How LLMs Learn Low-, Medium-, and High-Effort Reasoning Modes"
+  },
+  "https://simonwillison.net/2026/Aug/14/dont-classify-hallucinate/": {
+    "source": "Simon Willison",
+    "title": "Don't classify. Hallucinate!",
+    "link": "https://simonwillison.net/2026/Aug/14/dont-classify-hallucinate/",
+    "score": 4,
+    "reason": "Approccio pragmatico per RAG in produzione: evita vincoli di vocabolario rigido usando generazione + matching semantico, rilevante per integrare LLM in sistemi legacy con tassonomie complesse.",
+    "judged_at": "2026-08-24T06:20:27+00:00",
+    "shown": true,
+    "marked": false,
+    "summary": "   Don&#x27;t classify. Hallucinate!   \nI still have quite a bit of older content on my blog that I never got round to tagging. My blog has  1,856 tags  - likely too many to feed to an LLM in one go and say \"which of these tags match the following content\". \n Doug Turnbull has a neat solution. Tell the model to output tags without any details of the existing vocabulary, then use vector embeddings "
+  },
+  "https://simonwillison.net/2026/Aug/22/more-than-just-code-review/": {
+    "source": "Simon Willison",
+    "title": "More than just code review",
+    "link": "https://simonwillison.net/2026/Aug/22/more-than-just-code-review/",
+    "score": 4,
+    "reason": "Fornisce insight pratico su verificazione e validazione di agenti LLM in produzione, skills critiche per integrare AI in sistemi enterprise legacy.",
+    "judged_at": "2026-08-24T06:20:27+00:00",
+    "shown": true,
+    "marked": false,
+    "summary": " The key skill required to make productive use of coding agents is being able to confidently instruct them on how to make changes and then confidently verify that those changes have been applied in the correct way. \n Sometimes this involves reviewing every line of code they have written, but there are other ways to achieve that goal. Eyeballing every line of code has never been the most effective "
+  },
+  "https://simonwillison.net/2026/Aug/23/drew-breunig/": {
+    "source": "Simon Willison",
+    "title": "Quoting Drew Breunig",
+    "link": "https://simonwillison.net/2026/Aug/23/drew-breunig/",
+    "score": 4,
+    "reason": "Riflette sull'allocazione del lavoro tra modelli LLM e l'importanza crescente dell'ottimizzazione del contesto quando i modelli convergono in qualità, tema centrale per l'architettura di sistemi AI-native.",
+    "judged_at": "2026-08-24T06:20:27+00:00",
+    "shown": true,
+    "marked": false,
+    "summary": "  Prior to Fable, it felt silly to waste  too  much time improving your coding harness or context strategies. A new model would arrive at the same price (or cheaper!) and paper over most of your problems. \n But then Fable landed. It was (and still is!)  incredible . But the cost was so high and Opus was  good enough  (as was 5.6, K3, and even GLM) for  most  of the code we needed. \n  So we started"
+  },
+  "https://magazine.sebastianraschka.com/p/recent-developments-in-llm-architectures": {
+    "source": "Ahead of AI (Raschka)",
+    "title": "Recent Developments in LLM Architectures: KV Sharing, mHC, and Compressed Attention",
+    "link": "https://magazine.sebastianraschka.com/p/recent-developments-in-llm-architectures",
+    "score": 4,
+    "reason": "Analisi tecnica di architetture LLM moderne con focus su ottimizzazioni di costo e contesto, rilevante per i pattern architetturali di integrazione in sistemi enterprise.",
+    "judged_at": "2026-08-24T06:20:27+00:00",
+    "shown": true,
+    "marked": true,
+    "summary": "From Gemma 4 to DeepSeek V4, How New Open-Weight LLMs Are Reducing Long-Context Costs"
+  },
+  "https://hamel.dev/": {
+    "source": "Hamel Husain",
+    "title": "AI Product Engineering Notes",
+    "link": "https://hamel.dev/",
+    "score": 4,
+    "reason": "Copertura diretta di evaluations e architetture di sistemi LLM con contenuto distillato da fonte tecnica affidabile.",
+    "judged_at": "2026-08-24T07:27:02+00:00",
+    "shown": true,
+    "marked": false,
+    "summary": "Notes from 13 sessions on evals, context, and systems. 9.5 hours of talks distilled into about 20 minutes of reading."
+  },
+  "https://www.anthropic.com/research/teaching-claude-why": {
+    "source": "Anthropic Research",
+    "title": "AlignmentMay 8, 2026Teaching Claude whyNew research on how we've reduced agentic misalignment.",
+    "link": "https://www.anthropic.com/research/teaching-claude-why",
+    "score": 4,
+    "reason": "Ricerca Anthropic su mitigazione del misalignment negli agenti—direttamente rilevante per architetture LLM in produzione.",
+    "judged_at": "2026-08-24T07:27:02+00:00",
+    "shown": true,
+    "marked": false,
+    "summary": "AlignmentMay 8, 2026Teaching Claude whyNew research on how we've reduced agentic misalignment."
+  },
+  "https://www.anthropic.com/research/multiagent-systems": {
+    "source": "Anthropic Research",
+    "title": "Aug 13, 2026Frontier Red TeamPatterns and problems in emerging multiagent systems",
+    "link": "https://www.anthropic.com/research/multiagent-systems",
+    "score": 4,
+    "reason": "Analisi dei pattern e problemi nei sistemi multi-agenti emergenti, direttamente rilevante per architetture produttive con agenti LLM.",
+    "judged_at": "2026-08-24T07:27:02+00:00",
+    "shown": true,
+    "marked": true,
+    "summary": "Aug 13, 2026Frontier Red TeamPatterns and problems in emerging multiagent systems"
+  },
+  "https://www.anthropic.com/research/global-workspace": {
+    "source": "Anthropic Research",
+    "title": "InterpretabilityJul 6, 2026A global workspace in language modelsNew interpretability research reveals an emergent mental workspace in Claude that holds internal thoughts that don’t appear in the model’s output.",
+    "link": "https://www.anthropic.com/research/global-workspace",
+    "score": 5,
+    "reason": "Ricerca diretta su Claude che svela meccanismi interpretativi di workspace interno, altamente rilevante per comprendere come il modello elabora informazioni complesse.",
+    "judged_at": "2026-08-24T07:27:02+00:00",
+    "shown": true,
+    "marked": true,
+    "summary": "InterpretabilityJul 6, 2026A global workspace in language modelsNew interpretability research reveals an emergent mental workspace in Claude that holds internal thoughts that don’t appear in the model’s output."
+  },
+  "https://hamel.dev/blog/posts/eval-smell/": {
+    "source": "Hamel Husain",
+    "title": "“It’s Hard to Eval” Is a Product Smell",
+    "link": "https://hamel.dev/blog/posts/eval-smell/",
+    "score": 4,
+    "reason": "Articolo di Hamel Husain su eval design come requisito architetturale (non tutorial), direttamente rilevante per RAG/agents in produzione e LLM evaluation.",
+    "judged_at": "2026-08-24T07:27:02+00:00",
+    "shown": true,
+    "marked": true,
+    "summary": " \n \n  \n   \n\n\n\n\n \n\n \n\n\n For the past 3 years, AI evals have been my professional focus. 1  The most common objection I hear to evals is “our product is hard to eval”. \n This objection is a product smell. Artifacts that are hard for you to verify are often hard for users too. In the worst case, users have to redo the work from scratch to verify the output. More importantly, designing your product fo"
+  }
+}

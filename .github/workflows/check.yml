@@ -1,0 +1,69 @@
+name: check
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+  schedule:
+    # Monday, 06:00 UTC. The judge does not change on its own; the model behind
+    # it does. The run nobody triggered is the one that notices.
+    - cron: "0 6 * * 1"
+
+permissions:
+  contents: read
+
+jobs:
+  # Every push. Costs nothing, because the provider is faked.
+  wiring:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: astral-sh/setup-uv@v6
+
+      # From PyPI, like anyone else cloning this.
+      - run: uv sync
+
+      - name: The whole cycle, with the judge faked
+        env:
+          BRIEF_FAKE_JUDGE: "1"
+          # A scratch root, and this is the point: the committed baseline was
+          # produced by the real model, and the fake is a different judge. Its
+          # numbers are only good for proving that the suite loads, the prompts
+          # compose, the assertions evaluate and a comparison comes out — so
+          # they are promoted and compared against themselves, over here, where
+          # they cannot be mistaken for a measurement.
+          ROOT: ${{ runner.temp }}/digline
+        run: |
+          uv run digline run     --suite suite.py --root "$ROOT"
+          uv run digline promote --suite suite.py --root "$ROOT" --run latest
+          uv run digline compare --suite suite.py --root "$ROOT" --run latest --locale en
+
+  # The real thing, against the committed baseline. It spends, so it runs on
+  # the schedule and when asked — never on a push.
+  live:
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    env:
+      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+    steps:
+      - uses: actions/checkout@v5
+      - uses: astral-sh/setup-uv@v6
+      - run: uv sync
+
+      # A fork has no key, and a job that fails for that reason teaches nobody
+      # anything.
+      - id: key
+        run: |
+          if [ -n "$ANTHROPIC_API_KEY" ]; then
+            echo "present=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "present=false" >> "$GITHUB_OUTPUT"
+            echo "No ANTHROPIC_API_KEY configured — skipping the live run."
+          fi
+
+      - if: steps.key.outputs.present == 'true'
+        run: uv run digline run --suite suite.py
+
+      # The gate. Exit 1 if anything got worse than the committed baseline.
+      - if: steps.key.outputs.present == 'true'
+        run: uv run digline compare --suite suite.py --run latest --locale en

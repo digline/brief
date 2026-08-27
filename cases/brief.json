@@ -1,0 +1,317 @@
+[
+  {
+    "id": "2026-08-24-controlling-reasoning-effort-in-llms",
+    "vars": {
+      "source": "Ahead of AI (Raschka)",
+      "title": "Controlling Reasoning Effort in LLMs",
+      "summary": "How LLMs Learn Low-, Medium-, and High-Effort Reasoning Modes"
+    },
+    "expected": {
+      "marked": true
+    },
+    "metadata": {
+      "link": "https://magazine.sebastianraschka.com/p/controlling-reasoning-effort-in-llms",
+      "original_score": 4
+    }
+  },
+  {
+    "id": "2026-08-24-don-t-classify-hallucinate",
+    "vars": {
+      "source": "Simon Willison",
+      "title": "Don't classify. Hallucinate!",
+      "summary": "   Don&#x27;t classify. Hallucinate!   \nI still have quite a bit of older content on my blog that I never got round to tagging. My blog has  1,856 tags  - likely too many to feed to an LLM in one go and say \"which of these tags match the following content\". \n Doug Turnbull has a neat solution. Tell the model to output tags without any details of the existing vocabulary, then use vector embeddings "
+    },
+    "expected": {
+      "marked": false
+    },
+    "metadata": {
+      "link": "https://simonwillison.net/2026/Aug/14/dont-classify-hallucinate/",
+      "original_score": 4
+    }
+  },
+  {
+    "id": "2026-08-24-more-than-just-code-review",
+    "vars": {
+      "source": "Simon Willison",
+      "title": "More than just code review",
+      "summary": " The key skill required to make productive use of coding agents is being able to confidently instruct them on how to make changes and then confidently verify that those changes have been applied in the correct way. \n Sometimes this involves reviewing every line of code they have written, but there are other ways to achieve that goal. Eyeballing every line of code has never been the most effective "
+    },
+    "expected": {
+      "marked": false
+    },
+    "metadata": {
+      "link": "https://simonwillison.net/2026/Aug/22/more-than-just-code-review/",
+      "original_score": 4
+    }
+  },
+  {
+    "id": "2026-08-24-quoting-drew-breunig",
+    "vars": {
+      "source": "Simon Willison",
+      "title": "Quoting Drew Breunig",
+      "summary": "  Prior to Fable, it felt silly to waste  too  much time improving your coding harness or context strategies. A new model would arrive at the same price (or cheaper!) and paper over most of your problems. \n But then Fable landed. It was (and still is!)  incredible . But the cost was so high and Opus was  good enough  (as was 5.6, K3, and even GLM) for  most  of the code we needed. \n  So we started"
+    },
+    "expected": {
+      "marked": false
+    },
+    "metadata": {
+      "link": "https://simonwillison.net/2026/Aug/23/drew-breunig/",
+      "original_score": 4
+    }
+  },
+  {
+    "id": "2026-08-24-recent-developments-in-llm-architectures",
+    "vars": {
+      "source": "Ahead of AI (Raschka)",
+      "title": "Recent Developments in LLM Architectures: KV Sharing, mHC, and Compressed Attention",
+      "summary": "From Gemma 4 to DeepSeek V4, How New Open-Weight LLMs Are Reducing Long-Context Costs"
+    },
+    "expected": {
+      "marked": true
+    },
+    "metadata": {
+      "link": "https://magazine.sebastianraschka.com/p/recent-developments-in-llm-architectures",
+      "original_score": 4
+    }
+  },
+  {
+    "id": "2026-08-24-ai-product-engineering-notes",
+    "vars": {
+      "source": "Hamel Husain",
+      "title": "AI Product Engineering Notes",
+      "summary": "Notes from 13 sessions on evals, context, and systems. 9.5 hours of talks distilled into about 20 minutes of reading."
+    },
+    "expected": {
+      "marked": false
+    },
+    "metadata": {
+      "link": "https://hamel.dev/",
+      "original_score": 4
+    }
+  },
+  {
+    "id": "2026-08-24-alignmentmay-8-2026teaching-claude-whyne",
+    "vars": {
+      "source": "Anthropic Research",
+      "title": "AlignmentMay 8, 2026Teaching Claude whyNew research on how we've reduced agentic misalignment.",
+      "summary": "AlignmentMay 8, 2026Teaching Claude whyNew research on how we've reduced agentic misalignment."
+    },
+    "expected": {
+      "marked": false
+    },
+    "metadata": {
+      "link": "https://www.anthropic.com/research/teaching-claude-why",
+      "original_score": 4
+    }
+  },
+  {
+    "id": "2026-08-24-aug-13-2026frontier-red-teampatterns-and",
+    "vars": {
+      "source": "Anthropic Research",
+      "title": "Aug 13, 2026Frontier Red TeamPatterns and problems in emerging multiagent systems",
+      "summary": "Aug 13, 2026Frontier Red TeamPatterns and problems in emerging multiagent systems"
+    },
+    "expected": {
+      "marked": true
+    },
+    "metadata": {
+      "link": "https://www.anthropic.com/research/multiagent-systems",
+      "original_score": 4
+    }
+  },
+  {
+    "id": "2026-08-24-building-a-c-compiler-with-a-team-of-par",
+    "vars": {
+      "source": "Anthropic Engineering",
+      "title": "Building a C compiler with a team of parallel Claudes",
+      "summary": "We tasked Opus 4.6 using agent teams to build a C Compiler, and then (mostly) walked away. Here's what it taught us about the future of autonomous software development."
+    },
+    "expected": {
+      "marked": false
+    },
+    "metadata": {
+      "link": "https://www.anthropic.com/engineering/building-c-compiler",
+      "original_score": 5
+    }
+  },
+  {
+    "id": "2026-08-24-eval-awareness-in-claude-opus-4-6-s-brow",
+    "vars": {
+      "source": "Anthropic Engineering",
+      "title": "Eval awareness in Claude Opus 4.6’s BrowseComp performance",
+      "summary": "Evaluating Opus 4.6 on BrowseComp, we found cases where the model recognized the test, then found and decrypted answers to it—raising questions about eval integrity in web-enabled environments."
+    },
+    "expected": {
+      "marked": false
+    },
+    "metadata": {
+      "link": "https://www.anthropic.com/engineering/eval-awareness-browsecomp",
+      "original_score": 4
+    }
+  },
+  {
+    "id": "2026-08-24-evals-skills-for-coding-agents",
+    "vars": {
+      "source": "Hamel Husain",
+      "title": "Evals Skills for Coding Agents",
+      "summary": " \n \n  \n   \n\n\n\n\n   \n Today, Shreya Shankar and I are publishing  evals skills , a set of skills for AI product evals 1 . \n Eval tools often get in the way. They nudge you toward  generic off-the-shelf metrics  and  fully automated evals  before you’ve looked at your data. These skills help you avoid common mistakes we’ve seen helping 50+ companies and teaching students in our  AI Evals course . \n \n"
+    },
+    "expected": {
+      "marked": true
+    },
+    "metadata": {
+      "link": "https://hamel.dev/blog/posts/evals-skills/",
+      "original_score": 4
+    }
+  },
+  {
+    "id": "2026-08-24-harness-design-for-long-running-applicat",
+    "vars": {
+      "source": "Anthropic Engineering",
+      "title": "Harness design for long-running application development",
+      "summary": "Harness design is key to performance at the frontier of agentic coding. Here's how we pushed Claude further in frontend design and long-running autonomous software engineering."
+    },
+    "expected": {
+      "marked": true
+    },
+    "metadata": {
+      "link": "https://www.anthropic.com/engineering/harness-design-long-running-apps",
+      "original_score": 5
+    }
+  },
+  {
+    "id": "2026-08-24-how-we-built-claude-code-auto-mode-a-saf",
+    "vars": {
+      "source": "Anthropic Engineering",
+      "title": "How we built Claude Code auto mode: a safer way to skip permissions",
+      "summary": "Claude Code users approve 93% of permission prompts. We built classifiers to automate some decisions, increasing safety while reducing approval fatigue. Here's what it catches, and what it misses.\\n"
+    },
+    "expected": {
+      "marked": true
+    },
+    "metadata": {
+      "link": "https://www.anthropic.com/engineering/claude-code-auto-mode",
+      "original_score": 4
+    }
+  },
+  {
+    "id": "2026-08-24-how-we-contain-claude-across-products",
+    "vars": {
+      "source": "Anthropic Engineering",
+      "title": "How we contain Claude across products",
+      "summary": "As agents grow more capable, so does their potential blast radius. The engineering question is how to cap it. Here’s what we’ve learned building containment for claude.ai, Claude Code, and Cowork.\\n"
+    },
+    "expected": {
+      "marked": true
+    },
+    "metadata": {
+      "link": "https://www.anthropic.com/engineering/how-we-contain-claude",
+      "original_score": 5
+    }
+  },
+  {
+    "id": "2026-08-24-interpretabilityjul-6-2026a-global-works",
+    "vars": {
+      "source": "Anthropic Research",
+      "title": "InterpretabilityJul 6, 2026A global workspace in language modelsNew interpretability research reveals an emergent mental workspace in Claude that holds internal thoughts that don’t appear in the model’s output.",
+      "summary": "InterpretabilityJul 6, 2026A global workspace in language modelsNew interpretability research reveals an emergent mental workspace in Claude that holds internal thoughts that don’t appear in the model’s output."
+    },
+    "expected": {
+      "marked": true
+    },
+    "metadata": {
+      "link": "https://www.anthropic.com/research/global-workspace",
+      "original_score": 5
+    }
+  },
+  {
+    "id": "2026-08-24-quantifying-infrastructure-noise-in-agen",
+    "vars": {
+      "source": "Anthropic Engineering",
+      "title": "Quantifying infrastructure noise in agentic coding evals",
+      "summary": "Infrastructure configuration can swing agentic coding benchmarks by several percentage points—sometimes more than the leaderboard gap between top models.\\n\\n"
+    },
+    "expected": {
+      "marked": false
+    },
+    "metadata": {
+      "link": "https://www.anthropic.com/engineering/infrastructure-noise",
+      "original_score": 5
+    }
+  },
+  {
+    "id": "2026-08-24-scaling-managed-agents-decoupling-the-br",
+    "vars": {
+      "source": "Anthropic Engineering",
+      "title": "Scaling Managed Agents: Decoupling the brain from the hands",
+      "summary": "Harnesses encode assumptions that go stale as models improve. Managed Agents—our hosted service for long-horizon agent work—is built around interfaces that stay stable as harnesses change."
+    },
+    "expected": {
+      "marked": true
+    },
+    "metadata": {
+      "link": "https://www.anthropic.com/engineering/managed-agents",
+      "original_score": 5
+    }
+  },
+  {
+    "id": "2026-08-24-it-s-hard-to-eval-is-a-product-smell",
+    "vars": {
+      "source": "Hamel Husain",
+      "title": "“It’s Hard to Eval” Is a Product Smell",
+      "summary": " \n \n  \n   \n\n\n\n\n \n\n \n\n\n For the past 3 years, AI evals have been my professional focus. 1  The most common objection I hear to evals is “our product is hard to eval”. \n This objection is a product smell. Artifacts that are hard for you to verify are often hard for users too. In the worst case, users have to redo the work from scratch to verify the output. More importantly, designing your product fo"
+    },
+    "expected": {
+      "marked": true
+    },
+    "metadata": {
+      "link": "https://hamel.dev/blog/posts/eval-smell/",
+      "original_score": 4
+    }
+  },
+  {
+    "id": "2026-08-24-your-executable-is-a-sqlite-database",
+    "vars": {
+      "source": "Simon Willison",
+      "title": "Your executable is a SQLite database",
+      "summary": "   Your executable is a SQLite database   \nFarid Zakaria describes a neat Linux pattern for creating a SQLite database file that can be directly used as an executable binary. \n The trick sets the SQLite file format's 4-byte application ID (68 bytes into the file) to SELF, standing for Structured Executable &amp; Linkable Format.  The various components of the ELF executable format are then arrange"
+    },
+    "expected": {
+      "marked": false
+    },
+    "metadata": {
+      "link": "https://simonwillison.net/2026/Aug/24/your-executable-is-a-sqlite-database/",
+      "original_score": 1
+    }
+  },
+  {
+    "id": "2026-08-25-economics",
+    "vars": {
+      "source": "Anthropic Research",
+      "title": "Economics",
+      "summary": "Economics"
+    },
+    "expected": {
+      "marked": false
+    },
+    "metadata": {
+      "link": "https://www.anthropic.com/research/team/economics",
+      "original_score": 1
+    }
+  },
+  {
+    "id": "2026-08-25-llm-anthropic-0-27",
+    "vars": {
+      "source": "Simon Willison",
+      "title": "llm-anthropic 0.27",
+      "summary": "  Release:   llm-anthropic 0.27  \n         This release of the Anthropic plugin for  LLM  mainly provides compatibility with the recently released  anthropic v1.0.0  Python library, which switches from  httpx  to  httpx2 . OpenAI made the same change in their  v3.0.0 release  two weeks ago. \n Anthropic provide this  migration guide  for upgrading to 1.0, so I prompted Fable 5 in Claude Code with: "
+    },
+    "expected": {
+      "marked": false
+    },
+    "metadata": {
+      "link": "https://simonwillison.net/2026/Aug/24/llm-anthropic/",
+      "original_score": 2
+    }
+  }
+]

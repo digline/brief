@@ -1,0 +1,3 @@
+Source: {source}
+Title: {title}
+Summary: {summary}

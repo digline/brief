@@ -1,0 +1,16 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
+
+# My reading history. seen.example.json stands in for it in a fresh clone.
+seen.json
+
+# IDE
+.idea/
