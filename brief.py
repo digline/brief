@@ -20,9 +20,10 @@ from dataclasses import dataclass
 from datetime import datetime, timezone
 from pathlib import Path
 
-import anthropic
 import feedparser
-from digline.targets import PromptTemplate
+from digline.targets import JudgeBase, PromptTemplate, UnknownModelError, Usage
+from digline_anthropic import ANTHROPIC_PRICING
+from digline_anthropic.client import build_client, text_of, usage_of
 
 # --- Configuration ----------------------------------------------------------
 
@@ -45,8 +46,10 @@ SEEN_PATH = HERE / "seen.json"
 SEEN_EXAMPLE_PATH = HERE / "seen.example.json"
 
 MODEL = "claude-haiku-4-5"
-PRICE_IN_PER_MTOK = 1.00   # USD, claude-haiku-4-5 — check against the pricing page
-PRICE_OUT_PER_MTOK = 5.00
+JUDGE_MAX_TOKENS = 200
+#: The prefill that forces JSON out. Prepended to the reply before parsing,
+#: because the reply *is* the prefill plus the completion.
+JUDGE_PREFILL = "{"
 MAX_JUDGED_PER_RUN = 50  # ceiling on API calls (it matters mostly on the first run)
 TOP_N = 5
 #: How much of the summary the judge gets. It was 1500. Cutting it to 400 is
@@ -158,29 +161,87 @@ def fetch_new_items(seen: dict[str, dict]) -> list[Item]:
 # --- Judging ------------------------------------------------------------------
 
 
-def judge(client: anthropic.Anthropic, item: Item) -> Judgement:
-    prompt = JUDGE_PROMPT.render(
-        {"source": item.source, "title": item.title, "summary": item.summary}
-    )
-    response = client.messages.create(
-        model=MODEL,
-        max_tokens=200,
-        system=JUDGE_SYSTEM,
-        messages=[
-            {"role": "user", "content": prompt},
-            {"role": "assistant", "content": "{"},  # prefill: forces JSON out
-        ],
-    )
-    usage = response.usage
-    cost = (usage.input_tokens * PRICE_IN_PER_MTOK
-            + usage.output_tokens * PRICE_OUT_PER_MTOK) / 1_000_000
-    raw = "{" + response.content[0].text
-    try:
-        data = json.loads(raw)
-        return Judgement(score=int(data["score"]), reason=str(data["reason"]), cost_usd=cost)
-    except (json.JSONDecodeError, KeyError, ValueError, TypeError):
-        # the digest must never crash over one malformed answer
-        return Judgement(score=0, reason=f"[parse failed] {raw[:80]!r}", cost_usd=cost)
+class BriefJudge(JudgeBase):
+    """The digest's judge, on digline's judging machinery.
+
+    `JudgeBase` brings the accounting: `calls`, `spent_usd` and `latency_ms`,
+    monotone for the life of the object and never reset, so "what has this
+    morning cost" is a subtraction and not a tally kept by hand. The price list
+    comes from the published plugin — `ANTHROPIC_PRICING`, dated in
+    `digline_anthropic.pricing.PRICES_READ_ON` — instead of the two constants
+    that used to sit in this file and that nobody would have remembered to
+    update.
+
+    That is not only tidiness. The old arithmetic here read `input_tokens` and
+    `output_tokens` and nothing else, and `cache_creation_input_tokens` is
+    billed separately and is *not* included in `input_tokens`: the plugin's
+    `usage_of` reads all four counts, which is the undercount `probe.py`
+    documents, fixed here rather than described.
+
+    Deliberately **not** `AnthropicJudge` from the plugin. That one is a rubric
+    grader: its system prompt is a `ClassVar` on `ScoreJudge` — declared per
+    subclass on purpose, never a constructor argument — and it answers a float
+    in 0..1 about "the output of another system". This judge has to ask
+    `prompts/judge.txt` and answer an integer 1-5, which is the scale
+    `seen.json`, `cases/brief.json` and the committed baseline are all written
+    in. Same machinery, same provider, same price list; different question.
+    """
+
+    provider = "anthropic"
+    system = JUDGE_SYSTEM
+
+    def __init__(self, model: str = MODEL, *, client=None) -> None:
+        super().__init__(
+            model, max_tokens=JUDGE_MAX_TOKENS, pricing=ANTHROPIC_PRICING
+        )
+        self._injected = client
+
+    def _client(self):
+        """Built on first use, so importing this module needs no key."""
+        if self._injected is None:
+            self._injected = build_client()
+        return self._injected
+
+    def _complete(self, system: str, prompt: str) -> tuple[str, Usage]:
+        reply = self._client().messages.create(
+            model=self.model,
+            max_tokens=self.max_tokens,
+            system=system,
+            messages=[
+                {"role": "user", "content": prompt},
+                {"role": "assistant", "content": JUDGE_PREFILL},
+            ],
+        )
+        return JUDGE_PREFILL + text_of(reply), usage_of(reply)
+
+    def __call__(self, item: Item) -> Judgement:
+        prompt = JUDGE_PROMPT.render(
+            {"source": item.source, "title": item.title, "summary": item.summary}
+        )
+        # `spent_usd` is a running total for the life of the judge, so one
+        # item's cost is read twice and subtracted — the idiom `JudgeBase`
+        # documents. `_ask` prices the call before it parses it, so a reply
+        # that fails to parse is still charged for, as it was.
+        before = self.spent_usd
+        try:
+            data = self._ask(prompt)
+            return Judgement(
+                score=int(data["score"]),
+                reason=str(data["reason"]),
+                cost_usd=self.spent_usd - before,
+            )
+        except UnknownModelError:
+            # A mispriced model is not a malformed answer: it would turn every
+            # item into a silent zero. `preflight()` catches it before the
+            # first call, and this makes sure it can never be swallowed here.
+            raise
+        except (ValueError, KeyError, TypeError) as exc:
+            # the digest must never crash over one malformed answer
+            return Judgement(
+                score=0,
+                reason=f"[parse failed] {exc}"[:120],
+                cost_usd=self.spent_usd - before,
+            )
 
 
 # --- Statistics ----------------------------------------------------------------
@@ -198,6 +259,13 @@ def stats() -> None:
     shown = sum(1 for r in judged if r.get("shown"))
     print(f"shown in the digest: {shown}  |  rough precision: "
           f"{sum(1 for r in judged if r.get('marked')) / shown:.0%}" if shown else "")
+
+    priced = [r for r in judged if "cost_usd" in r]
+    if priced:
+        # Only records written since the judge started keeping the figure. The
+        # count is printed beside it so the total is not read as lifetime.
+        print(f"judged cost: ${sum(r['cost_usd'] for r in priced):.4f} over "
+              f"{len(priced)} of {len(judged)} judged")
 
     print("\nScore distribution:")
     for score, n in sorted(Counter(r["score"] for r in judged).items(), reverse=True):
@@ -232,10 +300,13 @@ def run_brief() -> None:
 
     print(f"{len(new_items)} new items, judging {len(to_judge)}", end="", flush=True)
 
-    client = anthropic.Anthropic()  # reads ANTHROPIC_API_KEY from the environment
+    judge = BriefJudge()  # the SDK reads ANTHROPIC_API_KEY from the environment
+    # Is this model priced? Ask before spending, not after: an unpriced model
+    # would otherwise be found out one call at a time.
+    judge.preflight()
     judged: list[tuple[Item, Judgement]] = []
     for item in to_judge:
-        j = judge(client, item)
+        j = judge(item)
         judged.append((item, j))
         seen[item.id] = {
             "source": item.source,
@@ -243,10 +314,15 @@ def run_brief() -> None:
             "link": item.link,
             "score": j.score,
             "reason": j.reason,
+            "cost_usd": j.cost_usd,
             "judged_at": now,
         }
         print(".", end="", flush=True)
     print()
+    print(f"{judge.calls} judged for ${judge.spent_usd:.4f} "
+          f"(${judge.spent_usd / judge.calls:.6f} each, "
+          f"{judge.latency_ms / judge.calls:.0f} ms each)"
+          if judge.calls else "nothing judged")
 
     ranked = sorted(judged, key=lambda pair: pair[1].score, reverse=True)
     top = [pair for pair in ranked if pair[1].score >= SCORE_THRESHOLD]

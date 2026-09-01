@@ -9,13 +9,12 @@ license-files = ["LICENSE"]
 dependencies = [
     "anthropic>=1.0.0",
     "feedparser>=6.0.14",
-    # `brief.judge()` renders the same template the suite does, so the
-    # application depends on digline for that — not only the tests.
-    "digline>=0.1.1,<0.2",
-]
-
-[dependency-groups]
-dev = [
-    # Only the suite talks to the provider through digline.
-    "digline-anthropic>=0.1,<0.2",
+    # `BriefJudge` renders the same template the suite does, and is built on
+    # `digline.targets.JudgeBase`, so the application depends on digline for
+    # that — not only the tests.
+    "digline>=0.2.0,<0.3",
+    # No longer test-only: `brief.BriefJudge` is a `digline.targets.JudgeBase`
+    # priced from the plugin's `ANTHROPIC_PRICING`, so the application imports
+    # the provider package too — not only the suite.
+    "digline-anthropic>=0.2.0,<0.3",
 ]
