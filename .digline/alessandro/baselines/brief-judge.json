@@ -78,6 +78,15 @@
             "spread": 0.0
           },
           "reason": "mean of 5 samples (1.000000, 1.000000, 1.000000, 1.000000, 1.000000)",
+          "sample_max": 1.0,
+          "sample_min": 1.0,
+          "samples": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
           "score": 1.0,
           "status": "pass",
           "threshold": 1.0,
@@ -100,6 +109,15 @@
             "spread": 1.0
           },
           "reason": "mean of 5 samples (1.000000, 1.000000, 0.000000, 1.000000, 1.000000)",
+          "sample_max": 1.0,
+          "sample_min": 0.0,
+          "samples": [
+            1.0,
+            1.0,
+            0.0,
+            1.0,
+            1.0
+          ],
           "score": 0.8,
           "status": "pass",
           "threshold": 0.5,
@@ -126,6 +144,15 @@
             "total_cost_usd": 0.003275
           },
           "reason": "mean of 5 samples (0.702905, 0.706215, 0.674460, 0.697999, 0.699627)",
+          "sample_max": 0.706215,
+          "sample_min": 0.67446,
+          "samples": [
+            0.702905,
+            0.706215,
+            0.67446,
+            0.697999,
+            0.699627
+          ],
           "score": 0.696241,
           "status": "pass",
           "threshold": 0.5,
@@ -154,6 +181,15 @@
             "spread": 0.0
           },
           "reason": "mean of 5 samples (1.000000, 1.000000, 1.000000, 1.000000, 1.000000)",
+          "sample_max": 1.0,
+          "sample_min": 1.0,
+          "samples": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
           "score": 1.0,
           "status": "pass",
           "threshold": 1.0,
@@ -176,6 +212,15 @@
             "spread": 1.0
           },
           "reason": "mean of 5 samples (0.000000, 1.000000, 1.000000, 1.000000, 1.000000)",
+          "sample_max": 1.0,
+          "sample_min": 0.0,
+          "samples": [
+            0.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
           "score": 0.8,
           "status": "pass",
           "threshold": 0.5,
@@ -202,6 +247,15 @@
             "total_cost_usd": 0.00354
           },
           "reason": "mean of 5 samples (0.675676, 0.692841, 0.689655, 0.666667, 0.672646)",
+          "sample_max": 0.692841,
+          "sample_min": 0.666667,
+          "samples": [
+            0.675676,
+            0.692841,
+            0.689655,
+            0.666667,
+            0.672646
+          ],
           "score": 0.679497,
           "status": "pass",
           "threshold": 0.5,
@@ -230,6 +284,15 @@
             "spread": 0.0
           },
           "reason": "mean of 5 samples (1.000000, 1.000000, 1.000000, 1.000000, 1.000000)",
+          "sample_max": 1.0,
+          "sample_min": 1.0,
+          "samples": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
           "score": 1.0,
           "status": "pass",
           "threshold": 1.0,
@@ -252,6 +315,15 @@
             "spread": 0.0
           },
           "reason": "mean of 5 samples (1.000000, 1.000000, 1.000000, 1.000000, 1.000000)",
+          "sample_max": 1.0,
+          "sample_min": 1.0,
+          "samples": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
           "score": 1.0,
           "status": "pass",
           "threshold": 0.5,
@@ -278,6 +350,15 @@
             "total_cost_usd": 0.00359
           },
           "reason": "mean of 5 samples (0.661667, 0.685871, 0.684307, 0.663130, 0.687443)",
+          "sample_max": 0.687443,
+          "sample_min": 0.661667,
+          "samples": [
+            0.661667,
+            0.685871,
+            0.684307,
+            0.66313,
+            0.687443
+          ],
           "score": 0.676484,
           "status": "pass",
           "threshold": 0.5,
@@ -306,6 +387,15 @@
             "spread": 0.0
           },
           "reason": "mean of 5 samples (1.000000, 1.000000, 1.000000, 1.000000, 1.000000)",
+          "sample_max": 1.0,
+          "sample_min": 1.0,
+          "samples": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
           "score": 1.0,
           "status": "pass",
           "threshold": 1.0,
@@ -328,6 +418,15 @@
             "spread": 0.0
           },
           "reason": "mean of 5 samples (1.000000, 1.000000, 1.000000, 1.000000, 1.000000)",
+          "sample_max": 1.0,
+          "sample_min": 1.0,
+          "samples": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
           "score": 1.0,
           "status": "pass",
           "threshold": 0.5,
@@ -354,6 +453,15 @@
             "total_cost_usd": 0.003375
           },
           "reason": "mean of 5 samples (0.683060, 0.690926, 0.694123, 0.695733, 0.684619)",
+          "sample_max": 0.695733,
+          "sample_min": 0.68306,
+          "samples": [
+            0.68306,
+            0.690926,
+            0.694123,
+            0.695733,
+            0.684619
+          ],
           "score": 0.689692,
           "status": "pass",
           "threshold": 0.5,
@@ -382,6 +490,15 @@
             "spread": 0.0
           },
           "reason": "mean of 5 samples (1.000000, 1.000000, 1.000000, 1.000000, 1.000000)",
+          "sample_max": 1.0,
+          "sample_min": 1.0,
+          "samples": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
           "score": 1.0,
           "status": "pass",
           "threshold": 1.0,
@@ -404,6 +521,15 @@
             "spread": 1.0
           },
           "reason": "mean of 5 samples (0.000000, 1.000000, 1.000000, 1.000000, 1.000000)",
+          "sample_max": 1.0,
+          "sample_min": 0.0,
+          "samples": [
+            0.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
           "score": 0.8,
           "status": "pass",
           "threshold": 0.5,
@@ -430,6 +556,15 @@
             "total_cost_usd": 0.003415
           },
           "reason": "mean of 5 samples (0.663130, 0.695410, 0.695410, 0.692201, 0.690608)",
+          "sample_max": 0.69541,
+          "sample_min": 0.66313,
+          "samples": [
+            0.66313,
+            0.69541,
+            0.69541,
+            0.692201,
+            0.690608
+          ],
           "score": 0.687352,
           "status": "pass",
           "threshold": 0.5,
@@ -458,6 +593,15 @@
             "spread": 0.0
           },
           "reason": "mean of 5 samples (1.000000, 1.000000, 1.000000, 1.000000, 1.000000)",
+          "sample_max": 1.0,
+          "sample_min": 1.0,
+          "samples": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
           "score": 1.0,
           "status": "pass",
           "threshold": 1.0,
@@ -480,6 +624,15 @@
             "spread": 0.0
           },
           "reason": "mean of 5 samples (0.000000, 0.000000, 0.000000, 0.000000, 0.000000)",
+          "sample_max": 0.0,
+          "sample_min": 0.0,
+          "samples": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
           "score": 0.0,
           "status": "fail",
           "threshold": 0.5,
@@ -506,6 +659,15 @@
             "total_cost_usd": 0.003115
           },
           "reason": "mean of 5 samples (0.715990, 0.702576, 0.721154, 0.686499, 0.707547)",
+          "sample_max": 0.721154,
+          "sample_min": 0.686499,
+          "samples": [
+            0.71599,
+            0.702576,
+            0.721154,
+            0.686499,
+            0.707547
+          ],
           "score": 0.706753,
           "status": "pass",
           "threshold": 0.5,
@@ -534,6 +696,15 @@
             "spread": 0.0
           },
           "reason": "mean of 5 samples (1.000000, 1.000000, 1.000000, 1.000000, 1.000000)",
+          "sample_max": 1.0,
+          "sample_min": 1.0,
+          "samples": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
           "score": 1.0,
           "status": "pass",
           "threshold": 1.0,
@@ -556,6 +727,15 @@
             "spread": 0.0
           },
           "reason": "mean of 5 samples (0.000000, 0.000000, 0.000000, 0.000000, 0.000000)",
+          "sample_max": 0.0,
+          "sample_min": 0.0,
+          "samples": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
           "score": 0.0,
           "status": "fail",
           "threshold": 0.5,
@@ -582,6 +762,15 @@
             "total_cost_usd": 0.003465
           },
           "reason": "mean of 5 samples (0.687128, 0.679348, 0.679348, 0.693481, 0.680890)",
+          "sample_max": 0.693481,
+          "sample_min": 0.679348,
+          "samples": [
+            0.687128,
+            0.679348,
+            0.679348,
+            0.693481,
+            0.68089
+          ],
           "score": 0.684039,
           "status": "pass",
           "threshold": 0.5,
@@ -610,6 +799,15 @@
             "spread": 0.0
           },
           "reason": "mean of 5 samples (1.000000, 1.000000, 1.000000, 1.000000, 1.000000)",
+          "sample_max": 1.0,
+          "sample_min": 1.0,
+          "samples": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
           "score": 1.0,
           "status": "pass",
           "threshold": 1.0,
@@ -632,6 +830,15 @@
             "spread": 0.0
           },
           "reason": "mean of 5 samples (1.000000, 1.000000, 1.000000, 1.000000, 1.000000)",
+          "sample_max": 1.0,
+          "sample_min": 1.0,
+          "samples": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
           "score": 1.0,
           "status": "pass",
           "threshold": 0.5,
@@ -658,6 +865,15 @@
             "total_cost_usd": 0.00309
           },
           "reason": "mean of 5 samples (0.705219, 0.705219, 0.710227, 0.708550, 0.711913)",
+          "sample_max": 0.711913,
+          "sample_min": 0.705219,
+          "samples": [
+            0.705219,
+            0.705219,
+            0.710227,
+            0.70855,
+            0.711913
+          ],
           "score": 0.708226,
           "status": "pass",
           "threshold": 0.5,
@@ -686,6 +902,15 @@
             "spread": 0.0
           },
           "reason": "mean of 5 samples (1.000000, 1.000000, 1.000000, 1.000000, 1.000000)",
+          "sample_max": 1.0,
+          "sample_min": 1.0,
+          "samples": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
           "score": 1.0,
           "status": "pass",
           "threshold": 1.0,
@@ -708,6 +933,15 @@
             "spread": 0.0
           },
           "reason": "mean of 5 samples (0.000000, 0.000000, 0.000000, 0.000000, 0.000000)",
+          "sample_max": 0.0,
+          "sample_min": 0.0,
+          "samples": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
           "score": 0.0,
           "status": "fail",
           "threshold": 0.5,
@@ -734,6 +968,15 @@
             "total_cost_usd": 0.003175
           },
           "reason": "mean of 5 samples (0.691563, 0.701262, 0.702905, 0.702905, 0.714626)",
+          "sample_max": 0.714626,
+          "sample_min": 0.691563,
+          "samples": [
+            0.691563,
+            0.701262,
+            0.702905,
+            0.702905,
+            0.714626
+          ],
           "score": 0.702652,
           "status": "pass",
           "threshold": 0.5,
@@ -762,6 +1005,15 @@
             "spread": 0.0
           },
           "reason": "mean of 5 samples (1.000000, 1.000000, 1.000000, 1.000000, 1.000000)",
+          "sample_max": 1.0,
+          "sample_min": 1.0,
+          "samples": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
           "score": 1.0,
           "status": "pass",
           "threshold": 1.0,
@@ -784,6 +1036,15 @@
             "spread": 1.0
           },
           "reason": "mean of 5 samples (0.000000, 0.000000, 0.000000, 1.000000, 0.000000)",
+          "sample_max": 1.0,
+          "sample_min": 0.0,
+          "samples": [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ],
           "score": 0.2,
           "status": "fail",
           "threshold": 0.5,
@@ -810,6 +1071,15 @@
             "total_cost_usd": 0.003285
           },
           "reason": "mean of 5 samples (0.678426, 0.700607, 0.700607, 0.705550, 0.692521)",
+          "sample_max": 0.70555,
+          "sample_min": 0.678426,
+          "samples": [
+            0.678426,
+            0.700607,
+            0.700607,
+            0.70555,
+            0.692521
+          ],
           "score": 0.695542,
           "status": "pass",
           "threshold": 0.5,
@@ -838,6 +1108,15 @@
             "spread": 0.0
           },
           "reason": "mean of 5 samples (1.000000, 1.000000, 1.000000, 1.000000, 1.000000)",
+          "sample_max": 1.0,
+          "sample_min": 1.0,
+          "samples": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
           "score": 1.0,
           "status": "pass",
           "threshold": 1.0,
@@ -860,6 +1139,15 @@
             "spread": 0.0
           },
           "reason": "mean of 5 samples (1.000000, 1.000000, 1.000000, 1.000000, 1.000000)",
+          "sample_max": 1.0,
+          "sample_min": 1.0,
+          "samples": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
           "score": 1.0,
           "status": "pass",
           "threshold": 0.5,
@@ -886,6 +1174,15 @@
             "total_cost_usd": 0.00365
           },
           "reason": "mean of 5 samples (0.679348, 0.654165, 0.679348, 0.674764, 0.676285)",
+          "sample_max": 0.679348,
+          "sample_min": 0.654165,
+          "samples": [
+            0.679348,
+            0.654165,
+            0.679348,
+            0.674764,
+            0.676285
+          ],
           "score": 0.672782,
           "status": "pass",
           "threshold": 0.5,
@@ -914,6 +1211,15 @@
             "spread": 0.0
           },
           "reason": "mean of 5 samples (1.000000, 1.000000, 1.000000, 1.000000, 1.000000)",
+          "sample_max": 1.0,
+          "sample_min": 1.0,
+          "samples": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
           "score": 1.0,
           "status": "pass",
           "threshold": 1.0,
@@ -936,6 +1242,15 @@
             "spread": 0.0
           },
           "reason": "mean of 5 samples (1.000000, 1.000000, 1.000000, 1.000000, 1.000000)",
+          "sample_max": 1.0,
+          "sample_min": 1.0,
+          "samples": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
           "score": 1.0,
           "status": "pass",
           "threshold": 0.5,
@@ -962,6 +1277,15 @@
             "total_cost_usd": 0.003015
           },
           "reason": "mean of 5 samples (0.714286, 0.712589, 0.721154, 0.717703, 0.700935)",
+          "sample_max": 0.721154,
+          "sample_min": 0.700935,
+          "samples": [
+            0.714286,
+            0.712589,
+            0.721154,
+            0.717703,
+            0.700935
+          ],
           "score": 0.713333,
           "status": "pass",
           "threshold": 0.5,
@@ -990,6 +1314,15 @@
             "spread": 0.0
           },
           "reason": "mean of 5 samples (1.000000, 1.000000, 1.000000, 1.000000, 1.000000)",
+          "sample_max": 1.0,
+          "sample_min": 1.0,
+          "samples": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
           "score": 1.0,
           "status": "pass",
           "threshold": 1.0,
@@ -1012,6 +1345,15 @@
             "spread": 0.0
           },
           "reason": "mean of 5 samples (1.000000, 1.000000, 1.000000, 1.000000, 1.000000)",
+          "sample_max": 1.0,
+          "sample_min": 1.0,
+          "samples": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
           "score": 1.0,
           "status": "pass",
           "threshold": 0.5,
@@ -1038,6 +1380,15 @@
             "total_cost_usd": 0.00329
           },
           "reason": "mean of 5 samples (0.690608, 0.682749, 0.713606, 0.693802, 0.695410)",
+          "sample_max": 0.713606,
+          "sample_min": 0.682749,
+          "samples": [
+            0.690608,
+            0.682749,
+            0.713606,
+            0.693802,
+            0.69541
+          ],
           "score": 0.695235,
           "status": "pass",
           "threshold": 0.5,
@@ -1066,6 +1417,15 @@
             "spread": 0.0
           },
           "reason": "mean of 5 samples (1.000000, 1.000000, 1.000000, 1.000000, 1.000000)",
+          "sample_max": 1.0,
+          "sample_min": 1.0,
+          "samples": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
           "score": 1.0,
           "status": "pass",
           "threshold": 1.0,
@@ -1088,6 +1448,15 @@
             "spread": 0.0
           },
           "reason": "mean of 5 samples (1.000000, 1.000000, 1.000000, 1.000000, 1.000000)",
+          "sample_max": 1.0,
+          "sample_min": 1.0,
+          "samples": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
           "score": 1.0,
           "status": "pass",
           "threshold": 0.5,
@@ -1114,6 +1483,15 @@
             "total_cost_usd": 0.00323
           },
           "reason": "mean of 5 samples (0.697350, 0.703895, 0.700607, 0.695733, 0.697350)",
+          "sample_max": 0.703895,
+          "sample_min": 0.695733,
+          "samples": [
+            0.69735,
+            0.703895,
+            0.700607,
+            0.695733,
+            0.69735
+          ],
           "score": 0.698987,
           "status": "pass",
           "threshold": 0.5,
@@ -1142,6 +1520,15 @@
             "spread": 0.0
           },
           "reason": "mean of 5 samples (1.000000, 1.000000, 1.000000, 1.000000, 1.000000)",
+          "sample_max": 1.0,
+          "sample_min": 1.0,
+          "samples": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
           "score": 1.0,
           "status": "pass",
           "threshold": 1.0,
@@ -1164,6 +1551,15 @@
             "spread": 0.0
           },
           "reason": "mean of 5 samples (1.000000, 1.000000, 1.000000, 1.000000, 1.000000)",
+          "sample_max": 1.0,
+          "sample_min": 1.0,
+          "samples": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
           "score": 1.0,
           "status": "pass",
           "threshold": 0.5,
@@ -1190,6 +1586,15 @@
             "total_cost_usd": 0.003215
           },
           "reason": "mean of 5 samples (0.684307, 0.697026, 0.705219, 0.705219, 0.708550)",
+          "sample_max": 0.70855,
+          "sample_min": 0.684307,
+          "samples": [
+            0.684307,
+            0.697026,
+            0.705219,
+            0.705219,
+            0.70855
+          ],
           "score": 0.700064,
           "status": "pass",
           "threshold": 0.5,
@@ -1218,6 +1623,15 @@
             "spread": 0.0
           },
           "reason": "mean of 5 samples (1.000000, 1.000000, 1.000000, 1.000000, 1.000000)",
+          "sample_max": 1.0,
+          "sample_min": 1.0,
+          "samples": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
           "score": 1.0,
           "status": "pass",
           "threshold": 1.0,
@@ -1240,6 +1654,15 @@
             "spread": 0.0
           },
           "reason": "mean of 5 samples (0.000000, 0.000000, 0.000000, 0.000000, 0.000000)",
+          "sample_max": 0.0,
+          "sample_min": 0.0,
+          "samples": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
           "score": 0.0,
           "status": "fail",
           "threshold": 0.5,
@@ -1266,6 +1689,15 @@
             "total_cost_usd": 0.003235
           },
           "reason": "mean of 5 samples (0.685871, 0.701919, 0.693802, 0.708550, 0.703565)",
+          "sample_max": 0.70855,
+          "sample_min": 0.685871,
+          "samples": [
+            0.685871,
+            0.701919,
+            0.693802,
+            0.70855,
+            0.703565
+          ],
           "score": 0.698741,
           "status": "pass",
           "threshold": 0.5,
@@ -1294,6 +1726,15 @@
             "spread": 0.0
           },
           "reason": "mean of 5 samples (1.000000, 1.000000, 1.000000, 1.000000, 1.000000)",
+          "sample_max": 1.0,
+          "sample_min": 1.0,
+          "samples": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
           "score": 1.0,
           "status": "pass",
           "threshold": 1.0,
@@ -1316,6 +1757,15 @@
             "spread": 0.0
           },
           "reason": "mean of 5 samples (1.000000, 1.000000, 1.000000, 1.000000, 1.000000)",
+          "sample_max": 1.0,
+          "sample_min": 1.0,
+          "samples": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
           "score": 1.0,
           "status": "pass",
           "threshold": 0.5,
@@ -1342,6 +1792,15 @@
             "total_cost_usd": 0.00313
           },
           "reason": "mean of 5 samples (0.710564, 0.712251, 0.710564, 0.702247, 0.692521)",
+          "sample_max": 0.712251,
+          "sample_min": 0.692521,
+          "samples": [
+            0.710564,
+            0.712251,
+            0.710564,
+            0.702247,
+            0.692521
+          ],
           "score": 0.705629,
           "status": "pass",
           "threshold": 0.5,
@@ -1370,6 +1829,15 @@
             "spread": 0.0
           },
           "reason": "mean of 5 samples (1.000000, 1.000000, 1.000000, 1.000000, 1.000000)",
+          "sample_max": 1.0,
+          "sample_min": 1.0,
+          "samples": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
           "score": 1.0,
           "status": "pass",
           "threshold": 1.0,
@@ -1392,6 +1860,15 @@
             "spread": 0.0
           },
           "reason": "mean of 5 samples (1.000000, 1.000000, 1.000000, 1.000000, 1.000000)",
+          "sample_max": 1.0,
+          "sample_min": 1.0,
+          "samples": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
           "score": 1.0,
           "status": "pass",
           "threshold": 0.5,
@@ -1418,6 +1895,15 @@
             "total_cost_usd": 0.0037
           },
           "reason": "mean of 5 samples (0.672646, 0.663717, 0.656455, 0.669643, 0.686499)",
+          "sample_max": 0.686499,
+          "sample_min": 0.656455,
+          "samples": [
+            0.672646,
+            0.663717,
+            0.656455,
+            0.669643,
+            0.686499
+          ],
           "score": 0.669792,
           "status": "pass",
           "threshold": 0.5,
@@ -1446,6 +1932,15 @@
             "spread": 0.0
           },
           "reason": "mean of 5 samples (1.000000, 1.000000, 1.000000, 1.000000, 1.000000)",
+          "sample_max": 1.0,
+          "sample_min": 1.0,
+          "samples": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
           "score": 1.0,
           "status": "pass",
           "threshold": 1.0,
@@ -1468,6 +1963,15 @@
             "spread": 0.0
           },
           "reason": "mean of 5 samples (1.000000, 1.000000, 1.000000, 1.000000, 1.000000)",
+          "sample_max": 1.0,
+          "sample_min": 1.0,
+          "samples": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
           "score": 1.0,
           "status": "pass",
           "threshold": 0.5,
@@ -1494,6 +1998,15 @@
             "total_cost_usd": 0.003275
           },
           "reason": "mean of 5 samples (0.695088, 0.679348, 0.701590, 0.688705, 0.716675)",
+          "sample_max": 0.716675,
+          "sample_min": 0.679348,
+          "samples": [
+            0.695088,
+            0.679348,
+            0.70159,
+            0.688705,
+            0.716675
+          ],
           "score": 0.696281,
           "status": "pass",
           "threshold": 0.5,
@@ -1522,6 +2035,15 @@
             "spread": 0.0
           },
           "reason": "mean of 5 samples (1.000000, 1.000000, 1.000000, 1.000000, 1.000000)",
+          "sample_max": 1.0,
+          "sample_min": 1.0,
+          "samples": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
           "score": 1.0,
           "status": "pass",
           "threshold": 1.0,
@@ -1544,6 +2066,15 @@
             "spread": 0.0
           },
           "reason": "mean of 5 samples (1.000000, 1.000000, 1.000000, 1.000000, 1.000000)",
+          "sample_max": 1.0,
+          "sample_min": 1.0,
+          "samples": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
           "score": 1.0,
           "status": "pass",
           "threshold": 0.5,
@@ -1570,6 +2101,15 @@
             "total_cost_usd": 0.002865
           },
           "reason": "mean of 5 samples (0.718735, 0.708550, 0.741840, 0.745527, 0.705219)",
+          "sample_max": 0.745527,
+          "sample_min": 0.705219,
+          "samples": [
+            0.718735,
+            0.70855,
+            0.74184,
+            0.745527,
+            0.705219
+          ],
           "score": 0.723974,
           "status": "pass",
           "threshold": 0.5,
@@ -1598,6 +2138,15 @@
             "spread": 0.0
           },
           "reason": "mean of 5 samples (1.000000, 1.000000, 1.000000, 1.000000, 1.000000)",
+          "sample_max": 1.0,
+          "sample_min": 1.0,
+          "samples": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
           "score": 1.0,
           "status": "pass",
           "threshold": 1.0,
@@ -1620,6 +2169,15 @@
             "spread": 0.0
           },
           "reason": "mean of 5 samples (1.000000, 1.000000, 1.000000, 1.000000, 1.000000)",
+          "sample_max": 1.0,
+          "sample_min": 1.0,
+          "samples": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
           "score": 1.0,
           "status": "pass",
           "threshold": 0.5,
@@ -1646,6 +2204,15 @@
             "total_cost_usd": 0.00359
           },
           "reason": "mean of 5 samples (0.690608, 0.667557, 0.670541, 0.676590, 0.676590)",
+          "sample_max": 0.690608,
+          "sample_min": 0.667557,
+          "samples": [
+            0.690608,
+            0.667557,
+            0.670541,
+            0.67659,
+            0.67659
+          ],
           "score": 0.676377,
           "status": "pass",
           "threshold": 0.5,
@@ -1654,7 +2221,7 @@
       ]
     }
   ],
-  "schema_version": 8,
+  "schema_version": 9,
   "suite": "brief-judge",
   "target_config": {
     "values": {

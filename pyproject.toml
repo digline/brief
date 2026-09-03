@@ -12,7 +12,7 @@ dependencies = [
     # `BriefJudge` renders the same template the suite does, and is built on
     # `digline.targets.JudgeBase`, so the application depends on digline for
     # that — not only the tests.
-    "digline>=0.2.0,<0.3",
+    "digline>=0.4.0,<0.5",
     # No longer test-only: `brief.BriefJudge` is a `digline.targets.JudgeBase`
     # priced from the plugin's `ANTHROPIC_PRICING`, so the application imports
     # the provider package too — not only the suite.
