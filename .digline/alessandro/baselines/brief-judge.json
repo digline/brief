@@ -14,14 +14,14 @@
         "unlabelled_excluded": 0
       },
       "reason": "precision 0.666667 = 10/15 (21 counted, 0 suspended, 0 could not be judged)",
-      "sample_max": 0.714286,
+      "sample_max": 0.666667,
       "sample_min": 0.615385,
       "samples": [
         0.666667,
-        0.615385,
-        0.714286,
-        0.625,
-        0.625
+        0.642857,
+        0.666667,
+        0.666667,
+        0.615385
       ],
       "score": 0.666667,
       "status": "pass",
@@ -42,14 +42,14 @@
         "unlabelled_excluded": 0
       },
       "reason": "accuracy 0.761905 = 16/21 (21 counted, 0 suspended, 0 could not be judged)",
-      "sample_max": 0.809524,
+      "sample_max": 0.761905,
       "sample_min": 0.666667,
       "samples": [
         0.761905,
-        0.666667,
-        0.809524,
         0.714286,
-        0.714286
+        0.761905,
+        0.761905,
+        0.666667
       ],
       "score": 0.761905,
       "status": "pass",
@@ -68,9 +68,9 @@
     }
   },
   "config_hash": "98fc65b1e49e930e",
-  "created_at": "2026-09-03T05:59:05.717767+00:00",
+  "created_at": "2026-09-03T06:14:13.174316+00:00",
   "environment": "dev",
-  "git_commit": "2ff19d6e772bab07632030aa1290e14156111ef9-dirty",
+  "git_commit": "cc76e68cf332747d630c11583dcd89cd3681bf55",
   "judge_config": {},
   "metadata": {},
   "redacted": false,
@@ -114,7 +114,7 @@
           "assertion": "agrees_with_mark",
           "assertion_id": "dbd60a76cb2582cd",
           "metadata": {
-            "agreement": 0.8,
+            "agreement": 0.6,
             "errored_samples": 0,
             "samples": 5,
             "scores": [
@@ -122,11 +122,11 @@
               0.0,
               1.0,
               1.0,
-              1.0
+              0.0
             ],
             "spread": 1.0
           },
-          "reason": "mean of 5 samples (1.000000, 0.000000, 1.000000, 1.000000, 1.000000)",
+          "reason": "mean of 5 samples (1.000000, 0.000000, 1.000000, 1.000000, 0.000000)",
           "sample_max": 1.0,
           "sample_min": 0.0,
           "samples": [
@@ -134,9 +134,9 @@
             0.0,
             1.0,
             1.0,
-            1.0
+            0.0
           ],
-          "score": 0.8,
+          "score": 0.6,
           "status": "pass",
           "threshold": 0.5,
           "tolerance": 0.41
@@ -146,32 +146,32 @@
           "assertion_id": "d6c3194e2d658693",
           "metadata": {
             "agreement": 1.0,
-            "cost_usd": 0.000656,
+            "cost_usd": 0.000635,
             "errored_samples": 0,
             "max_usd": 0.0015,
-            "ratio": 0.437333,
+            "ratio": 0.423333,
             "samples": 5,
             "scores": [
-              0.686813,
-              0.688389,
-              0.701262,
-              0.714626,
-              0.688389
+              0.697999,
+              0.696379,
+              0.732064,
+              0.707881,
+              0.680581
             ],
-            "spread": 0.027813,
-            "total_cost_usd": 0.00328
+            "spread": 0.051483,
+            "total_cost_usd": 0.003175
           },
-          "reason": "mean of 5 samples (0.686813, 0.688389, 0.701262, 0.714626, 0.688389)",
-          "sample_max": 0.714626,
-          "sample_min": 0.686813,
+          "reason": "mean of 5 samples (0.697999, 0.696379, 0.732064, 0.707881, 0.680581)",
+          "sample_max": 0.732064,
+          "sample_min": 0.680581,
           "samples": [
-            0.686813,
-            0.688389,
-            0.701262,
-            0.714626,
-            0.688389
+            0.697999,
+            0.696379,
+            0.732064,
+            0.707881,
+            0.680581
           ],
-          "score": 0.695896,
+          "score": 0.702981,
           "status": "pass",
           "threshold": 0.5,
           "tolerance": 0.15
@@ -217,29 +217,29 @@
           "assertion": "agrees_with_mark",
           "assertion_id": "dbd60a76cb2582cd",
           "metadata": {
-            "agreement": 0.6,
+            "agreement": 1.0,
             "errored_samples": 0,
             "samples": 5,
             "scores": [
               1.0,
               1.0,
               1.0,
-              0.0,
-              0.0
+              1.0,
+              1.0
             ],
-            "spread": 1.0
+            "spread": 0.0
           },
-          "reason": "mean of 5 samples (1.000000, 1.000000, 1.000000, 0.000000, 0.000000)",
+          "reason": "mean of 5 samples (1.000000, 1.000000, 1.000000, 1.000000, 1.000000)",
           "sample_max": 1.0,
-          "sample_min": 0.0,
+          "sample_min": 1.0,
           "samples": [
             1.0,
             1.0,
             1.0,
-            0.0,
-            0.0
+            1.0,
+            1.0
           ],
-          "score": 0.6,
+          "score": 1.0,
           "status": "pass",
           "threshold": 0.5,
           "tolerance": 0.41
@@ -249,32 +249,32 @@
           "assertion_id": "d6c3194e2d658693",
           "metadata": {
             "agreement": 1.0,
-            "cost_usd": 0.00072,
+            "cost_usd": 0.000731,
             "errored_samples": 0,
             "max_usd": 0.0015,
-            "ratio": 0.48,
+            "ratio": 0.487333,
             "samples": 5,
             "scores": [
-              0.678733,
-              0.657895,
-              0.675676,
+              0.677201,
+              0.665188,
               0.683371,
-              0.683371
+              0.668151,
+              0.668151
             ],
-            "spread": 0.025476,
-            "total_cost_usd": 0.0036
+            "spread": 0.018183,
+            "total_cost_usd": 0.003655
           },
-          "reason": "mean of 5 samples (0.678733, 0.657895, 0.675676, 0.683371, 0.683371)",
+          "reason": "mean of 5 samples (0.677201, 0.665188, 0.683371, 0.668151, 0.668151)",
           "sample_max": 0.683371,
-          "sample_min": 0.657895,
+          "sample_min": 0.665188,
           "samples": [
-            0.678733,
-            0.657895,
-            0.675676,
+            0.677201,
+            0.665188,
             0.683371,
-            0.683371
+            0.668151,
+            0.668151
           ],
-          "score": 0.675809,
+          "score": 0.672412,
           "status": "pass",
           "threshold": 0.5,
           "tolerance": 0.15
@@ -352,32 +352,32 @@
           "assertion_id": "d6c3194e2d658693",
           "metadata": {
             "agreement": 1.0,
-            "cost_usd": 0.00074,
+            "cost_usd": 0.00072,
             "errored_samples": 0,
             "max_usd": 0.0015,
-            "ratio": 0.493333,
+            "ratio": 0.48,
             "samples": 5,
             "scores": [
-              0.690608,
-              0.661667,
-              0.675068,
-              0.670541,
-              0.651607
+              0.679656,
+              0.669045,
+              0.651607,
+              0.692201,
+              0.687443
             ],
-            "spread": 0.039001,
-            "total_cost_usd": 0.0037
+            "spread": 0.040594,
+            "total_cost_usd": 0.0036
           },
-          "reason": "mean of 5 samples (0.690608, 0.661667, 0.675068, 0.670541, 0.651607)",
-          "sample_max": 0.690608,
+          "reason": "mean of 5 samples (0.679656, 0.669045, 0.651607, 0.692201, 0.687443)",
+          "sample_max": 0.692201,
           "sample_min": 0.651607,
           "samples": [
-            0.690608,
-            0.661667,
-            0.675068,
-            0.670541,
-            0.651607
+            0.679656,
+            0.669045,
+            0.651607,
+            0.692201,
+            0.687443
           ],
-          "score": 0.669898,
+          "score": 0.67599,
           "status": "pass",
           "threshold": 0.5,
           "tolerance": 0.15
@@ -455,32 +455,32 @@
           "assertion_id": "d6c3194e2d658693",
           "metadata": {
             "agreement": 1.0,
-            "cost_usd": 0.000682,
+            "cost_usd": 0.000674,
             "errored_samples": 0,
             "max_usd": 0.0015,
-            "ratio": 0.454667,
+            "ratio": 0.449333,
             "samples": 5,
             "scores": [
-              0.68306,
-              0.689338,
-              0.687758,
-              0.692521,
-              0.684619
+              0.690926,
+              0.686185,
+              0.681508,
+              0.702247,
+              0.689338
             ],
-            "spread": 0.009461,
-            "total_cost_usd": 0.00341
+            "spread": 0.020739,
+            "total_cost_usd": 0.00337
           },
-          "reason": "mean of 5 samples (0.683060, 0.689338, 0.687758, 0.692521, 0.684619)",
-          "sample_max": 0.692521,
-          "sample_min": 0.68306,
+          "reason": "mean of 5 samples (0.690926, 0.686185, 0.681508, 0.702247, 0.689338)",
+          "sample_max": 0.702247,
+          "sample_min": 0.681508,
           "samples": [
-            0.68306,
-            0.689338,
-            0.687758,
-            0.692521,
-            0.684619
+            0.690926,
+            0.686185,
+            0.681508,
+            0.702247,
+            0.689338
           ],
-          "score": 0.687459,
+          "score": 0.690041,
           "status": "pass",
           "threshold": 0.5,
           "tolerance": 0.15
@@ -558,32 +558,32 @@
           "assertion_id": "d6c3194e2d658693",
           "metadata": {
             "agreement": 1.0,
-            "cost_usd": 0.000691,
+            "cost_usd": 0.000681,
             "errored_samples": 0,
             "max_usd": 0.0015,
-            "ratio": 0.460667,
+            "ratio": 0.454,
             "samples": 5,
             "scores": [
-              0.681199,
-              0.678119,
-              0.685871,
-              0.682749,
-              0.69541
+              0.690608,
+              0.667557,
+              0.69541,
+              0.684307,
+              0.701919
             ],
-            "spread": 0.017291,
-            "total_cost_usd": 0.003455
+            "spread": 0.034362,
+            "total_cost_usd": 0.003405
           },
-          "reason": "mean of 5 samples (0.681199, 0.678119, 0.685871, 0.682749, 0.695410)",
-          "sample_max": 0.69541,
-          "sample_min": 0.678119,
+          "reason": "mean of 5 samples (0.690608, 0.667557, 0.695410, 0.684307, 0.701919)",
+          "sample_max": 0.701919,
+          "sample_min": 0.667557,
           "samples": [
-            0.681199,
-            0.678119,
-            0.685871,
-            0.682749,
-            0.69541
+            0.690608,
+            0.667557,
+            0.69541,
+            0.684307,
+            0.701919
           ],
-          "score": 0.68467,
+          "score": 0.68796,
           "status": "pass",
           "threshold": 0.5,
           "tolerance": 0.15
@@ -661,32 +661,32 @@
           "assertion_id": "d6c3194e2d658693",
           "metadata": {
             "agreement": 1.0,
-            "cost_usd": 0.000626,
+            "cost_usd": 0.000645,
             "errored_samples": 0,
             "max_usd": 0.0015,
-            "ratio": 0.417333,
+            "ratio": 0.43,
             "samples": 5,
             "scores": [
-              0.705882,
-              0.681818,
-              0.722892,
-              0.704225,
-              0.714286
+              0.692841,
+              0.70922,
+              0.696056,
+              0.688073,
+              0.7109
             ],
-            "spread": 0.041074,
-            "total_cost_usd": 0.00313
+            "spread": 0.022827,
+            "total_cost_usd": 0.003225
           },
-          "reason": "mean of 5 samples (0.705882, 0.681818, 0.722892, 0.704225, 0.714286)",
-          "sample_max": 0.722892,
-          "sample_min": 0.681818,
+          "reason": "mean of 5 samples (0.692841, 0.709220, 0.696056, 0.688073, 0.710900)",
+          "sample_max": 0.7109,
+          "sample_min": 0.688073,
           "samples": [
-            0.705882,
-            0.681818,
-            0.722892,
-            0.704225,
-            0.714286
+            0.692841,
+            0.70922,
+            0.696056,
+            0.688073,
+            0.7109
           ],
-          "score": 0.705821,
+          "score": 0.699418,
           "status": "pass",
           "threshold": 0.5,
           "tolerance": 0.15
@@ -764,32 +764,32 @@
           "assertion_id": "d6c3194e2d658693",
           "metadata": {
             "agreement": 1.0,
-            "cost_usd": 0.000679,
+            "cost_usd": 0.00063,
             "errored_samples": 0,
             "max_usd": 0.0015,
-            "ratio": 0.452667,
+            "ratio": 0.42,
             "samples": 5,
             "scores": [
-              0.685558,
-              0.716675,
-              0.691882,
-              0.670241,
-              0.679348
+              0.706547,
+              0.69029,
+              0.709891,
+              0.703235,
+              0.711575
             ],
-            "spread": 0.046434,
-            "total_cost_usd": 0.003395
+            "spread": 0.021285,
+            "total_cost_usd": 0.00315
           },
-          "reason": "mean of 5 samples (0.685558, 0.716675, 0.691882, 0.670241, 0.679348)",
-          "sample_max": 0.716675,
-          "sample_min": 0.670241,
+          "reason": "mean of 5 samples (0.706547, 0.690290, 0.709891, 0.703235, 0.711575)",
+          "sample_max": 0.711575,
+          "sample_min": 0.69029,
           "samples": [
-            0.685558,
-            0.716675,
-            0.691882,
-            0.670241,
-            0.679348
+            0.706547,
+            0.69029,
+            0.709891,
+            0.703235,
+            0.711575
           ],
-          "score": 0.688741,
+          "score": 0.704308,
           "status": "pass",
           "threshold": 0.5,
           "tolerance": 0.15
@@ -867,32 +867,32 @@
           "assertion_id": "d6c3194e2d658693",
           "metadata": {
             "agreement": 1.0,
-            "cost_usd": 0.000631,
+            "cost_usd": 0.00061,
             "errored_samples": 0,
             "max_usd": 0.0015,
-            "ratio": 0.420667,
+            "ratio": 0.406667,
             "samples": 5,
             "scores": [
-              0.698649,
-              0.70028,
+              0.705219,
+              0.713606,
               0.710227,
-              0.70855,
-              0.701919
+              0.711913,
+              0.713606
             ],
-            "spread": 0.011578,
-            "total_cost_usd": 0.003155
+            "spread": 0.008387,
+            "total_cost_usd": 0.00305
           },
-          "reason": "mean of 5 samples (0.698649, 0.700280, 0.710227, 0.708550, 0.701919)",
-          "sample_max": 0.710227,
-          "sample_min": 0.698649,
+          "reason": "mean of 5 samples (0.705219, 0.713606, 0.710227, 0.711913, 0.713606)",
+          "sample_max": 0.713606,
+          "sample_min": 0.705219,
           "samples": [
-            0.698649,
-            0.70028,
+            0.705219,
+            0.713606,
             0.710227,
-            0.70855,
-            0.701919
+            0.711913,
+            0.713606
           ],
-          "score": 0.703925,
+          "score": 0.710914,
           "status": "pass",
           "threshold": 0.5,
           "tolerance": 0.15
@@ -970,32 +970,32 @@
           "assertion_id": "d6c3194e2d658693",
           "metadata": {
             "agreement": 1.0,
-            "cost_usd": 0.000645,
+            "cost_usd": 0.000629,
             "errored_samples": 0,
             "max_usd": 0.0015,
-            "ratio": 0.43,
+            "ratio": 0.419333,
             "samples": 5,
             "scores": [
-              0.689972,
-              0.712928,
-              0.693161,
-              0.704556,
-              0.696379
+              0.709555,
+              0.701262,
+              0.702905,
+              0.711238,
+              0.697999
             ],
-            "spread": 0.022956,
-            "total_cost_usd": 0.003225
+            "spread": 0.013239,
+            "total_cost_usd": 0.003145
           },
-          "reason": "mean of 5 samples (0.689972, 0.712928, 0.693161, 0.704556, 0.696379)",
-          "sample_max": 0.712928,
-          "sample_min": 0.689972,
+          "reason": "mean of 5 samples (0.709555, 0.701262, 0.702905, 0.711238, 0.697999)",
+          "sample_max": 0.711238,
+          "sample_min": 0.697999,
           "samples": [
-            0.689972,
-            0.712928,
-            0.693161,
-            0.704556,
-            0.696379
+            0.709555,
+            0.701262,
+            0.702905,
+            0.711238,
+            0.697999
           ],
-          "score": 0.699399,
+          "score": 0.704592,
           "status": "pass",
           "threshold": 0.5,
           "tolerance": 0.15
@@ -1041,29 +1041,29 @@
           "assertion": "agrees_with_mark",
           "assertion_id": "dbd60a76cb2582cd",
           "metadata": {
-            "agreement": 0.8,
+            "agreement": 1.0,
             "errored_samples": 0,
             "samples": 5,
             "scores": [
               0.0,
               0.0,
-              1.0,
+              0.0,
               0.0,
               0.0
             ],
-            "spread": 1.0
+            "spread": 0.0
           },
-          "reason": "mean of 5 samples (0.000000, 0.000000, 1.000000, 0.000000, 0.000000)",
-          "sample_max": 1.0,
+          "reason": "mean of 5 samples (0.000000, 0.000000, 0.000000, 0.000000, 0.000000)",
+          "sample_max": 0.0,
           "sample_min": 0.0,
           "samples": [
             0.0,
             0.0,
-            1.0,
+            0.0,
             0.0,
             0.0
           ],
-          "score": 0.2,
+          "score": 0.0,
           "status": "fail",
           "threshold": 0.5,
           "tolerance": 0.41
@@ -1073,32 +1073,32 @@
           "assertion_id": "d6c3194e2d658693",
           "metadata": {
             "agreement": 1.0,
-            "cost_usd": 0.000658,
+            "cost_usd": 0.000676,
             "errored_samples": 0,
             "max_usd": 0.0015,
-            "ratio": 0.438667,
+            "ratio": 0.450667,
             "samples": 5,
             "scores": [
-              0.702247,
-              0.687758,
-              0.708885,
-              0.69735,
-              0.679964
+              0.70555,
+              0.681508,
+              0.684619,
+              0.692521,
+              0.68306
             ],
-            "spread": 0.028921,
-            "total_cost_usd": 0.00329
+            "spread": 0.024042,
+            "total_cost_usd": 0.00338
           },
-          "reason": "mean of 5 samples (0.702247, 0.687758, 0.708885, 0.697350, 0.679964)",
-          "sample_max": 0.708885,
-          "sample_min": 0.679964,
+          "reason": "mean of 5 samples (0.705550, 0.681508, 0.684619, 0.692521, 0.683060)",
+          "sample_max": 0.70555,
+          "sample_min": 0.681508,
           "samples": [
-            0.702247,
-            0.687758,
-            0.708885,
-            0.69735,
-            0.679964
+            0.70555,
+            0.681508,
+            0.684619,
+            0.692521,
+            0.68306
           ],
-          "score": 0.695241,
+          "score": 0.689452,
           "status": "pass",
           "threshold": 0.5,
           "tolerance": 0.15
@@ -1176,32 +1176,32 @@
           "assertion_id": "d6c3194e2d658693",
           "metadata": {
             "agreement": 1.0,
-            "cost_usd": 0.000705,
+            "cost_usd": 0.000753,
             "errored_samples": 0,
             "max_usd": 0.0015,
-            "ratio": 0.47,
+            "ratio": 0.502,
             "samples": 5,
             "scores": [
-              0.68089,
-              0.674764,
-              0.687128,
-              0.683995,
-              0.674764
+              0.658472,
+              0.66726,
+              0.655594,
+              0.677813,
+              0.670241
             ],
-            "spread": 0.012364,
-            "total_cost_usd": 0.003525
+            "spread": 0.022219,
+            "total_cost_usd": 0.003765
           },
-          "reason": "mean of 5 samples (0.680890, 0.674764, 0.687128, 0.683995, 0.674764)",
-          "sample_max": 0.687128,
-          "sample_min": 0.674764,
+          "reason": "mean of 5 samples (0.658472, 0.667260, 0.655594, 0.677813, 0.670241)",
+          "sample_max": 0.677813,
+          "sample_min": 0.655594,
           "samples": [
-            0.68089,
-            0.674764,
-            0.687128,
-            0.683995,
-            0.674764
+            0.658472,
+            0.66726,
+            0.655594,
+            0.677813,
+            0.670241
           ],
-          "score": 0.680308,
+          "score": 0.665876,
           "status": "pass",
           "threshold": 0.5,
           "tolerance": 0.15
@@ -1285,26 +1285,26 @@
             "ratio": 0.406,
             "samples": 5,
             "scores": [
-              0.721154,
+              0.688073,
+              0.717703,
+              0.705882,
               0.712589,
-              0.712589,
-              0.696056,
-              0.714286
+              0.733496
             ],
-            "spread": 0.025098,
+            "spread": 0.045423,
             "total_cost_usd": 0.003045
           },
-          "reason": "mean of 5 samples (0.721154, 0.712589, 0.712589, 0.696056, 0.714286)",
-          "sample_max": 0.721154,
-          "sample_min": 0.696056,
+          "reason": "mean of 5 samples (0.688073, 0.717703, 0.705882, 0.712589, 0.733496)",
+          "sample_max": 0.733496,
+          "sample_min": 0.688073,
           "samples": [
-            0.721154,
+            0.688073,
+            0.717703,
+            0.705882,
             0.712589,
-            0.712589,
-            0.696056,
-            0.714286
+            0.733496
           ],
-          "score": 0.711335,
+          "score": 0.711549,
           "status": "pass",
           "threshold": 0.5,
           "tolerance": 0.15
@@ -1355,22 +1355,22 @@
             "samples": 5,
             "scores": [
               1.0,
-              0.0,
               1.0,
               1.0,
-              1.0
+              1.0,
+              0.0
             ],
             "spread": 1.0
           },
-          "reason": "mean of 5 samples (1.000000, 0.000000, 1.000000, 1.000000, 1.000000)",
+          "reason": "mean of 5 samples (1.000000, 1.000000, 1.000000, 1.000000, 0.000000)",
           "sample_max": 1.0,
           "sample_min": 0.0,
           "samples": [
             1.0,
-            0.0,
             1.0,
             1.0,
-            1.0
+            1.0,
+            0.0
           ],
           "score": 0.8,
           "status": "pass",
@@ -1382,32 +1382,32 @@
           "assertion_id": "d6c3194e2d658693",
           "metadata": {
             "agreement": 1.0,
-            "cost_usd": 0.00065,
+            "cost_usd": 0.000648,
             "errored_samples": 0,
             "max_usd": 0.0015,
-            "ratio": 0.433333,
+            "ratio": 0.432,
             "samples": 5,
             "scores": [
-              0.693802,
               0.692201,
-              0.70855,
+              0.703565,
               0.705219,
-              0.689022
+              0.690608,
+              0.70028
             ],
-            "spread": 0.019528,
-            "total_cost_usd": 0.00325
+            "spread": 0.014611,
+            "total_cost_usd": 0.00324
           },
-          "reason": "mean of 5 samples (0.693802, 0.692201, 0.708550, 0.705219, 0.689022)",
-          "sample_max": 0.70855,
-          "sample_min": 0.689022,
+          "reason": "mean of 5 samples (0.692201, 0.703565, 0.705219, 0.690608, 0.700280)",
+          "sample_max": 0.705219,
+          "sample_min": 0.690608,
           "samples": [
-            0.693802,
             0.692201,
-            0.70855,
+            0.703565,
             0.705219,
-            0.689022
+            0.690608,
+            0.70028
           ],
-          "score": 0.697759,
+          "score": 0.698375,
           "status": "pass",
           "threshold": 0.5,
           "tolerance": 0.15
@@ -1485,32 +1485,32 @@
           "assertion_id": "d6c3194e2d658693",
           "metadata": {
             "agreement": 1.0,
-            "cost_usd": 0.00065,
+            "cost_usd": 0.000639,
             "errored_samples": 0,
             "max_usd": 0.0015,
-            "ratio": 0.433333,
+            "ratio": 0.426,
             "samples": 5,
             "scores": [
-              0.710564,
-              0.702247,
-              0.675371,
-              0.702247,
-              0.698975
+              0.700607,
+              0.700607,
+              0.695733,
+              0.71736,
+              0.692521
             ],
-            "spread": 0.035193,
-            "total_cost_usd": 0.00325
+            "spread": 0.024839,
+            "total_cost_usd": 0.003195
           },
-          "reason": "mean of 5 samples (0.710564, 0.702247, 0.675371, 0.702247, 0.698975)",
-          "sample_max": 0.710564,
-          "sample_min": 0.675371,
+          "reason": "mean of 5 samples (0.700607, 0.700607, 0.695733, 0.717360, 0.692521)",
+          "sample_max": 0.71736,
+          "sample_min": 0.692521,
           "samples": [
-            0.710564,
-            0.702247,
-            0.675371,
-            0.702247,
-            0.698975
+            0.700607,
+            0.700607,
+            0.695733,
+            0.71736,
+            0.692521
           ],
-          "score": 0.697881,
+          "score": 0.701366,
           "status": "pass",
           "threshold": 0.5,
           "tolerance": 0.15
@@ -1588,32 +1588,32 @@
           "assertion_id": "d6c3194e2d658693",
           "metadata": {
             "agreement": 1.0,
-            "cost_usd": 0.000665,
+            "cost_usd": 0.000651,
             "errored_samples": 0,
             "max_usd": 0.0015,
-            "ratio": 0.443333,
+            "ratio": 0.434,
             "samples": 5,
             "scores": [
               0.698649,
-              0.689022,
-              0.698649,
-              0.678119,
+              0.684307,
+              0.70028,
+              0.703565,
               0.70028
             ],
-            "spread": 0.022161,
-            "total_cost_usd": 0.003325
+            "spread": 0.019258,
+            "total_cost_usd": 0.003255
           },
-          "reason": "mean of 5 samples (0.698649, 0.689022, 0.698649, 0.678119, 0.700280)",
-          "sample_max": 0.70028,
-          "sample_min": 0.678119,
+          "reason": "mean of 5 samples (0.698649, 0.684307, 0.700280, 0.703565, 0.700280)",
+          "sample_max": 0.703565,
+          "sample_min": 0.684307,
           "samples": [
             0.698649,
-            0.689022,
-            0.698649,
-            0.678119,
+            0.684307,
+            0.70028,
+            0.703565,
             0.70028
           ],
-          "score": 0.692944,
+          "score": 0.697416,
           "status": "pass",
           "threshold": 0.5,
           "tolerance": 0.15
@@ -1691,32 +1691,32 @@
           "assertion_id": "d6c3194e2d658693",
           "metadata": {
             "agreement": 1.0,
-            "cost_usd": 0.000637,
+            "cost_usd": 0.000618,
             "errored_samples": 0,
             "max_usd": 0.0015,
-            "ratio": 0.424667,
+            "ratio": 0.412,
             "samples": 5,
             "scores": [
-              0.689022,
-              0.715308,
-              0.698649,
+              0.70688,
+              0.697026,
+              0.70688,
               0.713606,
-              0.693802
+              0.717017
             ],
-            "spread": 0.026286,
-            "total_cost_usd": 0.003185
+            "spread": 0.019991,
+            "total_cost_usd": 0.00309
           },
-          "reason": "mean of 5 samples (0.689022, 0.715308, 0.698649, 0.713606, 0.693802)",
-          "sample_max": 0.715308,
-          "sample_min": 0.689022,
+          "reason": "mean of 5 samples (0.706880, 0.697026, 0.706880, 0.713606, 0.717017)",
+          "sample_max": 0.717017,
+          "sample_min": 0.697026,
           "samples": [
-            0.689022,
-            0.715308,
-            0.698649,
+            0.70688,
+            0.697026,
+            0.70688,
             0.713606,
-            0.693802
+            0.717017
           ],
-          "score": 0.702077,
+          "score": 0.708282,
           "status": "pass",
           "threshold": 0.5,
           "tolerance": 0.15
@@ -1794,32 +1794,32 @@
           "assertion_id": "d6c3194e2d658693",
           "metadata": {
             "agreement": 1.0,
-            "cost_usd": 0.000654,
+            "cost_usd": 0.000633,
             "errored_samples": 0,
             "max_usd": 0.0015,
-            "ratio": 0.436,
+            "ratio": 0.422,
             "samples": 5,
             "scores": [
-              0.692521,
-              0.698975,
               0.703895,
-              0.694123,
-              0.692521
+              0.690926,
+              0.702247,
+              0.70555,
+              0.713946
             ],
-            "spread": 0.011374,
-            "total_cost_usd": 0.00327
+            "spread": 0.02302,
+            "total_cost_usd": 0.003165
           },
-          "reason": "mean of 5 samples (0.692521, 0.698975, 0.703895, 0.694123, 0.692521)",
-          "sample_max": 0.703895,
-          "sample_min": 0.692521,
+          "reason": "mean of 5 samples (0.703895, 0.690926, 0.702247, 0.705550, 0.713946)",
+          "sample_max": 0.713946,
+          "sample_min": 0.690926,
           "samples": [
-            0.692521,
-            0.698975,
             0.703895,
-            0.694123,
-            0.692521
+            0.690926,
+            0.702247,
+            0.70555,
+            0.713946
           ],
-          "score": 0.696407,
+          "score": 0.703313,
           "status": "pass",
           "threshold": 0.5,
           "tolerance": 0.15
@@ -1897,32 +1897,32 @@
           "assertion_id": "d6c3194e2d658693",
           "metadata": {
             "agreement": 1.0,
-            "cost_usd": 0.000751,
+            "cost_usd": 0.000715,
             "errored_samples": 0,
             "max_usd": 0.0015,
-            "ratio": 0.500667,
+            "ratio": 0.476667,
             "samples": 5,
             "scores": [
-              0.649351,
               0.674157,
-              0.680272,
-              0.666667,
-              0.662252
+              0.683371,
+              0.672646,
+              0.684932,
+              0.671141
             ],
-            "spread": 0.030921,
-            "total_cost_usd": 0.003755
+            "spread": 0.013791,
+            "total_cost_usd": 0.003575
           },
-          "reason": "mean of 5 samples (0.649351, 0.674157, 0.680272, 0.666667, 0.662252)",
-          "sample_max": 0.680272,
-          "sample_min": 0.649351,
+          "reason": "mean of 5 samples (0.674157, 0.683371, 0.672646, 0.684932, 0.671141)",
+          "sample_max": 0.684932,
+          "sample_min": 0.671141,
           "samples": [
-            0.649351,
             0.674157,
-            0.680272,
-            0.666667,
-            0.662252
+            0.683371,
+            0.672646,
+            0.684932,
+            0.671141
           ],
-          "score": 0.66654,
+          "score": 0.677249,
           "status": "pass",
           "threshold": 0.5,
           "tolerance": 0.15
@@ -2000,32 +2000,32 @@
           "assertion_id": "d6c3194e2d658693",
           "metadata": {
             "agreement": 1.0,
-            "cost_usd": 0.000659,
+            "cost_usd": 0.000653,
             "errored_samples": 0,
             "max_usd": 0.0015,
-            "ratio": 0.439333,
+            "ratio": 0.435333,
             "samples": 5,
             "scores": [
-              0.691882,
-              0.679348,
-              0.691882,
-              0.70159,
-              0.709891
+              0.703235,
+              0.695088,
+              0.693481,
+              0.695088,
+              0.696702
             ],
-            "spread": 0.030543,
-            "total_cost_usd": 0.003295
+            "spread": 0.009754,
+            "total_cost_usd": 0.003265
           },
-          "reason": "mean of 5 samples (0.691882, 0.679348, 0.691882, 0.701590, 0.709891)",
-          "sample_max": 0.709891,
-          "sample_min": 0.679348,
+          "reason": "mean of 5 samples (0.703235, 0.695088, 0.693481, 0.695088, 0.696702)",
+          "sample_max": 0.703235,
+          "sample_min": 0.693481,
           "samples": [
-            0.691882,
-            0.679348,
-            0.691882,
-            0.70159,
-            0.709891
+            0.703235,
+            0.695088,
+            0.693481,
+            0.695088,
+            0.696702
           ],
-          "score": 0.694919,
+          "score": 0.696719,
           "status": "pass",
           "threshold": 0.5,
           "tolerance": 0.15
@@ -2103,32 +2103,32 @@
           "assertion_id": "d6c3194e2d658693",
           "metadata": {
             "agreement": 1.0,
-            "cost_usd": 0.000559,
+            "cost_usd": 0.000588,
             "errored_samples": 0,
             "max_usd": 0.0015,
-            "ratio": 0.372667,
+            "ratio": 0.392,
             "samples": 5,
             "scores": [
-              0.720461,
-              0.73278,
-              0.723938,
-              0.73278,
-              0.73278
+              0.729217,
+              0.684307,
+              0.751127,
+              0.703565,
+              0.727449
             ],
-            "spread": 0.012319,
-            "total_cost_usd": 0.002795
+            "spread": 0.06682,
+            "total_cost_usd": 0.00294
           },
-          "reason": "mean of 5 samples (0.720461, 0.732780, 0.723938, 0.732780, 0.732780)",
-          "sample_max": 0.73278,
-          "sample_min": 0.720461,
+          "reason": "mean of 5 samples (0.729217, 0.684307, 0.751127, 0.703565, 0.727449)",
+          "sample_max": 0.751127,
+          "sample_min": 0.684307,
           "samples": [
-            0.720461,
-            0.73278,
-            0.723938,
-            0.73278,
-            0.73278
+            0.729217,
+            0.684307,
+            0.751127,
+            0.703565,
+            0.727449
           ],
-          "score": 0.728548,
+          "score": 0.719133,
           "status": "pass",
           "threshold": 0.5,
           "tolerance": 0.15
@@ -2206,32 +2206,32 @@
           "assertion_id": "d6c3194e2d658693",
           "metadata": {
             "agreement": 1.0,
-            "cost_usd": 0.000725,
+            "cost_usd": 0.000743,
             "errored_samples": 0,
             "max_usd": 0.0015,
-            "ratio": 0.483333,
+            "ratio": 0.495333,
             "samples": 5,
             "scores": [
-              0.67659,
-              0.685871,
-              0.675068,
-              0.675068,
-              0.658762
+              0.673552,
+              0.648789,
+              0.658762,
+              0.679656,
+              0.684307
             ],
-            "spread": 0.027109,
-            "total_cost_usd": 0.003625
+            "spread": 0.035518,
+            "total_cost_usd": 0.003715
           },
-          "reason": "mean of 5 samples (0.676590, 0.685871, 0.675068, 0.675068, 0.658762)",
-          "sample_max": 0.685871,
-          "sample_min": 0.658762,
+          "reason": "mean of 5 samples (0.673552, 0.648789, 0.658762, 0.679656, 0.684307)",
+          "sample_max": 0.684307,
+          "sample_min": 0.648789,
           "samples": [
-            0.67659,
-            0.685871,
-            0.675068,
-            0.675068,
-            0.658762
+            0.673552,
+            0.648789,
+            0.658762,
+            0.679656,
+            0.684307
           ],
-          "score": 0.674272,
+          "score": 0.669013,
           "status": "pass",
           "threshold": 0.5,
           "tolerance": 0.15

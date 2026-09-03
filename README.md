@@ -71,8 +71,11 @@ it.
 
 ## report.html
 
-`report.html` is committed, and it is a real one: the run that became the
-current baseline, compared against the one before it.
+`report.html` is committed, and it is a real one: the run of 2026-08-27 that
+became the baseline that day, compared against the one before it. It is kept at
+that comparison on purpose and is not re-rendered on every promotion — the gate
+that matters runs `digline compare` in CI, and a report of a run that moved
+nothing would document nothing.
 
 The change it measures is `SUMMARY_MAX_CHARS`, cut from 1500 to 400 — how much
 of each article's opening the judge gets to read. Nobody can eyeball whether
@@ -116,7 +119,7 @@ cases/brief.json    21 cases with my own marks as the expected answer
 make_cases.py       seen.json -> cases/brief.json
 fake.py             the provider, faked, for CI
 probe.py            one real call, printed field by field — how the fake stays honest
-report.html         the last comparison, rendered
+report.html         one comparison, rendered — the one of 2026-08-27
 seen.example.json   ten records, standing in for the seen.json that is not here
 .digline/           the committed baseline (runs are ephemeral and ignored)
 ```
