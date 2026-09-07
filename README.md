@@ -120,6 +120,7 @@ make_cases.py       seen.json -> cases/brief.json
 fake.py             the provider, faked, for CI
 probe.py            one real call, printed field by field — how the fake stays honest
 report.html         one comparison, rendered — the one of 2026-08-27
+fixtures/           runs kept out of the ignored run store, and what they show
 seen.example.json   ten records, standing in for the seen.json that is not here
 .digline/           the committed baseline (runs are ephemeral and ignored)
 ```

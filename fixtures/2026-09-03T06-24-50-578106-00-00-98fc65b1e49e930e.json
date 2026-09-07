@@ -1,0 +1,2252 @@
+{
+  "aggregate": [
+    {
+      "assertion": "precision",
+      "assertion_id": "31e12a0068b3f1db",
+      "metadata": {
+        "considered": 21,
+        "errored_excluded": 0,
+        "false_negative": 0,
+        "false_positive": 5,
+        "suspended_excluded": 0,
+        "true_negative": 6,
+        "true_positive": 10,
+        "unlabelled_excluded": 0
+      },
+      "reason": "precision 0.666667 = 10/15 (21 counted, 0 suspended, 0 could not be judged)",
+      "sample_max": 0.666667,
+      "sample_min": 0.6,
+      "samples": [
+        0.666667,
+        0.666667,
+        0.666667,
+        0.666667,
+        0.6
+      ],
+      "score": 0.666667,
+      "status": "pass",
+      "threshold": 0.6,
+      "tolerance": 0.047619
+    },
+    {
+      "assertion": "accuracy",
+      "assertion_id": "b00de39e2f9bb72b",
+      "metadata": {
+        "considered": 21,
+        "errored_excluded": 0,
+        "false_negative": 0,
+        "false_positive": 5,
+        "suspended_excluded": 0,
+        "true_negative": 6,
+        "true_positive": 10,
+        "unlabelled_excluded": 0
+      },
+      "reason": "accuracy 0.761905 = 16/21 (21 counted, 0 suspended, 0 could not be judged)",
+      "sample_max": 0.761905,
+      "sample_min": 0.666667,
+      "samples": [
+        0.761905,
+        0.761905,
+        0.761905,
+        0.761905,
+        0.666667
+      ],
+      "score": 0.761905,
+      "status": "pass",
+      "threshold": 0.65,
+      "tolerance": 0.047619
+    }
+  ],
+  "artifacts": {
+    "prompts/item.txt": {
+      "sha": "3ce6ed3b9b59e7e5222d2f203782ed104ddfae06b5c3b6713ed1d43fc4c27f8b",
+      "text": "Source: {source}\nTitle: {title}\nSummary: {summary}"
+    },
+    "prompts/judge.txt": {
+      "sha": "05c20df6d49b7e96498998e2ff1b642a9d2a401c872c336278e12145df3c4509",
+      "text": "You are a reading-list filter for an experienced software engineer (30 years in\nenterprise ERP/HR) who is building AI-native products and studying LLM engineering.\n\nHe WANTS items about:\n- RAG and agents in production (real systems, not demos)\n- LLM evaluation and measurement\n- Mechanistic interpretability\n- The Anthropic/Claude ecosystem (models, API, tooling)\n- Architectural patterns for integrating LLMs into existing systems\n\nHe does NOT want:\n- Funding announcements\n- Product hype without technical substance\n- Introductory tutorials\n\nGiven one feed item (title + summary), rate how much it deserves his reading\ntime on a 1-5 scale:\n5 = must read today\n4 = clearly relevant and worth reading in full (including substantial technical deep-dives and surveys, even without direct product use)\n3 = relevant topic but not a real read: short quotes, \"Quoting ...\" posts, announcements, teasers\n2 = marginal\n1 = skip\n\nRespond with ONLY a JSON object, no other text:\n{\"reason\": \"<one concise sentence in Italian>\", \"score\": <int 1-5>}"
+    }
+  },
+  "config_hash": "98fc65b1e49e930e",
+  "created_at": "2026-09-03T06:24:50.578106+00:00",
+  "environment": "dev",
+  "git_commit": "66484d6c742c262df03787b3065d75728d4f5f5e",
+  "judge_config": {},
+  "metadata": {},
+  "redacted": false,
+  "results": [
+    {
+      "case_id": "2026-08-24-controlling-reasoning-effort-in-llms",
+      "suspended": false,
+      "verdicts": [
+        {
+          "assertion": "json_schema",
+          "assertion_id": "6dda93ca8dbaefc2",
+          "metadata": {
+            "agreement": 1.0,
+            "errored_samples": 0,
+            "samples": 5,
+            "scores": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "spread": 0.0
+          },
+          "reason": "mean of 5 samples (1.000000, 1.000000, 1.000000, 1.000000, 1.000000)",
+          "sample_max": 1.0,
+          "sample_min": 1.0,
+          "samples": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "score": 1.0,
+          "status": "pass",
+          "threshold": 1.0,
+          "tolerance": 0.0
+        },
+        {
+          "assertion": "agrees_with_mark",
+          "assertion_id": "dbd60a76cb2582cd",
+          "metadata": {
+            "agreement": 1.0,
+            "errored_samples": 0,
+            "samples": 5,
+            "scores": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "spread": 0.0
+          },
+          "reason": "mean of 5 samples (1.000000, 1.000000, 1.000000, 1.000000, 1.000000)",
+          "sample_max": 1.0,
+          "sample_min": 1.0,
+          "samples": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "score": 1.0,
+          "status": "pass",
+          "threshold": 0.5,
+          "tolerance": 0.41
+        },
+        {
+          "assertion": "cost_budget",
+          "assertion_id": "d6c3194e2d658693",
+          "metadata": {
+            "agreement": 1.0,
+            "cost_usd": 0.000632,
+            "errored_samples": 0,
+            "max_usd": 0.0015,
+            "ratio": 0.421333,
+            "samples": 5,
+            "scores": [
+              0.701262,
+              0.712928,
+              0.699627,
+              0.701262,
+              0.702905
+            ],
+            "spread": 0.013301,
+            "total_cost_usd": 0.00316
+          },
+          "reason": "mean of 5 samples (0.701262, 0.712928, 0.699627, 0.701262, 0.702905)",
+          "sample_max": 0.712928,
+          "sample_min": 0.699627,
+          "samples": [
+            0.701262,
+            0.712928,
+            0.699627,
+            0.701262,
+            0.702905
+          ],
+          "score": 0.703597,
+          "status": "pass",
+          "threshold": 0.5,
+          "tolerance": 0.15
+        }
+      ]
+    },
+    {
+      "case_id": "2026-08-24-don-t-classify-hallucinate",
+      "suspended": false,
+      "verdicts": [
+        {
+          "assertion": "json_schema",
+          "assertion_id": "6dda93ca8dbaefc2",
+          "metadata": {
+            "agreement": 1.0,
+            "errored_samples": 0,
+            "samples": 5,
+            "scores": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "spread": 0.0
+          },
+          "reason": "mean of 5 samples (1.000000, 1.000000, 1.000000, 1.000000, 1.000000)",
+          "sample_max": 1.0,
+          "sample_min": 1.0,
+          "samples": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "score": 1.0,
+          "status": "pass",
+          "threshold": 1.0,
+          "tolerance": 0.0
+        },
+        {
+          "assertion": "agrees_with_mark",
+          "assertion_id": "dbd60a76cb2582cd",
+          "metadata": {
+            "agreement": 0.8,
+            "errored_samples": 0,
+            "samples": 5,
+            "scores": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              0.0
+            ],
+            "spread": 1.0
+          },
+          "reason": "mean of 5 samples (1.000000, 1.000000, 1.000000, 1.000000, 0.000000)",
+          "sample_max": 1.0,
+          "sample_min": 0.0,
+          "samples": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            0.0
+          ],
+          "score": 0.8,
+          "status": "pass",
+          "threshold": 0.5,
+          "tolerance": 0.41
+        },
+        {
+          "assertion": "cost_budget",
+          "assertion_id": "d6c3194e2d658693",
+          "metadata": {
+            "agreement": 1.0,
+            "cost_usd": 0.000729,
+            "errored_samples": 0,
+            "max_usd": 0.0015,
+            "ratio": 0.486,
+            "samples": 5,
+            "scores": [
+              0.666667,
+              0.686499,
+              0.660793,
+              0.671141,
+              0.680272
+            ],
+            "spread": 0.025706,
+            "total_cost_usd": 0.003645
+          },
+          "reason": "mean of 5 samples (0.666667, 0.686499, 0.660793, 0.671141, 0.680272)",
+          "sample_max": 0.686499,
+          "sample_min": 0.660793,
+          "samples": [
+            0.666667,
+            0.686499,
+            0.660793,
+            0.671141,
+            0.680272
+          ],
+          "score": 0.673074,
+          "status": "pass",
+          "threshold": 0.5,
+          "tolerance": 0.15
+        }
+      ]
+    },
+    {
+      "case_id": "2026-08-24-more-than-just-code-review",
+      "suspended": false,
+      "verdicts": [
+        {
+          "assertion": "json_schema",
+          "assertion_id": "6dda93ca8dbaefc2",
+          "metadata": {
+            "agreement": 1.0,
+            "errored_samples": 0,
+            "samples": 5,
+            "scores": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "spread": 0.0
+          },
+          "reason": "mean of 5 samples (1.000000, 1.000000, 1.000000, 1.000000, 1.000000)",
+          "sample_max": 1.0,
+          "sample_min": 1.0,
+          "samples": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "score": 1.0,
+          "status": "pass",
+          "threshold": 1.0,
+          "tolerance": 0.0
+        },
+        {
+          "assertion": "agrees_with_mark",
+          "assertion_id": "dbd60a76cb2582cd",
+          "metadata": {
+            "agreement": 1.0,
+            "errored_samples": 0,
+            "samples": 5,
+            "scores": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "spread": 0.0
+          },
+          "reason": "mean of 5 samples (1.000000, 1.000000, 1.000000, 1.000000, 1.000000)",
+          "sample_max": 1.0,
+          "sample_min": 1.0,
+          "samples": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "score": 1.0,
+          "status": "pass",
+          "threshold": 0.5,
+          "tolerance": 0.41
+        },
+        {
+          "assertion": "cost_budget",
+          "assertion_id": "d6c3194e2d658693",
+          "metadata": {
+            "agreement": 1.0,
+            "cost_usd": 0.000698,
+            "errored_samples": 0,
+            "max_usd": 0.0015,
+            "ratio": 0.465333,
+            "samples": 5,
+            "scores": [
+              0.67659,
+              0.67659,
+              0.690608,
+              0.69541,
+              0.673552
+            ],
+            "spread": 0.021858,
+            "total_cost_usd": 0.00349
+          },
+          "reason": "mean of 5 samples (0.676590, 0.676590, 0.690608, 0.695410, 0.673552)",
+          "sample_max": 0.69541,
+          "sample_min": 0.673552,
+          "samples": [
+            0.67659,
+            0.67659,
+            0.690608,
+            0.69541,
+            0.673552
+          ],
+          "score": 0.68255,
+          "status": "pass",
+          "threshold": 0.5,
+          "tolerance": 0.15
+        }
+      ]
+    },
+    {
+      "case_id": "2026-08-24-quoting-drew-breunig",
+      "suspended": false,
+      "verdicts": [
+        {
+          "assertion": "json_schema",
+          "assertion_id": "6dda93ca8dbaefc2",
+          "metadata": {
+            "agreement": 1.0,
+            "errored_samples": 0,
+            "samples": 5,
+            "scores": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "spread": 0.0
+          },
+          "reason": "mean of 5 samples (1.000000, 1.000000, 1.000000, 1.000000, 1.000000)",
+          "sample_max": 1.0,
+          "sample_min": 1.0,
+          "samples": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "score": 1.0,
+          "status": "pass",
+          "threshold": 1.0,
+          "tolerance": 0.0
+        },
+        {
+          "assertion": "agrees_with_mark",
+          "assertion_id": "dbd60a76cb2582cd",
+          "metadata": {
+            "agreement": 1.0,
+            "errored_samples": 0,
+            "samples": 5,
+            "scores": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "spread": 0.0
+          },
+          "reason": "mean of 5 samples (1.000000, 1.000000, 1.000000, 1.000000, 1.000000)",
+          "sample_max": 1.0,
+          "sample_min": 1.0,
+          "samples": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "score": 1.0,
+          "status": "pass",
+          "threshold": 0.5,
+          "tolerance": 0.41
+        },
+        {
+          "assertion": "cost_budget",
+          "assertion_id": "d6c3194e2d658693",
+          "metadata": {
+            "agreement": 1.0,
+            "cost_usd": 0.000667,
+            "errored_samples": 0,
+            "max_usd": 0.0015,
+            "ratio": 0.444667,
+            "samples": 5,
+            "scores": [
+              0.698975,
+              0.687758,
+              0.695733,
+              0.702247,
+              0.676895
+            ],
+            "spread": 0.025352,
+            "total_cost_usd": 0.003335
+          },
+          "reason": "mean of 5 samples (0.698975, 0.687758, 0.695733, 0.702247, 0.676895)",
+          "sample_max": 0.702247,
+          "sample_min": 0.676895,
+          "samples": [
+            0.698975,
+            0.687758,
+            0.695733,
+            0.702247,
+            0.676895
+          ],
+          "score": 0.692322,
+          "status": "pass",
+          "threshold": 0.5,
+          "tolerance": 0.15
+        }
+      ]
+    },
+    {
+      "case_id": "2026-08-24-recent-developments-in-llm-architectures",
+      "suspended": false,
+      "verdicts": [
+        {
+          "assertion": "json_schema",
+          "assertion_id": "6dda93ca8dbaefc2",
+          "metadata": {
+            "agreement": 1.0,
+            "errored_samples": 0,
+            "samples": 5,
+            "scores": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "spread": 0.0
+          },
+          "reason": "mean of 5 samples (1.000000, 1.000000, 1.000000, 1.000000, 1.000000)",
+          "sample_max": 1.0,
+          "sample_min": 1.0,
+          "samples": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "score": 1.0,
+          "status": "pass",
+          "threshold": 1.0,
+          "tolerance": 0.0
+        },
+        {
+          "assertion": "agrees_with_mark",
+          "assertion_id": "dbd60a76cb2582cd",
+          "metadata": {
+            "agreement": 1.0,
+            "errored_samples": 0,
+            "samples": 5,
+            "scores": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "spread": 0.0
+          },
+          "reason": "mean of 5 samples (1.000000, 1.000000, 1.000000, 1.000000, 1.000000)",
+          "sample_max": 1.0,
+          "sample_min": 1.0,
+          "samples": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "score": 1.0,
+          "status": "pass",
+          "threshold": 0.5,
+          "tolerance": 0.41
+        },
+        {
+          "assertion": "cost_budget",
+          "assertion_id": "d6c3194e2d658693",
+          "metadata": {
+            "agreement": 1.0,
+            "cost_usd": 0.000674,
+            "errored_samples": 0,
+            "max_usd": 0.0015,
+            "ratio": 0.449333,
+            "samples": 5,
+            "scores": [
+              0.685871,
+              0.689022,
+              0.693802,
+              0.690608,
+              0.690608
+            ],
+            "spread": 0.007931,
+            "total_cost_usd": 0.00337
+          },
+          "reason": "mean of 5 samples (0.685871, 0.689022, 0.693802, 0.690608, 0.690608)",
+          "sample_max": 0.693802,
+          "sample_min": 0.685871,
+          "samples": [
+            0.685871,
+            0.689022,
+            0.693802,
+            0.690608,
+            0.690608
+          ],
+          "score": 0.689982,
+          "status": "pass",
+          "threshold": 0.5,
+          "tolerance": 0.15
+        }
+      ]
+    },
+    {
+      "case_id": "2026-08-24-ai-product-engineering-notes",
+      "suspended": false,
+      "verdicts": [
+        {
+          "assertion": "json_schema",
+          "assertion_id": "6dda93ca8dbaefc2",
+          "metadata": {
+            "agreement": 1.0,
+            "errored_samples": 0,
+            "samples": 5,
+            "scores": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "spread": 0.0
+          },
+          "reason": "mean of 5 samples (1.000000, 1.000000, 1.000000, 1.000000, 1.000000)",
+          "sample_max": 1.0,
+          "sample_min": 1.0,
+          "samples": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "score": 1.0,
+          "status": "pass",
+          "threshold": 1.0,
+          "tolerance": 0.0
+        },
+        {
+          "assertion": "agrees_with_mark",
+          "assertion_id": "dbd60a76cb2582cd",
+          "metadata": {
+            "agreement": 1.0,
+            "errored_samples": 0,
+            "samples": 5,
+            "scores": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "spread": 0.0
+          },
+          "reason": "mean of 5 samples (0.000000, 0.000000, 0.000000, 0.000000, 0.000000)",
+          "sample_max": 0.0,
+          "sample_min": 0.0,
+          "samples": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "score": 0.0,
+          "status": "fail",
+          "threshold": 0.5,
+          "tolerance": 0.41
+        },
+        {
+          "assertion": "cost_budget",
+          "assertion_id": "d6c3194e2d658693",
+          "metadata": {
+            "agreement": 1.0,
+            "cost_usd": 0.000665,
+            "errored_samples": 0,
+            "max_usd": 0.0015,
+            "ratio": 0.443333,
+            "samples": 5,
+            "scores": [
+              0.697674,
+              0.686499,
+              0.700935,
+              0.689655,
+              0.689655
+            ],
+            "spread": 0.014436,
+            "total_cost_usd": 0.003325
+          },
+          "reason": "mean of 5 samples (0.697674, 0.686499, 0.700935, 0.689655, 0.689655)",
+          "sample_max": 0.700935,
+          "sample_min": 0.686499,
+          "samples": [
+            0.697674,
+            0.686499,
+            0.700935,
+            0.689655,
+            0.689655
+          ],
+          "score": 0.692884,
+          "status": "pass",
+          "threshold": 0.5,
+          "tolerance": 0.15
+        }
+      ]
+    },
+    {
+      "case_id": "2026-08-24-alignmentmay-8-2026teaching-claude-whyne",
+      "suspended": false,
+      "verdicts": [
+        {
+          "assertion": "json_schema",
+          "assertion_id": "6dda93ca8dbaefc2",
+          "metadata": {
+            "agreement": 1.0,
+            "errored_samples": 0,
+            "samples": 5,
+            "scores": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "spread": 0.0
+          },
+          "reason": "mean of 5 samples (1.000000, 1.000000, 1.000000, 1.000000, 1.000000)",
+          "sample_max": 1.0,
+          "sample_min": 1.0,
+          "samples": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "score": 1.0,
+          "status": "pass",
+          "threshold": 1.0,
+          "tolerance": 0.0
+        },
+        {
+          "assertion": "agrees_with_mark",
+          "assertion_id": "dbd60a76cb2582cd",
+          "metadata": {
+            "agreement": 1.0,
+            "errored_samples": 0,
+            "samples": 5,
+            "scores": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "spread": 0.0
+          },
+          "reason": "mean of 5 samples (0.000000, 0.000000, 0.000000, 0.000000, 0.000000)",
+          "sample_max": 0.0,
+          "sample_min": 0.0,
+          "samples": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "score": 0.0,
+          "status": "fail",
+          "threshold": 0.5,
+          "tolerance": 0.41
+        },
+        {
+          "assertion": "cost_budget",
+          "assertion_id": "d6c3194e2d658693",
+          "metadata": {
+            "agreement": 1.0,
+            "cost_usd": 0.000635,
+            "errored_samples": 0,
+            "max_usd": 0.0015,
+            "ratio": 0.423333,
+            "samples": 5,
+            "scores": [
+              0.687128,
+              0.704887,
+              0.70159,
+              0.711575,
+              0.708215
+            ],
+            "spread": 0.024447,
+            "total_cost_usd": 0.003175
+          },
+          "reason": "mean of 5 samples (0.687128, 0.704887, 0.701590, 0.711575, 0.708215)",
+          "sample_max": 0.711575,
+          "sample_min": 0.687128,
+          "samples": [
+            0.687128,
+            0.704887,
+            0.70159,
+            0.711575,
+            0.708215
+          ],
+          "score": 0.702679,
+          "status": "pass",
+          "threshold": 0.5,
+          "tolerance": 0.15
+        }
+      ]
+    },
+    {
+      "case_id": "2026-08-24-aug-13-2026frontier-red-teampatterns-and",
+      "suspended": false,
+      "verdicts": [
+        {
+          "assertion": "json_schema",
+          "assertion_id": "6dda93ca8dbaefc2",
+          "metadata": {
+            "agreement": 1.0,
+            "errored_samples": 0,
+            "samples": 5,
+            "scores": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "spread": 0.0
+          },
+          "reason": "mean of 5 samples (1.000000, 1.000000, 1.000000, 1.000000, 1.000000)",
+          "sample_max": 1.0,
+          "sample_min": 1.0,
+          "samples": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "score": 1.0,
+          "status": "pass",
+          "threshold": 1.0,
+          "tolerance": 0.0
+        },
+        {
+          "assertion": "agrees_with_mark",
+          "assertion_id": "dbd60a76cb2582cd",
+          "metadata": {
+            "agreement": 1.0,
+            "errored_samples": 0,
+            "samples": 5,
+            "scores": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "spread": 0.0
+          },
+          "reason": "mean of 5 samples (1.000000, 1.000000, 1.000000, 1.000000, 1.000000)",
+          "sample_max": 1.0,
+          "sample_min": 1.0,
+          "samples": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "score": 1.0,
+          "status": "pass",
+          "threshold": 0.5,
+          "tolerance": 0.41
+        },
+        {
+          "assertion": "cost_budget",
+          "assertion_id": "d6c3194e2d658693",
+          "metadata": {
+            "agreement": 1.0,
+            "cost_usd": 0.000618,
+            "errored_samples": 0,
+            "max_usd": 0.0015,
+            "ratio": 0.412,
+            "samples": 5,
+            "scores": [
+              0.70855,
+              0.70688,
+              0.705219,
+              0.713606,
+              0.70688
+            ],
+            "spread": 0.008387,
+            "total_cost_usd": 0.00309
+          },
+          "reason": "mean of 5 samples (0.708550, 0.706880, 0.705219, 0.713606, 0.706880)",
+          "sample_max": 0.713606,
+          "sample_min": 0.705219,
+          "samples": [
+            0.70855,
+            0.70688,
+            0.705219,
+            0.713606,
+            0.70688
+          ],
+          "score": 0.708227,
+          "status": "pass",
+          "threshold": 0.5,
+          "tolerance": 0.15
+        }
+      ]
+    },
+    {
+      "case_id": "2026-08-24-building-a-c-compiler-with-a-team-of-par",
+      "suspended": false,
+      "verdicts": [
+        {
+          "assertion": "json_schema",
+          "assertion_id": "6dda93ca8dbaefc2",
+          "metadata": {
+            "agreement": 1.0,
+            "errored_samples": 0,
+            "samples": 5,
+            "scores": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "spread": 0.0
+          },
+          "reason": "mean of 5 samples (1.000000, 1.000000, 1.000000, 1.000000, 1.000000)",
+          "sample_max": 1.0,
+          "sample_min": 1.0,
+          "samples": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "score": 1.0,
+          "status": "pass",
+          "threshold": 1.0,
+          "tolerance": 0.0
+        },
+        {
+          "assertion": "agrees_with_mark",
+          "assertion_id": "dbd60a76cb2582cd",
+          "metadata": {
+            "agreement": 1.0,
+            "errored_samples": 0,
+            "samples": 5,
+            "scores": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "spread": 0.0
+          },
+          "reason": "mean of 5 samples (0.000000, 0.000000, 0.000000, 0.000000, 0.000000)",
+          "sample_max": 0.0,
+          "sample_min": 0.0,
+          "samples": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "score": 0.0,
+          "status": "fail",
+          "threshold": 0.5,
+          "tolerance": 0.41
+        },
+        {
+          "assertion": "cost_budget",
+          "assertion_id": "d6c3194e2d658693",
+          "metadata": {
+            "agreement": 1.0,
+            "cost_usd": 0.000649,
+            "errored_samples": 0,
+            "max_usd": 0.0015,
+            "ratio": 0.432667,
+            "samples": 5,
+            "scores": [
+              0.697999,
+              0.689972,
+              0.686813,
+              0.712928,
+              0.702905
+            ],
+            "spread": 0.026115,
+            "total_cost_usd": 0.003245
+          },
+          "reason": "mean of 5 samples (0.697999, 0.689972, 0.686813, 0.712928, 0.702905)",
+          "sample_max": 0.712928,
+          "sample_min": 0.686813,
+          "samples": [
+            0.697999,
+            0.689972,
+            0.686813,
+            0.712928,
+            0.702905
+          ],
+          "score": 0.698123,
+          "status": "pass",
+          "threshold": 0.5,
+          "tolerance": 0.15
+        }
+      ]
+    },
+    {
+      "case_id": "2026-08-24-eval-awareness-in-claude-opus-4-6-s-brow",
+      "suspended": false,
+      "verdicts": [
+        {
+          "assertion": "json_schema",
+          "assertion_id": "6dda93ca8dbaefc2",
+          "metadata": {
+            "agreement": 1.0,
+            "errored_samples": 0,
+            "samples": 5,
+            "scores": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "spread": 0.0
+          },
+          "reason": "mean of 5 samples (1.000000, 1.000000, 1.000000, 1.000000, 1.000000)",
+          "sample_max": 1.0,
+          "sample_min": 1.0,
+          "samples": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "score": 1.0,
+          "status": "pass",
+          "threshold": 1.0,
+          "tolerance": 0.0
+        },
+        {
+          "assertion": "agrees_with_mark",
+          "assertion_id": "dbd60a76cb2582cd",
+          "metadata": {
+            "agreement": 1.0,
+            "errored_samples": 0,
+            "samples": 5,
+            "scores": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "spread": 0.0
+          },
+          "reason": "mean of 5 samples (0.000000, 0.000000, 0.000000, 0.000000, 0.000000)",
+          "sample_max": 0.0,
+          "sample_min": 0.0,
+          "samples": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "score": 0.0,
+          "status": "fail",
+          "threshold": 0.5,
+          "tolerance": 0.41
+        },
+        {
+          "assertion": "cost_budget",
+          "assertion_id": "d6c3194e2d658693",
+          "metadata": {
+            "agreement": 1.0,
+            "cost_usd": 0.00068,
+            "errored_samples": 0,
+            "max_usd": 0.0015,
+            "ratio": 0.453333,
+            "samples": 5,
+            "scores": [
+              0.672344,
+              0.698975,
+              0.700607,
+              0.679964,
+              0.689338
+            ],
+            "spread": 0.028263,
+            "total_cost_usd": 0.0034
+          },
+          "reason": "mean of 5 samples (0.672344, 0.698975, 0.700607, 0.679964, 0.689338)",
+          "sample_max": 0.700607,
+          "sample_min": 0.672344,
+          "samples": [
+            0.672344,
+            0.698975,
+            0.700607,
+            0.679964,
+            0.689338
+          ],
+          "score": 0.688246,
+          "status": "pass",
+          "threshold": 0.5,
+          "tolerance": 0.15
+        }
+      ]
+    },
+    {
+      "case_id": "2026-08-24-evals-skills-for-coding-agents",
+      "suspended": false,
+      "verdicts": [
+        {
+          "assertion": "json_schema",
+          "assertion_id": "6dda93ca8dbaefc2",
+          "metadata": {
+            "agreement": 1.0,
+            "errored_samples": 0,
+            "samples": 5,
+            "scores": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "spread": 0.0
+          },
+          "reason": "mean of 5 samples (1.000000, 1.000000, 1.000000, 1.000000, 1.000000)",
+          "sample_max": 1.0,
+          "sample_min": 1.0,
+          "samples": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "score": 1.0,
+          "status": "pass",
+          "threshold": 1.0,
+          "tolerance": 0.0
+        },
+        {
+          "assertion": "agrees_with_mark",
+          "assertion_id": "dbd60a76cb2582cd",
+          "metadata": {
+            "agreement": 1.0,
+            "errored_samples": 0,
+            "samples": 5,
+            "scores": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "spread": 0.0
+          },
+          "reason": "mean of 5 samples (1.000000, 1.000000, 1.000000, 1.000000, 1.000000)",
+          "sample_max": 1.0,
+          "sample_min": 1.0,
+          "samples": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "score": 1.0,
+          "status": "pass",
+          "threshold": 0.5,
+          "tolerance": 0.41
+        },
+        {
+          "assertion": "cost_budget",
+          "assertion_id": "d6c3194e2d658693",
+          "metadata": {
+            "agreement": 1.0,
+            "cost_usd": 0.000729,
+            "errored_samples": 0,
+            "max_usd": 0.0015,
+            "ratio": 0.486,
+            "samples": 5,
+            "scores": [
+              0.679348,
+              0.670241,
+              0.670241,
+              0.677813,
+              0.66726
+            ],
+            "spread": 0.012088,
+            "total_cost_usd": 0.003645
+          },
+          "reason": "mean of 5 samples (0.679348, 0.670241, 0.670241, 0.677813, 0.667260)",
+          "sample_max": 0.679348,
+          "sample_min": 0.66726,
+          "samples": [
+            0.679348,
+            0.670241,
+            0.670241,
+            0.677813,
+            0.66726
+          ],
+          "score": 0.672981,
+          "status": "pass",
+          "threshold": 0.5,
+          "tolerance": 0.15
+        }
+      ]
+    },
+    {
+      "case_id": "2026-08-24-harness-design-for-long-running-applicat",
+      "suspended": false,
+      "verdicts": [
+        {
+          "assertion": "json_schema",
+          "assertion_id": "6dda93ca8dbaefc2",
+          "metadata": {
+            "agreement": 1.0,
+            "errored_samples": 0,
+            "samples": 5,
+            "scores": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "spread": 0.0
+          },
+          "reason": "mean of 5 samples (1.000000, 1.000000, 1.000000, 1.000000, 1.000000)",
+          "sample_max": 1.0,
+          "sample_min": 1.0,
+          "samples": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "score": 1.0,
+          "status": "pass",
+          "threshold": 1.0,
+          "tolerance": 0.0
+        },
+        {
+          "assertion": "agrees_with_mark",
+          "assertion_id": "dbd60a76cb2582cd",
+          "metadata": {
+            "agreement": 1.0,
+            "errored_samples": 0,
+            "samples": 5,
+            "scores": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "spread": 0.0
+          },
+          "reason": "mean of 5 samples (1.000000, 1.000000, 1.000000, 1.000000, 1.000000)",
+          "sample_max": 1.0,
+          "sample_min": 1.0,
+          "samples": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "score": 1.0,
+          "status": "pass",
+          "threshold": 0.5,
+          "tolerance": 0.41
+        },
+        {
+          "assertion": "cost_budget",
+          "assertion_id": "d6c3194e2d658693",
+          "metadata": {
+            "agreement": 1.0,
+            "cost_usd": 0.00064,
+            "errored_samples": 0,
+            "max_usd": 0.0015,
+            "ratio": 0.426667,
+            "samples": 5,
+            "scores": [
+              0.699301,
+              0.700935,
+              0.700935,
+              0.699301,
+              0.704225
+            ],
+            "spread": 0.004924,
+            "total_cost_usd": 0.0032
+          },
+          "reason": "mean of 5 samples (0.699301, 0.700935, 0.700935, 0.699301, 0.704225)",
+          "sample_max": 0.704225,
+          "sample_min": 0.699301,
+          "samples": [
+            0.699301,
+            0.700935,
+            0.700935,
+            0.699301,
+            0.704225
+          ],
+          "score": 0.700939,
+          "status": "pass",
+          "threshold": 0.5,
+          "tolerance": 0.15
+        }
+      ]
+    },
+    {
+      "case_id": "2026-08-24-how-we-built-claude-code-auto-mode-a-saf",
+      "suspended": false,
+      "verdicts": [
+        {
+          "assertion": "json_schema",
+          "assertion_id": "6dda93ca8dbaefc2",
+          "metadata": {
+            "agreement": 1.0,
+            "errored_samples": 0,
+            "samples": 5,
+            "scores": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "spread": 0.0
+          },
+          "reason": "mean of 5 samples (1.000000, 1.000000, 1.000000, 1.000000, 1.000000)",
+          "sample_max": 1.0,
+          "sample_min": 1.0,
+          "samples": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "score": 1.0,
+          "status": "pass",
+          "threshold": 1.0,
+          "tolerance": 0.0
+        },
+        {
+          "assertion": "agrees_with_mark",
+          "assertion_id": "dbd60a76cb2582cd",
+          "metadata": {
+            "agreement": 1.0,
+            "errored_samples": 0,
+            "samples": 5,
+            "scores": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "spread": 0.0
+          },
+          "reason": "mean of 5 samples (1.000000, 1.000000, 1.000000, 1.000000, 1.000000)",
+          "sample_max": 1.0,
+          "sample_min": 1.0,
+          "samples": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "score": 1.0,
+          "status": "pass",
+          "threshold": 0.5,
+          "tolerance": 0.41
+        },
+        {
+          "assertion": "cost_budget",
+          "assertion_id": "d6c3194e2d658693",
+          "metadata": {
+            "agreement": 1.0,
+            "cost_usd": 0.00066,
+            "errored_samples": 0,
+            "max_usd": 0.0015,
+            "ratio": 0.44,
+            "samples": 5,
+            "scores": [
+              0.69541,
+              0.687443,
+              0.69541,
+              0.681199,
+              0.713606
+            ],
+            "spread": 0.032407,
+            "total_cost_usd": 0.0033
+          },
+          "reason": "mean of 5 samples (0.695410, 0.687443, 0.695410, 0.681199, 0.713606)",
+          "sample_max": 0.713606,
+          "sample_min": 0.681199,
+          "samples": [
+            0.69541,
+            0.687443,
+            0.69541,
+            0.681199,
+            0.713606
+          ],
+          "score": 0.694614,
+          "status": "pass",
+          "threshold": 0.5,
+          "tolerance": 0.15
+        }
+      ]
+    },
+    {
+      "case_id": "2026-08-24-how-we-contain-claude-across-products",
+      "suspended": false,
+      "verdicts": [
+        {
+          "assertion": "json_schema",
+          "assertion_id": "6dda93ca8dbaefc2",
+          "metadata": {
+            "agreement": 1.0,
+            "errored_samples": 0,
+            "samples": 5,
+            "scores": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "spread": 0.0
+          },
+          "reason": "mean of 5 samples (1.000000, 1.000000, 1.000000, 1.000000, 1.000000)",
+          "sample_max": 1.0,
+          "sample_min": 1.0,
+          "samples": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "score": 1.0,
+          "status": "pass",
+          "threshold": 1.0,
+          "tolerance": 0.0
+        },
+        {
+          "assertion": "agrees_with_mark",
+          "assertion_id": "dbd60a76cb2582cd",
+          "metadata": {
+            "agreement": 1.0,
+            "errored_samples": 0,
+            "samples": 5,
+            "scores": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "spread": 0.0
+          },
+          "reason": "mean of 5 samples (1.000000, 1.000000, 1.000000, 1.000000, 1.000000)",
+          "sample_max": 1.0,
+          "sample_min": 1.0,
+          "samples": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "score": 1.0,
+          "status": "pass",
+          "threshold": 0.5,
+          "tolerance": 0.41
+        },
+        {
+          "assertion": "cost_budget",
+          "assertion_id": "d6c3194e2d658693",
+          "metadata": {
+            "agreement": 1.0,
+            "cost_usd": 0.000646,
+            "errored_samples": 0,
+            "max_usd": 0.0015,
+            "ratio": 0.430667,
+            "samples": 5,
+            "scores": [
+              0.702247,
+              0.70555,
+              0.708885,
+              0.694123,
+              0.684619
+            ],
+            "spread": 0.024266,
+            "total_cost_usd": 0.00323
+          },
+          "reason": "mean of 5 samples (0.702247, 0.705550, 0.708885, 0.694123, 0.684619)",
+          "sample_max": 0.708885,
+          "sample_min": 0.684619,
+          "samples": [
+            0.702247,
+            0.70555,
+            0.708885,
+            0.694123,
+            0.684619
+          ],
+          "score": 0.699085,
+          "status": "pass",
+          "threshold": 0.5,
+          "tolerance": 0.15
+        }
+      ]
+    },
+    {
+      "case_id": "2026-08-24-interpretabilityjul-6-2026a-global-works",
+      "suspended": false,
+      "verdicts": [
+        {
+          "assertion": "json_schema",
+          "assertion_id": "6dda93ca8dbaefc2",
+          "metadata": {
+            "agreement": 1.0,
+            "errored_samples": 0,
+            "samples": 5,
+            "scores": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "spread": 0.0
+          },
+          "reason": "mean of 5 samples (1.000000, 1.000000, 1.000000, 1.000000, 1.000000)",
+          "sample_max": 1.0,
+          "sample_min": 1.0,
+          "samples": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "score": 1.0,
+          "status": "pass",
+          "threshold": 1.0,
+          "tolerance": 0.0
+        },
+        {
+          "assertion": "agrees_with_mark",
+          "assertion_id": "dbd60a76cb2582cd",
+          "metadata": {
+            "agreement": 1.0,
+            "errored_samples": 0,
+            "samples": 5,
+            "scores": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "spread": 0.0
+          },
+          "reason": "mean of 5 samples (1.000000, 1.000000, 1.000000, 1.000000, 1.000000)",
+          "sample_max": 1.0,
+          "sample_min": 1.0,
+          "samples": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "score": 1.0,
+          "status": "pass",
+          "threshold": 0.5,
+          "tolerance": 0.41
+        },
+        {
+          "assertion": "cost_budget",
+          "assertion_id": "d6c3194e2d658693",
+          "metadata": {
+            "agreement": 1.0,
+            "cost_usd": 0.000707,
+            "errored_samples": 0,
+            "max_usd": 0.0015,
+            "ratio": 0.471333,
+            "samples": 5,
+            "scores": [
+              0.673552,
+              0.678119,
+              0.666075,
+              0.679656,
+              0.701919
+            ],
+            "spread": 0.035844,
+            "total_cost_usd": 0.003535
+          },
+          "reason": "mean of 5 samples (0.673552, 0.678119, 0.666075, 0.679656, 0.701919)",
+          "sample_max": 0.701919,
+          "sample_min": 0.666075,
+          "samples": [
+            0.673552,
+            0.678119,
+            0.666075,
+            0.679656,
+            0.701919
+          ],
+          "score": 0.679864,
+          "status": "pass",
+          "threshold": 0.5,
+          "tolerance": 0.15
+        }
+      ]
+    },
+    {
+      "case_id": "2026-08-24-quantifying-infrastructure-noise-in-agen",
+      "suspended": false,
+      "verdicts": [
+        {
+          "assertion": "json_schema",
+          "assertion_id": "6dda93ca8dbaefc2",
+          "metadata": {
+            "agreement": 1.0,
+            "errored_samples": 0,
+            "samples": 5,
+            "scores": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "spread": 0.0
+          },
+          "reason": "mean of 5 samples (1.000000, 1.000000, 1.000000, 1.000000, 1.000000)",
+          "sample_max": 1.0,
+          "sample_min": 1.0,
+          "samples": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "score": 1.0,
+          "status": "pass",
+          "threshold": 1.0,
+          "tolerance": 0.0
+        },
+        {
+          "assertion": "agrees_with_mark",
+          "assertion_id": "dbd60a76cb2582cd",
+          "metadata": {
+            "agreement": 1.0,
+            "errored_samples": 0,
+            "samples": 5,
+            "scores": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "spread": 0.0
+          },
+          "reason": "mean of 5 samples (0.000000, 0.000000, 0.000000, 0.000000, 0.000000)",
+          "sample_max": 0.0,
+          "sample_min": 0.0,
+          "samples": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "score": 0.0,
+          "status": "fail",
+          "threshold": 0.5,
+          "tolerance": 0.41
+        },
+        {
+          "assertion": "cost_budget",
+          "assertion_id": "d6c3194e2d658693",
+          "metadata": {
+            "agreement": 1.0,
+            "cost_usd": 0.000636,
+            "errored_samples": 0,
+            "max_usd": 0.0015,
+            "ratio": 0.424,
+            "samples": 5,
+            "scores": [
+              0.70028,
+              0.718735,
+              0.687443,
+              0.715308,
+              0.690608
+            ],
+            "spread": 0.031292,
+            "total_cost_usd": 0.00318
+          },
+          "reason": "mean of 5 samples (0.700280, 0.718735, 0.687443, 0.715308, 0.690608)",
+          "sample_max": 0.718735,
+          "sample_min": 0.687443,
+          "samples": [
+            0.70028,
+            0.718735,
+            0.687443,
+            0.715308,
+            0.690608
+          ],
+          "score": 0.702475,
+          "status": "pass",
+          "threshold": 0.5,
+          "tolerance": 0.15
+        }
+      ]
+    },
+    {
+      "case_id": "2026-08-24-scaling-managed-agents-decoupling-the-br",
+      "suspended": false,
+      "verdicts": [
+        {
+          "assertion": "json_schema",
+          "assertion_id": "6dda93ca8dbaefc2",
+          "metadata": {
+            "agreement": 1.0,
+            "errored_samples": 0,
+            "samples": 5,
+            "scores": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "spread": 0.0
+          },
+          "reason": "mean of 5 samples (1.000000, 1.000000, 1.000000, 1.000000, 1.000000)",
+          "sample_max": 1.0,
+          "sample_min": 1.0,
+          "samples": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "score": 1.0,
+          "status": "pass",
+          "threshold": 1.0,
+          "tolerance": 0.0
+        },
+        {
+          "assertion": "agrees_with_mark",
+          "assertion_id": "dbd60a76cb2582cd",
+          "metadata": {
+            "agreement": 1.0,
+            "errored_samples": 0,
+            "samples": 5,
+            "scores": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "spread": 0.0
+          },
+          "reason": "mean of 5 samples (1.000000, 1.000000, 1.000000, 1.000000, 1.000000)",
+          "sample_max": 1.0,
+          "sample_min": 1.0,
+          "samples": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "score": 1.0,
+          "status": "pass",
+          "threshold": 0.5,
+          "tolerance": 0.41
+        },
+        {
+          "assertion": "cost_budget",
+          "assertion_id": "d6c3194e2d658693",
+          "metadata": {
+            "agreement": 1.0,
+            "cost_usd": 0.000645,
+            "errored_samples": 0,
+            "max_usd": 0.0015,
+            "ratio": 0.43,
+            "samples": 5,
+            "scores": [
+              0.690926,
+              0.710564,
+              0.713946,
+              0.692521,
+              0.689338
+            ],
+            "spread": 0.024608,
+            "total_cost_usd": 0.003225
+          },
+          "reason": "mean of 5 samples (0.690926, 0.710564, 0.713946, 0.692521, 0.689338)",
+          "sample_max": 0.713946,
+          "sample_min": 0.689338,
+          "samples": [
+            0.690926,
+            0.710564,
+            0.713946,
+            0.692521,
+            0.689338
+          ],
+          "score": 0.699459,
+          "status": "pass",
+          "threshold": 0.5,
+          "tolerance": 0.15
+        }
+      ]
+    },
+    {
+      "case_id": "2026-08-24-it-s-hard-to-eval-is-a-product-smell",
+      "suspended": false,
+      "verdicts": [
+        {
+          "assertion": "json_schema",
+          "assertion_id": "6dda93ca8dbaefc2",
+          "metadata": {
+            "agreement": 1.0,
+            "errored_samples": 0,
+            "samples": 5,
+            "scores": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "spread": 0.0
+          },
+          "reason": "mean of 5 samples (1.000000, 1.000000, 1.000000, 1.000000, 1.000000)",
+          "sample_max": 1.0,
+          "sample_min": 1.0,
+          "samples": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "score": 1.0,
+          "status": "pass",
+          "threshold": 1.0,
+          "tolerance": 0.0
+        },
+        {
+          "assertion": "agrees_with_mark",
+          "assertion_id": "dbd60a76cb2582cd",
+          "metadata": {
+            "agreement": 0.8,
+            "errored_samples": 0,
+            "samples": 5,
+            "scores": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              0.0
+            ],
+            "spread": 1.0
+          },
+          "reason": "mean of 5 samples (1.000000, 1.000000, 1.000000, 1.000000, 0.000000)",
+          "sample_max": 1.0,
+          "sample_min": 0.0,
+          "samples": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            0.0
+          ],
+          "score": 0.8,
+          "status": "pass",
+          "threshold": 0.5,
+          "tolerance": 0.41
+        },
+        {
+          "assertion": "cost_budget",
+          "assertion_id": "d6c3194e2d658693",
+          "metadata": {
+            "agreement": 1.0,
+            "cost_usd": 0.000711,
+            "errored_samples": 0,
+            "max_usd": 0.0015,
+            "ratio": 0.474,
+            "samples": 5,
+            "scores": [
+              0.677201,
+              0.672646,
+              0.691244,
+              0.675676,
+              0.675676
+            ],
+            "spread": 0.018598,
+            "total_cost_usd": 0.003555
+          },
+          "reason": "mean of 5 samples (0.677201, 0.672646, 0.691244, 0.675676, 0.675676)",
+          "sample_max": 0.691244,
+          "sample_min": 0.672646,
+          "samples": [
+            0.677201,
+            0.672646,
+            0.691244,
+            0.675676,
+            0.675676
+          ],
+          "score": 0.678489,
+          "status": "pass",
+          "threshold": 0.5,
+          "tolerance": 0.15
+        }
+      ]
+    },
+    {
+      "case_id": "2026-08-24-your-executable-is-a-sqlite-database",
+      "suspended": false,
+      "verdicts": [
+        {
+          "assertion": "json_schema",
+          "assertion_id": "6dda93ca8dbaefc2",
+          "metadata": {
+            "agreement": 1.0,
+            "errored_samples": 0,
+            "samples": 5,
+            "scores": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "spread": 0.0
+          },
+          "reason": "mean of 5 samples (1.000000, 1.000000, 1.000000, 1.000000, 1.000000)",
+          "sample_max": 1.0,
+          "sample_min": 1.0,
+          "samples": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "score": 1.0,
+          "status": "pass",
+          "threshold": 1.0,
+          "tolerance": 0.0
+        },
+        {
+          "assertion": "agrees_with_mark",
+          "assertion_id": "dbd60a76cb2582cd",
+          "metadata": {
+            "agreement": 1.0,
+            "errored_samples": 0,
+            "samples": 5,
+            "scores": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "spread": 0.0
+          },
+          "reason": "mean of 5 samples (1.000000, 1.000000, 1.000000, 1.000000, 1.000000)",
+          "sample_max": 1.0,
+          "sample_min": 1.0,
+          "samples": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "score": 1.0,
+          "status": "pass",
+          "threshold": 0.5,
+          "tolerance": 0.41
+        },
+        {
+          "assertion": "cost_budget",
+          "assertion_id": "d6c3194e2d658693",
+          "metadata": {
+            "agreement": 1.0,
+            "cost_usd": 0.000642,
+            "errored_samples": 0,
+            "max_usd": 0.0015,
+            "ratio": 0.428,
+            "samples": 5,
+            "scores": [
+              0.706547,
+              0.703235,
+              0.703235,
+              0.695088,
+              0.693481
+            ],
+            "spread": 0.013066,
+            "total_cost_usd": 0.00321
+          },
+          "reason": "mean of 5 samples (0.706547, 0.703235, 0.703235, 0.695088, 0.693481)",
+          "sample_max": 0.706547,
+          "sample_min": 0.693481,
+          "samples": [
+            0.706547,
+            0.703235,
+            0.703235,
+            0.695088,
+            0.693481
+          ],
+          "score": 0.700317,
+          "status": "pass",
+          "threshold": 0.5,
+          "tolerance": 0.15
+        }
+      ]
+    },
+    {
+      "case_id": "2026-08-25-economics",
+      "suspended": false,
+      "verdicts": [
+        {
+          "assertion": "json_schema",
+          "assertion_id": "6dda93ca8dbaefc2",
+          "metadata": {
+            "agreement": 1.0,
+            "errored_samples": 0,
+            "samples": 5,
+            "scores": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "spread": 0.0
+          },
+          "reason": "mean of 5 samples (1.000000, 1.000000, 1.000000, 1.000000, 1.000000)",
+          "sample_max": 1.0,
+          "sample_min": 1.0,
+          "samples": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "score": 1.0,
+          "status": "pass",
+          "threshold": 1.0,
+          "tolerance": 0.0
+        },
+        {
+          "assertion": "agrees_with_mark",
+          "assertion_id": "dbd60a76cb2582cd",
+          "metadata": {
+            "agreement": 1.0,
+            "errored_samples": 0,
+            "samples": 5,
+            "scores": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "spread": 0.0
+          },
+          "reason": "mean of 5 samples (1.000000, 1.000000, 1.000000, 1.000000, 1.000000)",
+          "sample_max": 1.0,
+          "sample_min": 1.0,
+          "samples": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "score": 1.0,
+          "status": "pass",
+          "threshold": 0.5,
+          "tolerance": 0.41
+        },
+        {
+          "assertion": "cost_budget",
+          "assertion_id": "d6c3194e2d658693",
+          "metadata": {
+            "agreement": 1.0,
+            "cost_usd": 0.000559,
+            "errored_samples": 0,
+            "max_usd": 0.0015,
+            "ratio": 0.372667,
+            "samples": 5,
+            "scores": [
+              0.711913,
+              0.751127,
+              0.729217,
+              0.720461,
+              0.730994
+            ],
+            "spread": 0.039214,
+            "total_cost_usd": 0.002795
+          },
+          "reason": "mean of 5 samples (0.711913, 0.751127, 0.729217, 0.720461, 0.730994)",
+          "sample_max": 0.751127,
+          "sample_min": 0.711913,
+          "samples": [
+            0.711913,
+            0.751127,
+            0.729217,
+            0.720461,
+            0.730994
+          ],
+          "score": 0.728742,
+          "status": "pass",
+          "threshold": 0.5,
+          "tolerance": 0.15
+        }
+      ]
+    },
+    {
+      "case_id": "2026-08-25-llm-anthropic-0-27",
+      "suspended": false,
+      "verdicts": [
+        {
+          "assertion": "json_schema",
+          "assertion_id": "6dda93ca8dbaefc2",
+          "metadata": {
+            "agreement": 1.0,
+            "errored_samples": 0,
+            "samples": 5,
+            "scores": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "spread": 0.0
+          },
+          "reason": "mean of 5 samples (1.000000, 1.000000, 1.000000, 1.000000, 1.000000)",
+          "sample_max": 1.0,
+          "sample_min": 1.0,
+          "samples": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "score": 1.0,
+          "status": "pass",
+          "threshold": 1.0,
+          "tolerance": 0.0
+        },
+        {
+          "assertion": "agrees_with_mark",
+          "assertion_id": "dbd60a76cb2582cd",
+          "metadata": {
+            "agreement": 1.0,
+            "errored_samples": 0,
+            "samples": 5,
+            "scores": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "spread": 0.0
+          },
+          "reason": "mean of 5 samples (1.000000, 1.000000, 1.000000, 1.000000, 1.000000)",
+          "sample_max": 1.0,
+          "sample_min": 1.0,
+          "samples": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "score": 1.0,
+          "status": "pass",
+          "threshold": 0.5,
+          "tolerance": 0.41
+        },
+        {
+          "assertion": "cost_budget",
+          "assertion_id": "d6c3194e2d658693",
+          "metadata": {
+            "agreement": 1.0,
+            "cost_usd": 0.000719,
+            "errored_samples": 0,
+            "max_usd": 0.0015,
+            "ratio": 0.479333,
+            "samples": 5,
+            "scores": [
+              0.672043,
+              0.664599,
+              0.685871,
+              0.675068,
+              0.682749
+            ],
+            "spread": 0.021272,
+            "total_cost_usd": 0.003595
+          },
+          "reason": "mean of 5 samples (0.672043, 0.664599, 0.685871, 0.675068, 0.682749)",
+          "sample_max": 0.685871,
+          "sample_min": 0.664599,
+          "samples": [
+            0.672043,
+            0.664599,
+            0.685871,
+            0.675068,
+            0.682749
+          ],
+          "score": 0.676066,
+          "status": "pass",
+          "threshold": 0.5,
+          "tolerance": 0.15
+        }
+      ]
+    }
+  ],
+  "schema_version": 9,
+  "suite": "brief-judge",
+  "target_config": {
+    "values": {
+      "max_tokens": 200,
+      "model": "claude-haiku-4-5",
+      "provider": "anthropic"
+    }
+  },
+  "tenant": "alessandro"
+}
