@@ -189,6 +189,14 @@ class BriefJudge(JudgeBase):
 
     provider = "anthropic"
     system = JUDGE_SYSTEM
+    #: The same `JUDGE_PREFILL` that `_complete` puts back, declared where
+    #: `JudgeBase` looks for it. Since digline 0.6.0 `_ask` refuses a reply the
+    #: model contributed nothing to, and it has to see past the prefill to know
+    #: that: `_complete` returns `"{"` for a model that said nothing, and `"{"`
+    #: is not empty. Left at its `None` default, this judge would be the one
+    #: the check never fired for, and a mute model would come back as a parse
+    #: failure over a brace instead of as the truncation or refusal it was.
+    prefill = JUDGE_PREFILL
 
     def __init__(self, model: str = MODEL, *, client=None) -> None:
         super().__init__(

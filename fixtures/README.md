@@ -81,7 +81,7 @@ Entries under `aggregate` carry `samples`, `sample_min` and `sample_max` too,
 and that is where the bands in the table above come from.
 
 Nothing here needs digline to read — it is plain JSON. To hand the files back
-to digline 0.4.0, copy them into the run store, which is
+to digline 0.6.0, copy them into the run store, which is
 `.digline/<tenant>/runs/<suite>/`:
 
 ```console
@@ -103,7 +103,7 @@ was written from, and it is kept as it was.
 
 Two things to know before reading it. These two are **schema 8**: the five
 samples live only in `metadata.scores`, there is no `samples` on the verdict,
-and digline 0.4.0 needs `digline migrate` before it will load them. And the
+and digline 0.6.0 needs `digline migrate` before it will load them. And the
 `compare` output quoted in the earlier version of this file was produced by
 **digline 0.2.0**, before the noise floor existed, when aggregates were judged
 against their declared `tolerance`. It reported `accuracy` as a regression.
