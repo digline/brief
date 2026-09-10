@@ -16,14 +16,14 @@ import json
 import re
 import sys
 from collections import Counter
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from datetime import datetime, timezone
 from pathlib import Path
 
 import feedparser
-from digline.targets import JudgeBase, PromptTemplate, UnknownModelError, Usage
+from digline.targets import Completion, JudgeBase, PromptTemplate, UnknownModelError
 from digline_anthropic import ANTHROPIC_PRICING
-from digline_anthropic.client import build_client, text_of, usage_of
+from digline_anthropic.client import build_client, completion_of
 
 # --- Configuration ----------------------------------------------------------
 
@@ -175,8 +175,8 @@ class BriefJudge(JudgeBase):
     That is not only tidiness. The old arithmetic here read `input_tokens` and
     `output_tokens` and nothing else, and `cache_creation_input_tokens` is
     billed separately and is *not* included in `input_tokens`: the plugin's
-    `usage_of` reads all four counts, which is the undercount `probe.py`
-    documents, fixed here rather than described.
+    `usage_of` — reached through `completion_of` — reads all four counts, which
+    is the undercount `probe.py` documents, fixed here rather than described.
 
     Deliberately **not** `AnthropicJudge` from the plugin. That one is a rubric
     grader: its system prompt is a `ClassVar` on `ScoreJudge` — declared per
@@ -196,6 +196,10 @@ class BriefJudge(JudgeBase):
     #: is not empty. Left at its `None` default, this judge would be the one
     #: the check never fired for, and a mute model would come back as a parse
     #: failure over a brace instead of as the truncation or refusal it was.
+    #:
+    #: What that check then *says* is decided by `_complete`'s return: see
+    #: there. The two are a pair — this one makes the check fire, that one
+    #: gives it something to read.
     prefill = JUDGE_PREFILL
 
     def __init__(self, model: str = MODEL, *, client=None) -> None:
@@ -210,17 +214,37 @@ class BriefJudge(JudgeBase):
             self._injected = build_client()
         return self._injected
 
-    def _complete(self, system: str, prompt: str) -> tuple[str, Usage]:
-        reply = self._client().messages.create(
-            model=self.model,
-            max_tokens=self.max_tokens,
-            system=system,
-            messages=[
-                {"role": "user", "content": prompt},
-                {"role": "assistant", "content": JUDGE_PREFILL},
-            ],
+    def _complete(self, system: str, prompt: str) -> Completion:
+        """The one call, as the record digline 0.8.0 widened `_complete` to.
+
+        This used to return the `(text, Usage)` pair. That pair is still
+        admissible and always will be, so nothing forced this — but it is the
+        *lossy* return, and what it loses is exactly what this judge wants on a
+        bad morning. `Completion` carries `finish` beside the two, so `_ask`
+        **reads** why a mute model said nothing instead of inferring it from a
+        token count against the cap: a reply cut off at `max_tokens` and one
+        that came back as a tool call are the same number and need opposite
+        fixes. It also carries what the provider said actually answered, so
+        `self.observed` learns the snapshot behind the `claude-haiku-4-5`
+        alias rather than recording the alias twice.
+
+        `replace` rather than a mutation because `Completion` is frozen, which
+        is what keeps it a value.
+        """
+        reply = completion_of(
+            self._client().messages.create(
+                model=self.model,
+                max_tokens=self.max_tokens,
+                system=system,
+                messages=[
+                    {"role": "user", "content": prompt},
+                    {"role": "assistant", "content": JUDGE_PREFILL},
+                ],
+            )
         )
-        return JUDGE_PREFILL + text_of(reply), usage_of(reply)
+        # The reply *is* the prefill plus the completion, and a parser handed
+        # only the tail sees invalid JSON.
+        return replace(reply, text=JUDGE_PREFILL + reply.text)
 
     def __call__(self, item: Item) -> Judgement:
         prompt = JUDGE_PROMPT.render(
