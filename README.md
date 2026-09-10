@@ -46,6 +46,11 @@ $ uv run digline compare --suite suite.py --run latest --locale en
 $ uv run digline promote --suite suite.py --run latest   # only if the change is one you want
 ```
 
+`compare` answers whether it got worse; `digline explain --suite suite.py --run
+latest` reads the same run back at length — what moved, by how much, and inside
+or outside which measured interval — which is the one to reach for when the
+answer is yes.
+
 What it checks, per case, five samples each:
 
 | check | what it says |
@@ -106,7 +111,11 @@ same whatever you asked would make every prompt look equally good. Its `usage`
 shape was copied from a real reply through `probe.py`, including
 `cache_creation_input_tokens` — a field that is *not* part of `input_tokens`,
 that nothing was reading, and whose absence from an earlier hand-written fake
-understated the cost by a factor of 384 with the tests green.
+understated the cost by a factor of 384 with the tests green. `stop_reason` and
+`model` are there for the same reason: digline reads both, so a fake without
+them would make the checks see a poorer record than production writes. The fake
+answers `brief-fake-judge` to "what model was that", because it is not
+`claude-haiku-4-5-20251001` and must not say it was.
 
 ## What is where
 
@@ -123,6 +132,7 @@ report.html         one comparison, rendered — the one of 2026-08-27
 fixtures/           runs kept out of the ignored run store, and what they show
 seen.example.json   ten records, standing in for the seen.json that is not here
 .digline/           the committed baseline (runs are ephemeral and ignored)
+.mcp.json           digline-mcp over this repo: six read/measure tools, no promote
 ```
 
 A note on reading the data: `prompts/judge.txt` asks for the reason in Italian,
