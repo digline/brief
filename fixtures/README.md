@@ -111,3 +111,21 @@ against their declared `tolerance`. It reported `accuracy` as a regression.
 Under the current rules that same movement is the one the noise floor absorbs,
 as the table above shows. Do not read the 0.2.0 text with today's rules; the
 2026-09-03 triple is the one that reflects how the gate behaves now.
+
+> **Since digline 0.7.0 (ADR 0009), 2026-09-10.** The declared tolerance
+> absorbs this movement, not the noise floor: `within_noise` now reads
+> **false** where it read true, and the reason names the tolerance the suite
+> declares instead of the measured band. The sentence above describes the
+> pre-0.7.0 reading and is kept for that.
+>
+> **The verdict a reader acts on does not move.** `accuracy` on this pair read
+> `unchanged` then and reads `unchanged` now; what changed is which of the two
+> controls answered first, and `compare()` checks the declared tolerance before
+> the measured floor precisely so nobody has to guess. Measured on 0.8.1
+> against these files: the aggregates carry `noise_samples: 0` — schema 8 kept
+> no per-sample band — so there was never a floor here to do the absorbing,
+> and `digline explain` says *"inside the tolerance the suite declares"*.
+>
+> ADR 0009 §8 owns this explanation now, and states the red line in the same
+> terms: a change that makes `12-29-17` read *got worse* at the aggregate again
+> is a change that undoes ADR 0006. It still reads `unchanged`.
