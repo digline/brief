@@ -18,3 +18,14 @@ dependencies = [
     # the provider package too — not only the suite.
     "digline-anthropic>=0.4,<0.5",
 ]
+
+# Not a dependency of the digest. `digline-mcp` pulls `mcp>=2.2,<3`, and the
+# morning run has no business carrying an MCP stack — but `.mcp.json` names
+# `uv run digline-mcp`, so it has to be installed somewhere. A dev group is
+# that somewhere. Note `uv sync` installs it by default, CI included; that is
+# the price of the server being one command away rather than one README
+# paragraph away.
+[dependency-groups]
+dev = [
+    "digline-mcp>=0.1.1,<0.2",
+]

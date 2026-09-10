@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "digline-brief": {
+      "command": "uv",
+      "args": ["run", "digline-mcp", "--root", ".", "--tenant", "alessandro"]
+    }
+  }
+}
