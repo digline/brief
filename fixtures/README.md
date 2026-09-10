@@ -53,13 +53,14 @@ and it is not counted as a regression. Both aggregates fell:
 | `precision` | 0.666667 | `0.666667, 0.642857, 0.666667, 0.666667, 0.615385` | 0.615385–0.666667 | **0.600000** | **yes** — below the band |
 | `accuracy` | 0.761905 | `0.761905, 0.714286, 0.761905, 0.761905, 0.666667` | 0.666667–0.761905 | **0.666667** | no — on the band's lower edge |
 
-Under digline 0.4.0 an aggregate is judged against the spread of the
-reference's own samples, not against its declared `tolerance`. The noise floor
-works in both directions on this one comparison: it absorbs a two-case drop in
-`accuracy` because the reference had already produced that number once, and it
-reports a one-case drop in `precision` because the reference never had. Which
-is the point — the same run is noisy enough to explain the larger movement and
-not the smaller one, and only the reference's own history can tell them apart.
+Under digline 0.4.0, and unchanged through 0.8.1, an aggregate is judged
+against the spread of the reference's own samples, not against its declared
+`tolerance`. The noise floor works in both directions on this one comparison:
+it absorbs a two-case drop in `accuracy` because the reference had already
+produced that number once, and it reports a one-case drop in `precision`
+because the reference never had. Which is the point — the same run is noisy
+enough to explain the larger movement and not the smaller one, and only the
+reference's own history can tell them apart.
 
 On the declared `tolerance` alone (0.047619, one case out of twenty-one) both
 would have been reported: `accuracy` fell by 0.095238 and `precision` by
@@ -81,7 +82,7 @@ Entries under `aggregate` carry `samples`, `sample_min` and `sample_max` too,
 and that is where the bands in the table above come from.
 
 Nothing here needs digline to read — it is plain JSON. To hand the files back
-to digline 0.6.0, copy them into the run store, which is
+to digline 0.8.1, copy them into the run store, which is
 `.digline/<tenant>/runs/<suite>/`:
 
 ```console
@@ -103,10 +104,10 @@ was written from, and it is kept as it was.
 
 Two things to know before reading it. These two are **schema 8**: the five
 samples live only in `metadata.scores`, there is no `samples` on the verdict,
-and digline 0.6.0 needs `digline migrate` before it will load them. And the
+and digline 0.8.1 needs `digline migrate` before it will load them. And the
 `compare` output quoted in the earlier version of this file was produced by
 **digline 0.2.0**, before the noise floor existed, when aggregates were judged
 against their declared `tolerance`. It reported `accuracy` as a regression.
 Under the current rules that same movement is the one the noise floor absorbs,
-as the table above shows. Do not read the 0.2.0 text with the 0.4.0 rules; the
+as the table above shows. Do not read the 0.2.0 text with today's rules; the
 2026-09-03 triple is the one that reflects how the gate behaves now.
