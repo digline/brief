@@ -18,7 +18,10 @@ asked it would make every prompt look equally good.
 
 The shape of `usage` comes from `probe.py`, from a real reply — including
 `cache_creation_input_tokens`, which is *not* part of `input_tokens` and which
-a fake written by reading the code would not have had.
+a fake written by reading the code would not have had. `stop_reason` and
+`model` are here for the same reason and arrived the same way: digline 0.8.0
+reads both, so a fake without them would quietly make the checks see a poorer
+record than production writes.
 """
 
 from __future__ import annotations
@@ -66,10 +69,30 @@ class _Usage:
     cache_creation_input_tokens: int = 0
 
 
+#: What this fake says answered, when asked the way a real reply is asked.
+#: Deliberately **not** `claude-haiku-4-5-20251001` and deliberately not the
+#: model id off the request: the first would put a real snapshot's name in a
+#: record no real model produced, and the second is the echo `completion_of`
+#: refuses on Bedrock because it "would manufacture the one fact it exists to
+#: obtain". The fake is a judge; this is its name. A fake run that ever landed
+#: beside a real baseline would say so in one line of the comparison.
+FAKE_MODEL = "brief-fake-judge"
+
+
 @dataclass
 class _Reply:
     content: list[_Block]
     usage: _Usage = field(default_factory=_Usage)
+    #: Both fields come from a real reply through `probe.py`, like `usage`
+    #: before them. Since digline 0.8.0 the plugin reads `stop_reason` into
+    #: `Completion.finish` and `model` into what the run records as
+    #: `resolved_model` — so a fake without them is a fake that makes the
+    #: harness record *less* than it does in production, which is the shape of
+    #: the `cache_creation_input_tokens` mistake this file already carries a
+    #: paragraph about. `end_turn` is the truthful word here: this judge always
+    #: finishes what it is saying.
+    stop_reason: str = "end_turn"
+    model: str = FAKE_MODEL
 
 
 class _Messages:
