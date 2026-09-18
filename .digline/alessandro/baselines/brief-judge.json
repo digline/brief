@@ -2239,7 +2239,7 @@
       ]
     }
   ],
-  "schema_version": 11,
+  "schema_version": 13,
   "suite": "brief-judge",
   "target_config": {
     "values": {
