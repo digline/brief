@@ -41,10 +41,18 @@ that show the shape of the file. The first digest you run writes the real one.
 ## Run the suite
 
 ```console
-$ uv run digline run     --suite suite.py            # ~$0.014, 21 cases x 5 samples
+$ uv run digline run     --suite suite.py            # ~$0.069: 21 cases x 5 samples
 $ uv run digline compare --suite suite.py --run latest --locale en
 $ uv run digline promote --suite suite.py --run latest   # only if the change is one you want
 ```
+
+About **$0.069** a run, because a run is 21 cases times five samples: 105
+judgements at about $0.00066 each. One judgement per case would be $0.014, and
+that is the number this file carried until it was read against the run files —
+each case's `cost_budget` verdict records `cost_usd`, the mean of its samples,
+beside `total_cost_usd`, the five of them, and the $0.014 was the means added
+up. `fixtures/recompute.py` prints what a run actually cost, from the committed
+runs.
 
 `compare` answers whether it got worse; `digline explain --suite suite.py --run
 latest` reads the same run back at length — what moved, by how much, and inside

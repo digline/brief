@@ -2,7 +2,59 @@
 
 Runs of `brief-judge`, copied out of `.digline/alessandro/runs/`, which is
 gitignored (`*/runs/`). They are here because they are worth keeping and that
-directory is not.
+directory is not: the pair and the triple two sections down are the fixtures
+ADR 0006 and ADR 0009 were written from, and all six are what the numbers on
+<https://digline.dev/why/> are read out of. `recompute.py` prints those numbers
+from the files.
+
+## Which number comes from which run
+
+The numbers about this project on <https://digline.dev/why/> are read out of
+these files. Each is one run: run id, the `config_hash` every one of them
+shares, and the value as the file has it.
+
+| Number | Run(s) | Value | Where it is in the file |
+| --- | --- | --- | --- |
+| the reader-agreement of a run | `2026-09-03T06-14-13-174316` (the baseline) | `accuracy` **0.761905 = 16/21** — 10 true positives and 6 true negatives — and `precision` **0.666667 = 10/15** | `aggregate[]`, by `assertion`; `reason` spells the fraction and `metadata` the four counts |
+| one verdict out of 21 changed between two runs, nothing else changed | `2026-09-01T12-29-17-700450` → `12-44-02-518586` | `2026-08-24-evals-skills-for-coding-agents` goes `[1, 1, 0, 0, 0]` → `[1, 1, 1, 1, 1]`, 2/5 then 5/5: the majority verdict flips, and no other case does | `results[].verdicts[]` where `assertion` is `agrees_with_mark`, `metadata.scores` |
+| the aggregate moves by one case out of 21 while a case moves by three votes | the same pair | `accuracy` **0.714286 (15/21) → 0.761905 (16/21)**, one case; the largest movement on a case is 3 of its 5 votes | `aggregate[]` and the same `metadata.scores` |
+| how many cases out of 21 are not unanimous | all six: **2** (`06-14-13`, `06-24-50`), **4** (`12-44-02`), **5** (`12-29-17`, `06-18-43`), **6** (`06-30-18`) | between **2/21 and 6/21** on runs that are replicates of each other | count the `agrees_with_mark` verdicts whose `metadata.scores` are neither all 0 nor all 1 |
+| what a run costs | any of the six | **$0.0691 – $0.0699**, about seven cents | sum `metadata.total_cost_usd` over the `cost_budget` verdicts — one per case, each already the five samples of that case |
+
+Every one of those is recomputed from the committed files alone, with no
+network and no digline:
+
+```console
+$ python3 fixtures/recompute.py
+2026-09-01T12-29-17  schema  8  accuracy 0.714286 (15/21)  precision 0.642857  split 5/21  $0.0691
+2026-09-01T12-44-02  schema  8  accuracy 0.761905 (16/21)  precision 0.666667  split 4/21  $0.0695
+2026-09-03T06-14-13  schema  9  accuracy 0.761905 (16/21)  precision 0.666667  split 2/21  $0.0694
+2026-09-03T06-18-43  schema  9  accuracy 0.666667 (14/21)  precision 0.600000  split 5/21  $0.0696
+2026-09-03T06-24-50  schema  9  accuracy 0.761905 (16/21)  precision 0.666667  split 2/21  $0.0697
+2026-09-03T06-30-18  schema 11  accuracy 0.761905 (16/21)  precision 0.666667  split 6/21  $0.0699
+```
+
+`split` is the count of cases whose five samples disagree. The three schemas
+are why the script reads `metadata.scores` rather than the verdict's `samples`:
+`scores` is in all of them, `samples` arrived with schema 9.
+
+What these files do **not** carry: the 1–5 score the judge returns. A sample is
+the outcome of an assertion — 1.0 when it held — so `[1, 1, 0, 0, 0]` says
+three samples disagreed with my mark, not what they scored. Keeping the raw
+output per sample became possible later, and is not on in these runs.
+
+## 2026-09-03T06-30-18: six cases out of twenty-one
+
+```
+2026-09-03T06-30-18-474632-00-00-98fc65b1e49e930e.json
+```
+
+The fourth run of that morning, twelve minutes after the triple below, same
+suite, same prompts, same `config_hash`, and the one with the most cases split:
+**six of twenty-one**, in both patterns, 4–1 and 3–2. It is here as the top of
+the range in the table above — the bottom, 2/21, is the baseline itself. It is
+**schema 11**, the store having been migrated since the others were copied out,
+which is what the version differences in the `recompute.py` output are.
 
 ## The 2026-09-03 triple
 
