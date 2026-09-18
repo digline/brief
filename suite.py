@@ -16,11 +16,13 @@ import json
 import os
 from dataclasses import dataclass
 from pathlib import Path
+from typing import ClassVar
 
 from digline.core import (
     STRUCTURED_ONLY,
     Accuracy,
     AssertionBase,
+    CheckKind,
     CostBudget,
     EvaluatorInputs,
     JsonSchema,
@@ -49,6 +51,7 @@ class AgreesWithMark(AssertionBase):
 
     brief_threshold: int = 4
     name: str = "agrees_with_mark"
+    KIND: ClassVar[CheckKind] = "deterministic"
     threshold: float = 0.5
     tolerance: float = 0.41
     accepts: frozenset[OutputKind] = STRUCTURED_ONLY
