@@ -218,12 +218,19 @@ suite = Suite(
         # No `CostBudget`. The call this suite makes is `suite.py`'s call, and
         # its price is already gated there at $0.0015; a second budget over the
         # same number would be two gates on one fact, failing twice or passing
-        # twice and never disagreeing usefully. What that leaves ungated is the
-        # judge's own spend — `CostBudget` reads `Response.cost_usd`, which is
-        # the target's — and nothing digline ships can gate it. It is announced
-        # by `planned_calls` before the run and recorded by `judge.spent_usd`
-        # after it; it is not a check, and this comment is the only place that
-        # says so.
+        # twice and never disagreeing usefully.
+        #
+        # What that leaves ungated is the judge's own spend, and since digline
+        # 0.16.0 the run at least *states* it: `Run.usage` carries two lines,
+        # `target` and `judge`, and the command prints both when it finishes.
+        # Measured on this suite, one run is **$0.070135 of target and
+        # $0.134599 of judge** — the judge is 1.92x the target and 66% of the
+        # bill. `CostBudget` reads `Response.cost_usd`, which is the target's,
+        # so the gated third is the smaller one. Nothing digline ships gates the
+        # larger, deliberately (ADR 0025 §6); it is a fact on the document, not
+        # a check, and this comment is the only place in this repository that
+        # says which part of the bill the green `cost_budget` in `suite.py`
+        # actually covers.
         Faithfulness(
             judge=judge,
             # Measured, not wished for — the house rule from `suite.py`: the

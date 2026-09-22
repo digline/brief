@@ -12,11 +12,24 @@ dependencies = [
     # `BriefJudge` renders the same template the suite does, and is built on
     # `digline.targets.JudgeBase`, so the application depends on digline for
     # that — not only the tests.
-    "digline>=0.15,<0.16",
+    #
+    # The floor is **0.16**, and it is a floor with a reason rather than a
+    # currency update: 0.16.0 opened schema 14 with `Run.usage`, two lines of
+    # one bill — the target's and the judge's — where before it every provider
+    # priced the counts, kept the money on `Response.cost_usd` and dropped the
+    # rest. `reason.py` is judged, so its judge spends more than its target
+    # does, and under `<0.16` this repository could not state that number: it
+    # had to be reconstructed by multiplying calls by an observed price. A
+    # number the document carries beats a number somebody multiplied.
+    #
+    # It lands on 0.18 rather than 0.16 because `digline-anthropic` 0.5.3
+    # requires `digline>=0.17`, and the plugin is not worth holding back to
+    # keep a floor we only needed a minimum of.
+    "digline>=0.18,<0.19",
     # No longer test-only: `brief.BriefJudge` is a `digline.targets.JudgeBase`
     # priced from the plugin's `ANTHROPIC_PRICING`, so the application imports
     # the provider package too — not only the suite.
-    "digline-anthropic>=0.5,<0.6",
+    "digline-anthropic>=0.5.3,<0.6",
 ]
 
 # Not a dependency of the digest. `digline-mcp` pulls `mcp>=2.2,<3`, and the

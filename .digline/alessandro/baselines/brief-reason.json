@@ -916,7 +916,7 @@
       ]
     }
   ],
-  "schema_version": 13,
+  "schema_version": 15,
   "suite": "brief-reason",
   "target_config": {
     "values": {

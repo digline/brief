@@ -94,7 +94,7 @@ took on something that does not exist. Until `reason.py` the only thing checked
 about it was that it was not empty.
 
 ```console
-$ uv run digline run     --suite reason.py            # ~$0.19: 21 cases x 5 samples, two models each
+$ uv run digline run     --suite reason.py            # $0.20: 21 cases x 5 samples, two models each
 $ uv run digline compare --suite reason.py --run latest --locale en
 ```
 
@@ -124,6 +124,24 @@ in `prompts/judge.txt`.
 
 `reason.py` sets `record_responses=True`. It is the first suite here that does,
 which makes its runs the first that can ever be re-judged — see below.
+
+### What it costs, and which part of that is watched
+
+A run of this suite is **$0.2047**, and since digline 0.16.0 the run says so
+itself rather than being reconstructed: `Run.usage` carries two lines.
+
+```console
+digline: target: 105 calls, 38485 in / 6330 out, 0.070135 USD
+digline: judge:  110 calls, 89059 in /  9108 out, 0.134599 USD
+```
+
+**The judge is 1.92x the target and 66% of the bill**, and `CostBudget` gates
+none of it: it reads the target's per-case cost, which is the other 34%. That is
+deliberate on digline's side — a recorded total with no threshold is a fact, not
+a vacuously green assertion — but it means the green `cost_budget` in `suite.py`
+has seen a third of what a judged morning costs. `suite.py`'s own run writes
+`judge: 0 calls, $0.0`, which is the honest line for a suite with nothing judged
+in it.
 
 ## Re-judging, and the two measurements it unlocks
 
