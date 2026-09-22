@@ -96,10 +96,37 @@ judge = AnthropicClaimJudge(
 )
 
 
+#: The one case this suite cannot ask its question of, set aside by id rather
+#: than by a rule, because a rule over summary length would be a filter nobody
+#: could read in a diff.
+#:
+#: Its item is the single word "Economics" as both title and summary. There is
+#: nothing there for a sentence to be faithful *to*, so the model writes that
+#: the item is empty of content — which is the right answer and is not a claim
+#: about an article. digline 0.16.0 gave the judge the licence to decline, and
+#: it declines here 11 judgements out of 15; the case became `error`, and
+#: `promote` refused the run by name.
+#:
+#: Suspending it is the honest close, not a workaround. `Case.suspended` puts
+#: the exclusion in the run document, so it travels to the report and reads as
+#: coverage deliberately set aside rather than coverage that quietly shrank.
+#: And it is suspended **here only** — in `suite.py` the case is untouched and
+#: still counted, because "is this worth my morning" is a question a one-word
+#: item can be asked and answered about, while "does this sentence invent the
+#: article" is not.
+UNJUDGEABLE = {
+    "2026-08-25-economics": (
+        "the item is the single word 'Economics' as title and summary: there is "
+        "nothing for the sentence to be faithful to, and the judge declines "
+        "rather than counting claims in a sentence that makes none"
+    ),
+}
+
 cases = [
     Case(
         id=c["id"],
         vars=c["vars"],
+        suspended=UNJUDGEABLE.get(c["id"]),
         # **Both prompts.** The context is what the model was given, and it was
         # given two things: the taste in `prompts/judge.txt` and the item in
         # `prompts/item.txt`. The first draft of this file passed the item
