@@ -35,7 +35,7 @@ import os
 from pathlib import Path
 
 from digline.core import Faithfulness
-from digline.run import Case, Suite
+from digline.run import Calibration, Case, Suite
 from digline.targets import PromptTemplate
 from digline_anthropic import AnthropicClaimJudge, AnthropicTarget
 
@@ -126,6 +126,79 @@ cases = [
     for c in json.loads((HERE / "cases" / "brief.json").read_text(encoding="utf-8"))
 ]
 
+# --- The calibration case ------------------------------------------------------
+#
+# The canary watches whether the model is still that model; this watches whether
+# the scale is still a scale. A judge that has gone binary is *more* repeatable,
+# not less, so no amount of repetition sees the collapse — and `--judge-samples`
+# says so itself, in the sentence it prints when a suite declares none.
+#
+# The item is declared here rather than borrowed from `cases/brief.json`, and
+# the point is that `make_cases.py` rewrites that file from `seen.json` whenever
+# I answer the digest. A control instrument that could be rebuilt out from under
+# itself by an ordinary morning is not a control instrument.
+CALIBRATION_VARS = {
+    "source": "Anthropic Engineering",
+    "title": "Quantifying infrastructure noise in agentic coding evals",
+    "summary": (
+        "Infrastructure configuration can swing agentic coding benchmarks by "
+        "several percentage points—sometimes more than the leaderboard gap "
+        "between top models."
+    ),
+}
+CALIBRATION_ITEM = ITEM.render(CALIBRATION_VARS)
+
+#: Two claims, and I know which is which. The first is the summary's own
+#: sentence back in Italian; the second — a containerised execution protocol
+#: that zeroes the measured variance — is not in the item, not in the taste, and
+#: not anywhere. A judge that still has a scale puts this in the middle.
+#:
+#: Measured five times before it was declared: 0.500 every time, 1 claim of 2,
+#: and five reasons that all named the containerised protocol as the unsupported
+#: one. That stability is worth saying out loud next to the noise in the real
+#: cases — the judge is not flaky, the *real sentences* are ambiguous to
+#: decompose. "Rilevante per RAG in produzione" is one claim or two depending on
+#: the reading, and that is where the wobble comes from. Here there is nothing
+#: to be ambiguous about, and the judge does not wobble.
+CALIBRATION_ANSWER = (
+    "Misura di quanto la configurazione dell'infrastruttura sposti i benchmark "
+    "di coding agentico, e propone un protocollo di esecuzione containerizzato "
+    "che azzera la varianza misurata."
+)
+
+cases.append(
+    Case(
+        id="calibration-half-supported",
+        vars=CALIBRATION_VARS,
+        context=[JUDGE_SYSTEM, CALIBRATION_ITEM],
+        calibration=Calibration(
+            output=CALIBRATION_ANSWER,
+            check="faithfulness",
+            # Measured 0.500 and dead stable, so the band is not built around
+            # noise that is not there — it is built around the noise the *real*
+            # cases show. One judgement of five landing at an extreme folds to
+            # 0.4 or 0.6 and is inside; two fold to 0.3 or 0.7 and are still
+            # inside, inclusive; three are outside. `suite.py`'s reading of its
+            # own five samples — two wobbling is noise, three is a change —
+            # applied to the instrument instead of to the system.
+            #
+            # Both ends strictly inside (0, 1) because digline refuses anything
+            # else, and it is right to: a band containing an extreme counts a
+            # judge that has collapsed onto that extreme as in band, so it could
+            # not detect the one thing it exists for.
+            low=0.30,
+            high=0.70,
+            # Mandatory, and digline refuses the case without it: `Faithfulness`
+            # puts the question in front of the judge beside the answer on every
+            # real case, and the target that would render it is never called for
+            # a calibration case. Graded blind, this would measure a different
+            # question than the cases it is the control for.
+            input=CALIBRATION_ITEM,
+        ),
+    )
+)
+
+
 suite = Suite(
     tenant="alessandro",
     environment="dev",
@@ -183,15 +256,25 @@ suite = Suite(
             # two sigma — a case that moves further than this moved for a reason
             # other than the judge counting claims differently today.
             #
-            # It is 2σ for a *typical* case and the honest caveat is that two or
-            # three cases are not typical. Where the judge finds one claim in
-            # the sentence — `economics` is 0.8 supported of 1.0 — each sample
-            # is 0 or 1 and nothing between, the standard error reaches 0.200,
-            # and 2σ there is 0.40. Those are the cases that will chatter first,
-            # and `compare` already says so in its own words: five checks are
-            # on the line, their measured bands covering the threshold. Widening
-            # the tolerance until they stopped would be buying quiet with the
-            # only cases that can still move.
+            # Then measured a second way, which is the number to worry about.
+            # `rejudge` put the same 105 recorded answers past the judge again:
+            # the per-case score moved by 0.073 on average and by 0.200 at the
+            # most — `economics`, exactly on this line. Nothing crossed it, in
+            # that replay or in the live run after it, but one case sitting on
+            # the boundary is where the first false regression will come from.
+            #
+            # The tolerance is left where it is anyway, because widening it is
+            # the wrong repair. `--judge-samples` says why: on a *fixed* answer
+            # three judgements of `economics` ranged over the whole scale, 0.0
+            # to 1.0, and thirteen of the 21 cases ranged 0.5 or more. That is
+            # not a flaky judge — the calibration case proves the scale is
+            # intact — it is `total` being the judge's own decision on sentences
+            # that are genuinely ambiguous to decompose: "rilevante per RAG in
+            # produzione" is one claim or two depending on the reading. The
+            # answer to noise at the source is `Repeated` around this check,
+            # which is what `Faithfulness`'s own docstring prescribes and what
+            # `Suite.samples` explicitly is not. It triples the judging, so it
+            # is a decision to take when a case actually chatters, not before.
             tolerance=0.20,
         ),
     ],

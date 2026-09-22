@@ -150,6 +150,31 @@ the judge's. Both of these need a check whose `KIND` is `judged`, and
 `agrees_with_mark` is declared `deterministic`, because the model there produces
 the *answer* and a threshold comparison produces the *verdict*.
 
+The third is the calibration case, declared in `reason.py` and judged on every
+run with no call to the target. It is a sentence I wrote myself about a real
+item, with two claims — one the summary states, one invented — so a judge that
+still has a scale puts it in the middle, and its band is 0.30–0.70. The canary
+watches whether the model is still that model; this watches whether the scale is
+still a scale, which repetition cannot see: a judge that has gone binary is
+*more* repeatable, not less. A run whose calibration case lands outside its band
+cannot be promoted.
+
+What the three of them measured, the first time they were run:
+
+| measurement | what it said |
+| --- | --- |
+| `rejudge` | the same 105 answers judged again move the per-case score by 0.073 on average, 0.200 at most — and `promote` refuses the result, because its interval is the judge's wobble with the target taken out |
+| `--judge-samples 3` | on a *fixed* answer the judge's range reaches **1.000**, and 13 of 21 cases range 0.5 or more |
+| the calibration case | **0.500**, five times out of five, inside its band |
+
+Read together they say something the first two could not say alone. The judge
+has not lost its scale — the calibration case is dead stable in the middle of
+it. The range is `total` being the judge's own decision on sentences that are
+genuinely ambiguous to decompose: "rilevante per RAG in produzione" is one claim
+or two depending on the reading. The five-sample fold already suppresses that
+from 0.5 to 0.073, which is why the suite works at all; the repair if a case
+starts chattering is `Repeated` around the check, not a wider tolerance.
+
 ## report.html
 
 `report.html` is committed, and it is a real one: the run of 2026-08-27 that
