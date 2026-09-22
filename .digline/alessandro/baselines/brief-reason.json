@@ -1,0 +1,885 @@
+{
+  "aggregate": [],
+  "artifacts": {
+    "prompts/item.txt": {
+      "sha": "3ce6ed3b9b59e7e5222d2f203782ed104ddfae06b5c3b6713ed1d43fc4c27f8b",
+      "text": "Source: {source}\nTitle: {title}\nSummary: {summary}"
+    },
+    "prompts/judge.txt": {
+      "sha": "05c20df6d49b7e96498998e2ff1b642a9d2a401c872c336278e12145df3c4509",
+      "text": "You are a reading-list filter for an experienced software engineer (30 years in\nenterprise ERP/HR) who is building AI-native products and studying LLM engineering.\n\nHe WANTS items about:\n- RAG and agents in production (real systems, not demos)\n- LLM evaluation and measurement\n- Mechanistic interpretability\n- The Anthropic/Claude ecosystem (models, API, tooling)\n- Architectural patterns for integrating LLMs into existing systems\n\nHe does NOT want:\n- Funding announcements\n- Product hype without technical substance\n- Introductory tutorials\n\nGiven one feed item (title + summary), rate how much it deserves his reading\ntime on a 1-5 scale:\n5 = must read today\n4 = clearly relevant and worth reading in full (including substantial technical deep-dives and surveys, even without direct product use)\n3 = relevant topic but not a real read: short quotes, \"Quoting ...\" posts, announcements, teasers\n2 = marginal\n1 = skip\n\nRespond with ONLY a JSON object, no other text:\n{\"reason\": \"<one concise sentence in Italian>\", \"score\": <int 1-5>}"
+    }
+  },
+  "config_hash": "6fe13fe748184b18",
+  "created_at": "2026-09-22T09:40:37.911047+00:00",
+  "digline_version": "0.15.1",
+  "environment": "dev",
+  "git_commit": "f02d50e93e69c1a61e3136d89fa5c762d18b8333-dirty",
+  "judge_config": {
+    "identities": [
+      "anthropic/claude-haiku-4-5"
+    ],
+    "values": {
+      "max_tokens": 400,
+      "model": "claude-haiku-4-5",
+      "provider": "anthropic",
+      "resolved_model": "claude-haiku-4-5-20251001"
+    }
+  },
+  "metadata": {},
+  "promoted_at": "2026-09-22T09:45:55.325001+00:00",
+  "redacted": false,
+  "results": [
+    {
+      "case_id": "2026-08-24-controlling-reasoning-effort-in-llms",
+      "suspended": false,
+      "verdicts": [
+        {
+          "assertion": "faithfulness",
+          "assertion_id": "3befe6745bc6cf96",
+          "judged": true,
+          "metadata": {
+            "agreement": 0.6,
+            "claims_supported": 0.8,
+            "claims_total": 2.4,
+            "errored_samples": 0,
+            "samples": 5,
+            "scores": [
+              0.333333,
+              0.0,
+              0.666667,
+              0.0,
+              0.5
+            ],
+            "spread": 0.666667
+          },
+          "reason": "mean of 5 samples (0.333333, 0.000000, 0.666667, 0.000000, 0.500000)",
+          "sample_max": 0.666667,
+          "sample_min": 0.0,
+          "samples": [
+            0.333333,
+            0.0,
+            0.666667,
+            0.0,
+            0.5
+          ],
+          "score": 0.3,
+          "status": "fail",
+          "threshold": 0.35,
+          "tolerance": 0.2
+        }
+      ]
+    },
+    {
+      "case_id": "2026-08-24-don-t-classify-hallucinate",
+      "suspended": false,
+      "verdicts": [
+        {
+          "assertion": "faithfulness",
+          "assertion_id": "3befe6745bc6cf96",
+          "judged": true,
+          "metadata": {
+            "agreement": 1.0,
+            "claims_supported": 2.6,
+            "claims_total": 3.8,
+            "errored_samples": 0,
+            "samples": 5,
+            "scores": [
+              0.75,
+              0.666667,
+              0.4,
+              1.0,
+              0.666667
+            ],
+            "spread": 0.6
+          },
+          "reason": "mean of 5 samples (0.750000, 0.666667, 0.400000, 1.000000, 0.666667)",
+          "sample_max": 1.0,
+          "sample_min": 0.4,
+          "samples": [
+            0.75,
+            0.666667,
+            0.4,
+            1.0,
+            0.666667
+          ],
+          "score": 0.696667,
+          "status": "pass",
+          "threshold": 0.35,
+          "tolerance": 0.2
+        }
+      ]
+    },
+    {
+      "case_id": "2026-08-24-more-than-just-code-review",
+      "suspended": false,
+      "verdicts": [
+        {
+          "assertion": "faithfulness",
+          "assertion_id": "3befe6745bc6cf96",
+          "judged": true,
+          "metadata": {
+            "agreement": 0.8,
+            "claims_supported": 1.4,
+            "claims_total": 2.6,
+            "errored_samples": 0,
+            "samples": 5,
+            "scores": [
+              0.666667,
+              0.666667,
+              0.5,
+              0.333333,
+              0.5
+            ],
+            "spread": 0.333334
+          },
+          "reason": "mean of 5 samples (0.666667, 0.666667, 0.500000, 0.333333, 0.500000)",
+          "sample_max": 0.666667,
+          "sample_min": 0.333333,
+          "samples": [
+            0.666667,
+            0.666667,
+            0.5,
+            0.333333,
+            0.5
+          ],
+          "score": 0.533333,
+          "status": "pass",
+          "threshold": 0.35,
+          "tolerance": 0.2
+        }
+      ]
+    },
+    {
+      "case_id": "2026-08-24-quoting-drew-breunig",
+      "suspended": false,
+      "verdicts": [
+        {
+          "assertion": "faithfulness",
+          "assertion_id": "3befe6745bc6cf96",
+          "judged": true,
+          "metadata": {
+            "agreement": 1.0,
+            "claims_supported": 2.0,
+            "claims_total": 2.8,
+            "errored_samples": 0,
+            "samples": 5,
+            "scores": [
+              1.0,
+              0.666667,
+              0.5,
+              0.75,
+              0.5
+            ],
+            "spread": 0.5
+          },
+          "reason": "mean of 5 samples (1.000000, 0.666667, 0.500000, 0.750000, 0.500000)",
+          "sample_max": 1.0,
+          "sample_min": 0.5,
+          "samples": [
+            1.0,
+            0.666667,
+            0.5,
+            0.75,
+            0.5
+          ],
+          "score": 0.683333,
+          "status": "pass",
+          "threshold": 0.35,
+          "tolerance": 0.2
+        }
+      ]
+    },
+    {
+      "case_id": "2026-08-24-recent-developments-in-llm-architectures",
+      "suspended": false,
+      "verdicts": [
+        {
+          "assertion": "faithfulness",
+          "assertion_id": "3befe6745bc6cf96",
+          "judged": true,
+          "metadata": {
+            "agreement": 1.0,
+            "claims_supported": 1.6,
+            "claims_total": 2.4,
+            "errored_samples": 0,
+            "samples": 5,
+            "scores": [
+              0.5,
+              0.666667,
+              1.0,
+              0.5,
+              0.5
+            ],
+            "spread": 0.5
+          },
+          "reason": "mean of 5 samples (0.500000, 0.666667, 1.000000, 0.500000, 0.500000)",
+          "sample_max": 1.0,
+          "sample_min": 0.5,
+          "samples": [
+            0.5,
+            0.666667,
+            1.0,
+            0.5,
+            0.5
+          ],
+          "score": 0.633333,
+          "status": "pass",
+          "threshold": 0.35,
+          "tolerance": 0.2
+        }
+      ]
+    },
+    {
+      "case_id": "2026-08-24-ai-product-engineering-notes",
+      "suspended": false,
+      "verdicts": [
+        {
+          "assertion": "faithfulness",
+          "assertion_id": "3befe6745bc6cf96",
+          "judged": true,
+          "metadata": {
+            "agreement": 0.8,
+            "claims_supported": 1.6,
+            "claims_total": 2.2,
+            "errored_samples": 0,
+            "samples": 5,
+            "scores": [
+              1.0,
+              1.0,
+              0.5,
+              0.333333,
+              1.0
+            ],
+            "spread": 0.666667
+          },
+          "reason": "mean of 5 samples (1.000000, 1.000000, 0.500000, 0.333333, 1.000000)",
+          "sample_max": 1.0,
+          "sample_min": 0.333333,
+          "samples": [
+            1.0,
+            1.0,
+            0.5,
+            0.333333,
+            1.0
+          ],
+          "score": 0.766667,
+          "status": "pass",
+          "threshold": 0.35,
+          "tolerance": 0.2
+        }
+      ]
+    },
+    {
+      "case_id": "2026-08-24-alignmentmay-8-2026teaching-claude-whyne",
+      "suspended": false,
+      "verdicts": [
+        {
+          "assertion": "faithfulness",
+          "assertion_id": "3befe6745bc6cf96",
+          "judged": true,
+          "metadata": {
+            "agreement": 1.0,
+            "claims_supported": 2.0,
+            "claims_total": 2.8,
+            "errored_samples": 0,
+            "samples": 5,
+            "scores": [
+              0.666667,
+              0.666667,
+              1.0,
+              0.666667,
+              0.666667
+            ],
+            "spread": 0.333333
+          },
+          "reason": "mean of 5 samples (0.666667, 0.666667, 1.000000, 0.666667, 0.666667)",
+          "sample_max": 1.0,
+          "sample_min": 0.666667,
+          "samples": [
+            0.666667,
+            0.666667,
+            1.0,
+            0.666667,
+            0.666667
+          ],
+          "score": 0.733334,
+          "status": "pass",
+          "threshold": 0.35,
+          "tolerance": 0.2
+        }
+      ]
+    },
+    {
+      "case_id": "2026-08-24-aug-13-2026frontier-red-teampatterns-and",
+      "suspended": false,
+      "verdicts": [
+        {
+          "assertion": "faithfulness",
+          "assertion_id": "3befe6745bc6cf96",
+          "judged": true,
+          "metadata": {
+            "agreement": 1.0,
+            "claims_supported": 1.8,
+            "claims_total": 2.8,
+            "errored_samples": 0,
+            "samples": 5,
+            "scores": [
+              0.5,
+              0.666667,
+              0.666667,
+              0.666667,
+              0.666667
+            ],
+            "spread": 0.166667
+          },
+          "reason": "mean of 5 samples (0.500000, 0.666667, 0.666667, 0.666667, 0.666667)",
+          "sample_max": 0.666667,
+          "sample_min": 0.5,
+          "samples": [
+            0.5,
+            0.666667,
+            0.666667,
+            0.666667,
+            0.666667
+          ],
+          "score": 0.633334,
+          "status": "pass",
+          "threshold": 0.35,
+          "tolerance": 0.2
+        }
+      ]
+    },
+    {
+      "case_id": "2026-08-24-building-a-c-compiler-with-a-team-of-par",
+      "suspended": false,
+      "verdicts": [
+        {
+          "assertion": "faithfulness",
+          "assertion_id": "3befe6745bc6cf96",
+          "judged": true,
+          "metadata": {
+            "agreement": 1.0,
+            "claims_supported": 1.6,
+            "claims_total": 2.4,
+            "errored_samples": 0,
+            "samples": 5,
+            "scores": [
+              0.666667,
+              1.0,
+              0.666667,
+              0.5,
+              0.5
+            ],
+            "spread": 0.5
+          },
+          "reason": "mean of 5 samples (0.666667, 1.000000, 0.666667, 0.500000, 0.500000)",
+          "sample_max": 1.0,
+          "sample_min": 0.5,
+          "samples": [
+            0.666667,
+            1.0,
+            0.666667,
+            0.5,
+            0.5
+          ],
+          "score": 0.666667,
+          "status": "pass",
+          "threshold": 0.35,
+          "tolerance": 0.2
+        }
+      ]
+    },
+    {
+      "case_id": "2026-08-24-eval-awareness-in-claude-opus-4-6-s-brow",
+      "suspended": false,
+      "verdicts": [
+        {
+          "assertion": "faithfulness",
+          "assertion_id": "3befe6745bc6cf96",
+          "judged": true,
+          "metadata": {
+            "agreement": 1.0,
+            "claims_supported": 2.4,
+            "claims_total": 2.8,
+            "errored_samples": 0,
+            "samples": 5,
+            "scores": [
+              1.0,
+              1.0,
+              0.666667,
+              1.0,
+              0.5
+            ],
+            "spread": 0.5
+          },
+          "reason": "mean of 5 samples (1.000000, 1.000000, 0.666667, 1.000000, 0.500000)",
+          "sample_max": 1.0,
+          "sample_min": 0.5,
+          "samples": [
+            1.0,
+            1.0,
+            0.666667,
+            1.0,
+            0.5
+          ],
+          "score": 0.833333,
+          "status": "pass",
+          "threshold": 0.35,
+          "tolerance": 0.2
+        }
+      ]
+    },
+    {
+      "case_id": "2026-08-24-evals-skills-for-coding-agents",
+      "suspended": false,
+      "verdicts": [
+        {
+          "assertion": "faithfulness",
+          "assertion_id": "3befe6745bc6cf96",
+          "judged": true,
+          "metadata": {
+            "agreement": 1.0,
+            "claims_supported": 2.0,
+            "claims_total": 2.8,
+            "errored_samples": 0,
+            "samples": 5,
+            "scores": [
+              0.666667,
+              0.666667,
+              0.666667,
+              1.0,
+              0.666667
+            ],
+            "spread": 0.333333
+          },
+          "reason": "mean of 5 samples (0.666667, 0.666667, 0.666667, 1.000000, 0.666667)",
+          "sample_max": 1.0,
+          "sample_min": 0.666667,
+          "samples": [
+            0.666667,
+            0.666667,
+            0.666667,
+            1.0,
+            0.666667
+          ],
+          "score": 0.733334,
+          "status": "pass",
+          "threshold": 0.35,
+          "tolerance": 0.2
+        }
+      ]
+    },
+    {
+      "case_id": "2026-08-24-harness-design-for-long-running-applicat",
+      "suspended": false,
+      "verdicts": [
+        {
+          "assertion": "faithfulness",
+          "assertion_id": "3befe6745bc6cf96",
+          "judged": true,
+          "metadata": {
+            "agreement": 0.8,
+            "claims_supported": 1.8,
+            "claims_total": 2.6,
+            "errored_samples": 0,
+            "samples": 5,
+            "scores": [
+              0.666667,
+              1.0,
+              0.333333,
+              1.0,
+              0.666667
+            ],
+            "spread": 0.666667
+          },
+          "reason": "mean of 5 samples (0.666667, 1.000000, 0.333333, 1.000000, 0.666667)",
+          "sample_max": 1.0,
+          "sample_min": 0.333333,
+          "samples": [
+            0.666667,
+            1.0,
+            0.333333,
+            1.0,
+            0.666667
+          ],
+          "score": 0.733333,
+          "status": "pass",
+          "threshold": 0.35,
+          "tolerance": 0.2
+        }
+      ]
+    },
+    {
+      "case_id": "2026-08-24-how-we-built-claude-code-auto-mode-a-saf",
+      "suspended": false,
+      "verdicts": [
+        {
+          "assertion": "faithfulness",
+          "assertion_id": "3befe6745bc6cf96",
+          "judged": true,
+          "metadata": {
+            "agreement": 1.0,
+            "claims_supported": 1.8,
+            "claims_total": 2.6,
+            "errored_samples": 0,
+            "samples": 5,
+            "scores": [
+              0.666667,
+              1.0,
+              0.666667,
+              0.666667,
+              0.666667
+            ],
+            "spread": 0.333333
+          },
+          "reason": "mean of 5 samples (0.666667, 1.000000, 0.666667, 0.666667, 0.666667)",
+          "sample_max": 1.0,
+          "sample_min": 0.666667,
+          "samples": [
+            0.666667,
+            1.0,
+            0.666667,
+            0.666667,
+            0.666667
+          ],
+          "score": 0.733334,
+          "status": "pass",
+          "threshold": 0.35,
+          "tolerance": 0.2
+        }
+      ]
+    },
+    {
+      "case_id": "2026-08-24-how-we-contain-claude-across-products",
+      "suspended": false,
+      "verdicts": [
+        {
+          "assertion": "faithfulness",
+          "assertion_id": "3befe6745bc6cf96",
+          "judged": true,
+          "metadata": {
+            "agreement": 1.0,
+            "claims_supported": 1.4,
+            "claims_total": 1.6,
+            "errored_samples": 0,
+            "samples": 5,
+            "scores": [
+              0.5,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "spread": 0.5
+          },
+          "reason": "mean of 5 samples (0.500000, 1.000000, 1.000000, 1.000000, 1.000000)",
+          "sample_max": 1.0,
+          "sample_min": 0.5,
+          "samples": [
+            0.5,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "score": 0.9,
+          "status": "pass",
+          "threshold": 0.35,
+          "tolerance": 0.2
+        }
+      ]
+    },
+    {
+      "case_id": "2026-08-24-interpretabilityjul-6-2026a-global-works",
+      "suspended": false,
+      "verdicts": [
+        {
+          "assertion": "faithfulness",
+          "assertion_id": "3befe6745bc6cf96",
+          "judged": true,
+          "metadata": {
+            "agreement": 1.0,
+            "claims_supported": 2.2,
+            "claims_total": 2.4,
+            "errored_samples": 0,
+            "samples": 5,
+            "scores": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              0.666667
+            ],
+            "spread": 0.333333
+          },
+          "reason": "mean of 5 samples (1.000000, 1.000000, 1.000000, 1.000000, 0.666667)",
+          "sample_max": 1.0,
+          "sample_min": 0.666667,
+          "samples": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            0.666667
+          ],
+          "score": 0.933333,
+          "status": "pass",
+          "threshold": 0.35,
+          "tolerance": 0.2
+        }
+      ]
+    },
+    {
+      "case_id": "2026-08-24-quantifying-infrastructure-noise-in-agen",
+      "suspended": false,
+      "verdicts": [
+        {
+          "assertion": "faithfulness",
+          "assertion_id": "3befe6745bc6cf96",
+          "judged": true,
+          "metadata": {
+            "agreement": 1.0,
+            "claims_supported": 2.0,
+            "claims_total": 2.6,
+            "errored_samples": 0,
+            "samples": 5,
+            "scores": [
+              1.0,
+              1.0,
+              0.666667,
+              0.666667,
+              0.666667
+            ],
+            "spread": 0.333333
+          },
+          "reason": "mean of 5 samples (1.000000, 1.000000, 0.666667, 0.666667, 0.666667)",
+          "sample_max": 1.0,
+          "sample_min": 0.666667,
+          "samples": [
+            1.0,
+            1.0,
+            0.666667,
+            0.666667,
+            0.666667
+          ],
+          "score": 0.8,
+          "status": "pass",
+          "threshold": 0.35,
+          "tolerance": 0.2
+        }
+      ]
+    },
+    {
+      "case_id": "2026-08-24-scaling-managed-agents-decoupling-the-br",
+      "suspended": false,
+      "verdicts": [
+        {
+          "assertion": "faithfulness",
+          "assertion_id": "3befe6745bc6cf96",
+          "judged": true,
+          "metadata": {
+            "agreement": 1.0,
+            "claims_supported": 1.8,
+            "claims_total": 2.0,
+            "errored_samples": 0,
+            "samples": 5,
+            "scores": [
+              0.5,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "spread": 0.5
+          },
+          "reason": "mean of 5 samples (0.500000, 1.000000, 1.000000, 1.000000, 1.000000)",
+          "sample_max": 1.0,
+          "sample_min": 0.5,
+          "samples": [
+            0.5,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "score": 0.9,
+          "status": "pass",
+          "threshold": 0.35,
+          "tolerance": 0.2
+        }
+      ]
+    },
+    {
+      "case_id": "2026-08-24-it-s-hard-to-eval-is-a-product-smell",
+      "suspended": false,
+      "verdicts": [
+        {
+          "assertion": "faithfulness",
+          "assertion_id": "3befe6745bc6cf96",
+          "judged": true,
+          "metadata": {
+            "agreement": 1.0,
+            "claims_supported": 1.8,
+            "claims_total": 2.6,
+            "errored_samples": 0,
+            "samples": 5,
+            "scores": [
+              0.5,
+              0.5,
+              1.0,
+              0.666667,
+              0.666667
+            ],
+            "spread": 0.5
+          },
+          "reason": "mean of 5 samples (0.500000, 0.500000, 1.000000, 0.666667, 0.666667)",
+          "sample_max": 1.0,
+          "sample_min": 0.5,
+          "samples": [
+            0.5,
+            0.5,
+            1.0,
+            0.666667,
+            0.666667
+          ],
+          "score": 0.666667,
+          "status": "pass",
+          "threshold": 0.35,
+          "tolerance": 0.2
+        }
+      ]
+    },
+    {
+      "case_id": "2026-08-24-your-executable-is-a-sqlite-database",
+      "suspended": false,
+      "verdicts": [
+        {
+          "assertion": "faithfulness",
+          "assertion_id": "3befe6745bc6cf96",
+          "judged": true,
+          "metadata": {
+            "agreement": 1.0,
+            "claims_supported": 1.0,
+            "claims_total": 1.4,
+            "errored_samples": 0,
+            "samples": 5,
+            "scores": [
+              1.0,
+              0.5,
+              0.5,
+              1.0,
+              1.0
+            ],
+            "spread": 0.5
+          },
+          "reason": "mean of 5 samples (1.000000, 0.500000, 0.500000, 1.000000, 1.000000)",
+          "sample_max": 1.0,
+          "sample_min": 0.5,
+          "samples": [
+            1.0,
+            0.5,
+            0.5,
+            1.0,
+            1.0
+          ],
+          "score": 0.8,
+          "status": "pass",
+          "threshold": 0.35,
+          "tolerance": 0.2
+        }
+      ]
+    },
+    {
+      "case_id": "2026-08-25-economics",
+      "suspended": false,
+      "verdicts": [
+        {
+          "assertion": "faithfulness",
+          "assertion_id": "3befe6745bc6cf96",
+          "judged": true,
+          "metadata": {
+            "agreement": 0.8,
+            "claims_supported": 0.8,
+            "claims_total": 1.0,
+            "errored_samples": 0,
+            "samples": 5,
+            "scores": [
+              1.0,
+              1.0,
+              1.0,
+              0.0,
+              1.0
+            ],
+            "spread": 1.0
+          },
+          "reason": "mean of 5 samples (1.000000, 1.000000, 1.000000, 0.000000, 1.000000)",
+          "sample_max": 1.0,
+          "sample_min": 0.0,
+          "samples": [
+            1.0,
+            1.0,
+            1.0,
+            0.0,
+            1.0
+          ],
+          "score": 0.8,
+          "status": "pass",
+          "threshold": 0.35,
+          "tolerance": 0.2
+        }
+      ]
+    },
+    {
+      "case_id": "2026-08-25-llm-anthropic-0-27",
+      "suspended": false,
+      "verdicts": [
+        {
+          "assertion": "faithfulness",
+          "assertion_id": "3befe6745bc6cf96",
+          "judged": true,
+          "metadata": {
+            "agreement": 1.0,
+            "claims_supported": 1.4,
+            "claims_total": 2.0,
+            "errored_samples": 0,
+            "samples": 5,
+            "scores": [
+              1.0,
+              0.5,
+              0.75,
+              0.5,
+              1.0
+            ],
+            "spread": 0.5
+          },
+          "reason": "mean of 5 samples (1.000000, 0.500000, 0.750000, 0.500000, 1.000000)",
+          "sample_max": 1.0,
+          "sample_min": 0.5,
+          "samples": [
+            1.0,
+            0.5,
+            0.75,
+            0.5,
+            1.0
+          ],
+          "score": 0.75,
+          "status": "pass",
+          "threshold": 0.35,
+          "tolerance": 0.2
+        }
+      ]
+    }
+  ],
+  "schema_version": 13,
+  "suite": "brief-reason",
+  "target_config": {
+    "values": {
+      "max_tokens": 200,
+      "model": "claude-haiku-4-5",
+      "provider": "anthropic",
+      "resolved_model": "claude-haiku-4-5-20251001"
+    }
+  },
+  "tenant": "alessandro"
+}

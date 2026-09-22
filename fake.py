@@ -5,6 +5,12 @@ worth having; a run on every push is worth neither, and a repository whose
 checks only work for whoever holds the key is a repository nobody can send a
 patch to. `BRIEF_FAKE_JUDGE=1` puts this in place of the SDK (see `suite.py`).
 
+Two providers are faked, because there are two models in play. `FakeAnthropic`
+stands in for the one being measured — the digest's own judge, scoring an item
+1-5. `FakeClaimAnthropic` stands in for the *instrument* `reason.py` measures it
+with: the claim judge that counts how much of the sentence the item supports.
+Different questions, different shapes, so they are two classes and not one.
+
 What it proves is the wiring, not the judge: that the suite loads, that the
 target composes both prompt files, that the assertions evaluate, that a run and
 a report come out the other end. It says nothing about whether the real judge
@@ -26,6 +32,7 @@ record than production writes.
 
 from __future__ import annotations
 
+import json
 import re
 from dataclasses import dataclass, field
 from typing import Any
@@ -40,6 +47,19 @@ STOPWORDS = frozenset(
 def _keywords(bullet: str) -> set[str]:
     words = re.findall(r"[a-z]{3,}", bullet.lower())
     return {w for w in words if w not in STOPWORDS}
+
+
+def _title(prompt: str) -> str:
+    """The `Title:` line of a rendered `prompts/item.txt`, or the empty string.
+
+    Read out of the prompt rather than passed in, because that is the only
+    thing this fake is ever given — and reading it is what lets the sentence it
+    writes be about the item, the way the real one is.
+    """
+    for line in prompt.splitlines():
+        if line.startswith("Title:"):
+            return line[len("Title:") :].strip()
+    return ""
 
 
 def _bullets(system: str, heading: str) -> list[set[str]]:
@@ -106,13 +126,26 @@ class _Messages:
             bool(kw & _keywords(text)) for kw in _bullets(system, "He does NOT want")
         )
         score = max(1, min(5, 3 + wanted - avoided))
-        reason = f"fake judge: {wanted} wanted topics, {avoided} unwanted"
+        # The sentence names the item, because the real one does. `reason.py`
+        # measures how much of the sentence the item supports, and a fake whose
+        # words were the same whatever it had been shown would score identically
+        # on all 21 cases — the "every prompt looks equally good" failure this
+        # file exists to avoid, moved one field along.
+        reason = (
+            f"fake judge: {_title(prompt)}; "
+            f"{wanted} wanted topics, {avoided} unwanted"
+        )
 
         # The prefill is `{`, and the SDK returns only what follows it: the
         # caller puts the brace back. A fake that returned the whole object
         # would hand `brief.judge()` a `{{` and fail to parse. (See
         # `AnthropicTarget._complete`.)
-        answer = f'"reason": "{reason}", "score": {score}}}'
+        #
+        # Built by `json.dumps` and beheaded, not by an f-string: a title
+        # carrying a quote — `Quoting ...` posts are a whole category in these
+        # feeds — would otherwise produce a reply that is not JSON, and the
+        # fake would fail for a reason the real provider never has.
+        answer = json.dumps({"reason": reason, "score": score}, ensure_ascii=False)[1:]
         return _Reply(
             content=[_Block(answer)],
             usage=_Usage(
@@ -127,3 +160,72 @@ class FakeAnthropic:
 
     def __init__(self) -> None:
         self.messages = _Messages()
+
+
+# --- The claim judge, faked ---------------------------------------------------
+
+#: The line every judge prompt puts the graded text behind. Declared in
+#: `digline.core.assertions` as `JUDGE_OUTPUT_LABEL` and repeated here rather
+#: than imported, because a fake that broke when digline renamed a private
+#: constant would be a fake nobody could read. It is interface — `docs/api.md`
+#: spells the shape out under `Judge` — and a rename would be a release note.
+CLAIM_OUTPUT_LABEL = "Output to judge:"
+
+#: The claim judge's own name, for `FAKE_MODEL`'s reason. It is a second
+#: instrument and must not answer to the first one's name: a run in which the
+#: target was faked and the judge was real, or the reverse, is a run whose
+#: `judge_config` and `target_config` have to disagree.
+FAKE_CLAIM_MODEL = "brief-fake-claim-judge"
+
+#: What a claim is, to this fake. Splitting an Italian sentence into claims is
+#: the real judge's whole job and is not reproducible here; splitting it on the
+#: marks that separate clauses is the honest approximation — it moves when the
+#: sentence moves, which is the only property the wiring test needs.
+_CLAUSE = re.compile(r"[.,;:!?]|\s+—\s+|\s+-\s+")
+
+
+def _clauses(text: str) -> list[str]:
+    return [part.strip() for part in _CLAUSE.split(text) if part.strip()]
+
+
+class _ClaimMessages:
+    def create(self, **request: Any) -> _Reply:
+        prompt: str = request["messages"][0]["content"]
+        # Everything before the label is what the output was allowed to use —
+        # the Context section and, in this suite, the Input that repeats it.
+        # Everything after is the sentence being checked. Reading them this way
+        # round is what makes the fake follow `judge_prompt`'s shape rather than
+        # a shape of its own.
+        given, _, output = prompt.partition(CLAIM_OUTPUT_LABEL)
+        given_words = _keywords(given.split("Context:", 1)[-1])
+
+        clauses = _clauses(output)
+        total = len(clauses)
+        supported = sum(1 for clause in clauses if _keywords(clause) & given_words)
+        # `total == 0` is returned rather than nudged to 1. An output with no
+        # clauses is an empty sentence, and `Faithfulness` turns that into an
+        # `error` on purpose — 0/0 is not 0. A fake that quietly reported one
+        # claim would hide the one outcome `reason.py` says it is watching for.
+        reason = (
+            f"fake claim judge: {supported} of {total} clauses share a word "
+            f"with the context"
+        )
+        answer = json.dumps(
+            {"supported": supported, "total": total, "reason": reason},
+            ensure_ascii=False,
+        )[1:]
+        return _Reply(
+            content=[_Block(answer)],
+            usage=_Usage(
+                input_tokens=len(prompt) // 4,
+                output_tokens=len(answer) // 4,
+            ),
+            model=FAKE_CLAIM_MODEL,
+        )
+
+
+class FakeClaimAnthropic:
+    """Whatever `AnthropicClaimJudge` calls, and nothing else."""
+
+    def __init__(self) -> None:
+        self.messages = _ClaimMessages()

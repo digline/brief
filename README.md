@@ -82,6 +82,74 @@ The suite calls the judge through the same two files the application does —
 every run, which is why the committed baseline carries the prompt that produced
 it.
 
+## The sentence
+
+`suite.py` measures the score. Nothing measured the sentence printed under the
+title, and the sentence is what decides whether I open the article.
+
+The model writes it from the source, the title and the summary — **it has not
+read the piece.** So a sentence that names a benchmark, a comparison or a
+conclusion the summary never mentions is not a florid answer; it is a decision I
+took on something that does not exist. Until `reason.py` the only thing checked
+about it was that it was not empty.
+
+```console
+$ uv run digline run     --suite reason.py            # ~$0.19: 21 cases x 5 samples, two models each
+$ uv run digline compare --suite reason.py --run latest --locale en
+```
+
+The check is `Faithfulness`, and it needs no label I would have to invent: the
+ground truth is the item, which `cases/brief.json` already holds. A claim judge
+is asked to decompose the sentence and count how many of its claims the item
+supports; digline does the division. The context is **both** prompt files, not
+just the item — the model was given the taste in `prompts/judge.txt` too, and a
+context holding only the item marks every "rilevante per ..." clause unsupported
+by construction. That mistake was in the first draft and cost 0.19 of mean score.
+
+The first run measured a mean of 0.725 over the 21 cases, median 0.733, and it
+is not higher because `prompts/judge.txt` asks for a sentence that *judges*: a
+characterisation is a claim neither prompt states, the judge counts it
+unsupported, and it is right to. The threshold is 0.35 — under the pack, over
+the floor. One case sits below it and stays there:
+`controlling-reasoning-effort-in-llms`, where the item says only that LLMs learn
+low-, medium- and high-effort reasoning modes and the sentence keeps promising
+cost and latency optimisation for RAG and agents in production. That is the
+failure this suite was written for, sitting in the reference with its name on
+it.
+
+A blank reason **errors** rather than fails, and that is correct: with no claims
+there is no fraction, and 0/0 is not 0. The first exit 2 reading "the judge found
+no claims in the output" is a contentless sentence from the model, and the fix is
+in `prompts/judge.txt`.
+
+`reason.py` sets `record_responses=True`. It is the first suite here that does,
+which makes its runs the first that can ever be re-judged — see below.
+
+## Re-judging, and the two measurements it unlocks
+
+Recording is opt-in and was off, so the eighteen stored runs of `brief-judge`
+hold verdicts and no answers. A run already produced cannot gain answers nobody
+kept, so none of them can be replayed, and none ever will be. `brief-reason`'s
+runs can:
+
+```console
+$ uv run digline rejudge --suite reason.py --run latest                  # the judge alone; no call to the target
+$ uv run digline rejudge --suite reason.py --run latest --judge-samples 5
+```
+
+`rejudge` re-runs the assertions over the recorded answers and writes a run that
+declares where they came from, so nothing can mistake it for a measurement — and
+`promote` refuses it outright. It costs the judging and not the target, which is
+what makes moving a threshold or swapping a judge affordable.
+
+`--judge-samples M` asks each judged check M times per recorded answer and
+reports the judge's own range beside the calibration result. It runs only on a
+replay, because on a live target the range would mix the target's variance into
+the judge's. Both of these need a check whose `KIND` is `judged`, and
+`Faithfulness` is the first one in this repository: `suite.py`'s
+`agrees_with_mark` is declared `deterministic`, because the model there produces
+the *answer* and a threshold comparison produces the *verdict*.
+
 ## report.html
 
 `report.html` is committed, and it is a real one: the run of 2026-08-27 that
@@ -99,7 +167,8 @@ the honest reading; what it does say is that the cut cost nothing.
 ## The fake judge, and CI
 
 `.github/workflows/check.yml` runs on every push with `BRIEF_FAKE_JUDGE=1`,
-which swaps the provider for `fake.py`. No key, no network, no spend, and a
+which swaps both providers for `fake.py` — `FakeAnthropic` for the digest's
+judge, `FakeClaimAnthropic` for the instrument `reason.py` measures it with. No key, no network, no spend, and a
 fork can run the checks too.
 
 The fake proves the wiring — the suite loads, both prompts compose, the
@@ -131,10 +200,11 @@ answers `brief-fake-judge` to "what model was that", because it is not
 brief.py            the digest: fetch, judge, print, ask, remember
 prompts/judge.txt   the system prompt — the taste being encoded
 prompts/item.txt    the user prompt, one item, rendered by app and suite alike
-suite.py            the suite: assertions, thresholds, cases
+suite.py            the score suite: does the model still agree with me
+reason.py           the sentence suite: is the reason faithful to the item
 cases/brief.json    21 cases with my own marks as the expected answer
 make_cases.py       seen.json -> cases/brief.json
-fake.py             the provider, faked, for CI
+fake.py             both providers, faked, for CI — the target and the claim judge
 probe.py            one real call, printed field by field — how the fake stays honest
 report.html         one comparison, rendered — the one of 2026-08-27
 fixtures/           runs kept out of the ignored run store, and what they show

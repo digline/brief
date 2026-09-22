@@ -38,6 +38,20 @@ jobs:
           uv run digline promote --suite suite.py --root "$ROOT" --run latest
           uv run digline compare --suite suite.py --root "$ROOT" --run latest --locale en
 
+      # The second suite, and the second fake: `FakeClaimAnthropic` stands in
+      # for the instrument, not for the thing measured. Its sentence is mostly
+      # about its own bookkeeping, so it scores low by construction and the run
+      # is mostly red — which is the correct answer to the question asked, and
+      # harmless here because the reference it is compared against is itself.
+      - name: The reason suite, both providers faked
+        env:
+          BRIEF_FAKE_JUDGE: "1"
+          ROOT: ${{ runner.temp }}/digline
+        run: |
+          uv run digline run     --suite reason.py --root "$ROOT"
+          uv run digline promote --suite reason.py --root "$ROOT" --run latest
+          uv run digline compare --suite reason.py --root "$ROOT" --run latest --locale en
+
   # The real thing, against the committed baseline. It spends, so it runs on
   # the schedule and when asked — never on a push.
   live:
@@ -61,9 +75,22 @@ jobs:
             echo "No ANTHROPIC_API_KEY configured — skipping the live run."
           fi
 
+      # Both runs before either gate, on purpose. `compare` exits 1 on a
+      # regression and a failed step ends the job, so gating between the two
+      # runs would mean a bad morning for the score cost us the measurement of
+      # the sentence — the expensive half, and the one we would want most.
       - if: steps.key.outputs.present == 'true'
         run: uv run digline run --suite suite.py
 
-      # The gate. Exit 1 if anything got worse than the committed baseline.
+      # The sentence. Two models per case here — the target being measured and
+      # the claim judge measuring it — so it costs about $0.19 against
+      # `suite.py`'s $0.07.
+      - if: steps.key.outputs.present == 'true'
+        run: uv run digline run --suite reason.py
+
+      # The gates. Exit 1 if anything got worse than the committed baseline.
       - if: steps.key.outputs.present == 'true'
         run: uv run digline compare --suite suite.py --run latest --locale en
+
+      - if: steps.key.outputs.present == 'true'
+        run: uv run digline compare --suite reason.py --run latest --locale en
