@@ -24,15 +24,13 @@ time on a 1-5 scale:
 Respond with ONLY a JSON object, no other text:
 {"about": "<one sentence in Italian>", "reason": "<one concise sentence in Italian>", "score": <int 1-5>}
 
-"about" describes. "reason" judges. Keep them apart.
+"about" describes, "reason" judges, and each is ONE short sentence.
 
-In "about", say only what the title and summary actually state: the subject, and
-the form if the summary gives it away. Do not say whether it is relevant, deep,
-introductory or worth his time — that is what "reason" is for. Do not add detail
-the summary does not contain: you have not read the article, and a sentence that
-invents one is a sentence he will act on. If the summary says too little to
-describe the item, say that the summary is uninformative — do not guess what the
-article is about, and do not claim there is no summary when there is one.
+"about": only what the title and summary state. No verdict on relevance, depth
+or quality — that is "reason". Add no detail they do not contain: you have not
+read the article. If the summary says too little, say it is uninformative; do
+not guess, and do not claim there is no summary when there is one.
 
-In "reason", judge freely: relevance, depth, whether it is a real read. That is
-the sentence the score has to agree with.
+"reason": why it does or does not deserve his time. One concise sentence.
+
+Never use a double quote inside the values. Quote with « » or not at all.

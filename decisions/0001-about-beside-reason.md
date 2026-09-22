@@ -280,3 +280,40 @@ more often.
 
 The fix is one clause in the prompt — do not use double quotes inside the
 values — and it belongs with the other two.
+
+
+## The three clauses, applied and read (2026-09-22)
+
+The instruction block went 885 → 677 chars: `reason` lost *"judge freely"* and
+got *"One concise sentence"* back, the added prose was said in fewer words, and
+one clause was added — never a double quote inside a value, quote with « ».
+
+Read against the expectation written before the run:
+
+| | old | split v1 | **split v2** | my estimate |
+|---|---|---|---|---|
+| input tok/call | 366.5 | 558.5 | **508.5** | 470 |
+| output tok/call | 59.9 | 123.6 | **111.6** | 105 |
+| $ per judgement | 0.000666 | 0.001176 | **0.001067** | 0.0009 |
+| `about` chars | — | 152.6 | **142.5** | — |
+| `reason` chars | 153.0 | 212.1 | **176.6** | 153 |
+
+**Every number moved the right way and every one fell short of the estimate.**
+Cost came down 9%, not the 23% predicted; `reason` came back to 1.15x the old
+length, not 1.00x. The estimate was optimistic in the same direction as the
+token-cap prediction earlier the same day — twice in one session, both times
+cheaper-and-shorter than reality. That is a bias worth naming: a prediction
+about my own prose is a prediction about a model's, and I keep reading my own
+instructions as tighter than the model treats them.
+
+**The JSON clause: zero errors, 105 of 105 calls, and that is not proof.** At
+the ~2% rate measured over the previous four runs, a clean run of 105 happens by
+luck about 12% of the time. It is the right sign and nothing more; two or three
+more clean runs would settle it.
+
+**Agreement: not read from this run, on purpose.** accuracy 15/21 and precision
+7/10, both on the same denominator as the baseline, `compare` says 3 checks
+worse. That is one run, and the finding of the previous round is that one run
+cannot tell a regression from a coin — the case that looked like a regression
+after run 1 turned out to be noise in 3 of the next 4. Reading this one would be
+making the mistake the round before it just documented.
