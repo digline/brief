@@ -143,6 +143,43 @@ has seen a third of what a judged morning costs. `suite.py`'s own run writes
 `judge: 0 calls, $0.0`, which is the honest line for a suite with nothing judged
 in it.
 
+### What is not checkable, and the fix chapter 0 prescribes
+
+This suite does not gate yet, and the reason is in the sentence it measures.
+`prompts/judge.txt` asks for one sentence that does two jobs: it *describes* the
+item and it *judges* it. Only the first is checkable. "Ricerca Anthropic su
+misalignment negli agenti" is a claim the item supports or does not; "ma carente
+di profondità tecnica" is not a claim about the article at all, and a claim judge
+asked to decompose it either counts it unsupported or declines to count it.
+
+Both of those have now happened, and the second is the one that bites. digline
+0.16.0 gave the judge licence to decline instead of guessing, and on live runs it
+declines **8–10.5%** of judgements — enough that at least one case per run tips
+past `min_agreement` and the run cannot be promoted. `economics` is suspended for
+a harder version of the same thing; the rest is not a bad case, it is the shape
+of the question.
+
+**The fix is to stop asking one field to do two jobs**, and it is prescribed by
+[Handbook chapter 0](https://digline.dev/handbook/00-before-the-prompt/),
+published 2026-09-22. Its first decision is *"Emit the decision, not only the
+prose"*: a system that returns what it chose beside the sentence it wrote can be
+asserted on mechanically, and one that returns only the sentence cannot,
+whatever you bolt on later. Here that is one more field — `about` beside
+`reason` — one that describes and can be checked against the item, one that
+judges and cannot be checked against anything.
+
+Which makes this repository a slightly strange case: brief is one of the systems
+the Handbook reads, and it is about to demonstrate that chapter on itself, the
+same day the chapter was published. The work is not in this branch. It changes
+`prompts/judge.txt`, so it moves `suite.py`'s baseline as well as this one, and
+it is a change to the digest before it is a change to the suite.
+
+Two things ruled out on the way, recorded because the reasoning is the useful
+part. Raising `samples` would dilute the abstentions and is a legitimate interim
+if the gate is wanted back sooner — it roughly doubles the run and is a
+deliberate re-baseline. Lowering `min_agreement` is refused: it buys a green
+gate by caring less.
+
 ## Re-judging, and the two measurements it unlocks
 
 Recording is opt-in and was off, so the eighteen stored runs of `brief-judge`
@@ -163,7 +200,11 @@ what makes moving a threshold or swapping a judge affordable.
 `--judge-samples M` asks each judged check M times per recorded answer and
 reports the judge's own range beside the calibration result. It runs only on a
 replay, because on a live target the range would mix the target's variance into
-the judge's. Both of these need a check whose `KIND` is `judged`, and
+the judge's — and that isolation has a price worth knowing: a replay judges
+answers you already have, which are not a sample of the answers you will get.
+Measured here, the judge declines 2.0% of judgements on replayed answers and
+8–10.5% on live ones, so the printed range is a **floor** on the judge's noise
+and never a reading of it. Both of these need a check whose `KIND` is `judged`, and
 `Faithfulness` is the first one in this repository: `suite.py`'s
 `agrees_with_mark` is declared `deterministic`, because the model there produces
 the *answer* and a threshold comparison produces the *verdict*.
