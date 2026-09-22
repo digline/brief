@@ -194,3 +194,89 @@ re-interprets it.
 **No fix for the replay bound.** `--judge-samples` still reports a floor
 (digline ADR 0024 §5.6), and a cleaner `about` does not change that — it is a
 property of replaying answers you already have.
+
+
+## Step 3, measured (2026-09-22)
+
+Four live runs on the split prompt, `config_hash 61333b9d823c1ed7`. Read first,
+argued second.
+
+### Agreement: flat, and the apparent gain is a denominator
+
+| run | accuracy | precision | errored cases |
+|---|---|---|---|
+| baseline (old prompt) | 0.761905 = 16/21 | 0.666667 = 10/15 | — |
+| 14-00-40 | 0.714286 = 15/21 | 0.666667 = 8/12 | 0 |
+| 14-11-23 | 0.761905 = 16/21 | 0.727273 = 8/11 | 0 |
+| 14-14-39 | 0.800000 = **16/20** | 0.727273 | 1 |
+| 14-17-50 | 0.800000 = **16/20** | 0.800000 | 1 |
+
+The median reads +0.019 accuracy and +0.061 precision, and **that reading is
+wrong.** The two best runs are the two with an unjudgeable case, and their
+denominator is 20 rather than 21. On the numerator, which is what can be
+compared: **15, 16, 16, 16 against the baseline's 16.** Accuracy is flat.
+
+On the two runs that are like-for-like — no errors, denominator 21 — precision
+is 0.667 and 0.727 against a baseline 0.667, so precision is flat to slightly
+better. That is the honest summary: **the split did not cost agreement and did
+not clearly buy any.**
+
+### The flips: one repeats, one was a coin, and the gain repeats too
+
+| case | baseline | four runs | below 0.5 |
+|---|---|---|---|
+| `frontier-red-teampatterns` | 0.80 | 0.20, 0.20, 0.00, 0.20 | **4/4 — repeats** |
+| `how-we-built-auto-mode` | 0.60 | 0.40, 0.60, 0.80, 0.80 | 1/4 — noise |
+| `alignment…whyne` | 0.40 | 1.00, 0.80, 0.80, 1.00 | **0/4 — the gain repeats** |
+
+So one real regression, one real improvement, one coin — which is exactly why
+the house does not decide on one run.
+
+### Where the 1.77x went, and it is not `about`
+
+| | old | new | |
+|---|---|---|---|
+| `about` | — | **152.6 chars** mean | |
+| `reason` | 153.0 chars mean | **212.1 chars** mean | **1.39x** |
+| input/call | 366.5 tok | 558.5 tok | 1.52x |
+| output/call | 59.9 tok | 123.6 tok | 2.06x |
+
+**`about` is proportionate.** At 152.6 chars it is almost exactly the length the
+single `reason` used to be (153.0) — one sentence, as asked. The suspicion that
+the prompt was asking for an essay where it wanted a clause was right in shape
+and wrong in field.
+
+**`reason` is the field that grew, by 39%,** and the cause is in the text I
+wrote: *"In `reason`, judge freely"*. The old prompt asked for *one concise
+sentence* and nothing else; the new one repeats "concise" in the JSON line and
+then hands out a licence two paragraphs later. The model took it.
+
+**And the input grew by my own instructions, not the model's.** `prompts/judge.txt`
+went 1035 → 1805 chars, +208 estimated tokens against +192 measured per call.
+Every call pays that, forever, whether or not it helps.
+
+So the cost is two text fixes and no budget change: give `reason` its brevity
+back, and say the new instructions in fewer words.
+
+### A failure mode the split introduced
+
+**~2% of calls now return invalid JSON.** Eight of 417 calls across the four
+runs raised `JSONDecodeError`, in two runs of four, concentrated on one case
+each time. It did not happen once in 415 recorded replies under the old prompt.
+
+The mechanism is asking the model to *describe* an item: a description quotes
+the thing it describes, and these feeds carry a whole category of `Quoting …`
+posts and titles with quotation marks in them. An unescaped `"` inside a string
+value is invalid JSON, and `digline.targets.loads_lenient` does not save it —
+it is lenient about the *wrapping* (fences, a sentence before the object), not
+about a broken string inside.
+
+**Where that lands is the thing already written up at `JUDGE_MAX_TOKENS`.** In
+the suite it is an honest `error`. In the digest it is caught, recorded with
+`score=0`, and the item silently never appears — an absence wearing a
+measurement's clothes, at roughly one item in fifty. The cap comment describes
+this arriving by truncation; it is arriving by a quotation mark instead, and
+more often.
+
+The fix is one clause in the prompt — do not use double quotes inside the
+values — and it belongs with the other two.

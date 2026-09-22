@@ -161,4 +161,11 @@ suite = Suite(
     cases=cases,
     samples=5,
     min_agreement="3/5",
+    # On since decision 0001, and for a question this suite could not otherwise
+    # answer: the split cost 1.77x per judgement, and *where* those tokens went
+    # cannot be read off a verdict. It is not in `config_hash` — recording
+    # changes no score and moves no bar — so it costs nothing in comparability,
+    # and it makes this suite's runs re-judgeable for the first time, which is
+    # the argument `reason.py` already makes for itself.
+    record_responses=True,
 )

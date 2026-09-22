@@ -48,12 +48,30 @@ SEEN_EXAMPLE_PATH = HERE / "seen.example.json"
 MODEL = "claude-haiku-4-5"
 #: Raised from 200 to 400 when decision 0001 split the reply in two. Measured,
 #: not guessed: `probe.py` against a real item returned **137 output tokens of
-#: 200** where the one-sentence reply used to average 60. The decision record
-#: predicted "room twice over" and the real headroom was 1.46x, which is not
-#: headroom — a longer title or a denser summary crosses it, and a reply cut off
-#: at the cap is a parse failure the digest turns into `score=0` on an item it
-#: would otherwise have shown me. The cap costs nothing until it is reached:
-#: output tokens are billed as generated.
+#: 200** where the one-sentence reply used to average 60. The record predicted
+#: "room twice over"; the real headroom was 1.46x, which is not headroom. The
+#: cap costs nothing until it is reached, because output tokens are billed as
+#: generated.
+#:
+#: **What is on the other side of this number is worse than an error.** A reply
+#: cut off at the cap is invalid JSON, `__call__` catches the parse failure, and
+#: the item is recorded with `score=0`. Zero is below `SCORE_THRESHOLD`, so the
+#: item never appears in the digest — and in `seen.json` it is a row with a
+#: score in it, indistinguishable by any count from an item the judge read and
+#: thought worthless. An absence wearing a measurement's clothes, and the row
+#: keeps saying it for as long as the file is kept.
+#:
+#: That is Handbook chapter 0's fourth decision — *make a failure look different
+#: from an empty answer* — broken inside the repository the chapter was partly
+#: written from, in the one place nobody was watching. The only thing standing
+#: between it and silence is that `reason` begins with `[parse failed]`: a
+#: marker in prose, in a field nothing counts. `stats()` reads `"score" in r`
+#: and counts the row as judged.
+#:
+#: Not fixed here. Giving a failure its own state changes what `seen.json`
+#: holds and what `make_cases.py` reads out of it, which is its own piece of
+#: work and its own record. Raising the cap makes it rarer; it does not make it
+#: visible.
 JUDGE_MAX_TOKENS = 400
 #: The prefill that forces JSON out. Prepended to the reply before parsing,
 #: because the reply *is* the prefill plus the completion.
