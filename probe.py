@@ -29,7 +29,7 @@ import anthropic
 import feedparser
 from digline_anthropic.client import completion_of
 
-from brief import JUDGE_PROMPT, JUDGE_SYSTEM, MODEL, SUMMARY_MAX_CHARS
+from brief import JUDGE_MAX_TOKENS, JUDGE_PROMPT, JUDGE_SYSTEM, MODEL, SUMMARY_MAX_CHARS
 
 SOURCE = "Simon Willison"
 FEED = "https://simonwillison.net/atom/everything/"
@@ -46,7 +46,7 @@ prompt = JUDGE_PROMPT.render(
 client = anthropic.Anthropic()  # reads ANTHROPIC_API_KEY from the environment
 response = client.messages.create(
     model=MODEL,
-    max_tokens=200,
+    max_tokens=JUDGE_MAX_TOKENS,
     system=JUDGE_SYSTEM,
     messages=[
         {"role": "user", "content": prompt},
@@ -89,4 +89,17 @@ print()
 
 raw = "{" + response.content[0].text
 data = json.loads(raw)
-print("score:", data["score"], "| reason:", data["reason"])
+print("--- the reply, field by field ---")
+print("   `about` arrived with decision 0001. It is printed here for the rule")
+print("   this whole file rests on: whatever the probe does not show is what")
+print("   the fake will not have, and so what the checks will never see.")
+for key in ("about", "reason", "score"):
+    print(f"   {key:8} = {data.get(key, '<ABSENT>')!r}")
+print()
+print("--- did it fit? ---")
+print("   three fields, two of them Italian sentences, against JUDGE_MAX_TOKENS.")
+print("   a reply cut off at the cap is a parse failure the digest turns into")
+print("   score=0, so the cap is verified here rather than assumed.")
+print(f"   output_tokens {response.usage.output_tokens} of the "
+      f"{JUDGE_MAX_TOKENS} sent as max_tokens")
+print(f"   stop_reason   {response.stop_reason!r}  (must be 'end_turn', never 'max_tokens')")

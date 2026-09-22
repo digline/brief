@@ -46,7 +46,15 @@ SEEN_PATH = HERE / "seen.json"
 SEEN_EXAMPLE_PATH = HERE / "seen.example.json"
 
 MODEL = "claude-haiku-4-5"
-JUDGE_MAX_TOKENS = 200
+#: Raised from 200 to 400 when decision 0001 split the reply in two. Measured,
+#: not guessed: `probe.py` against a real item returned **137 output tokens of
+#: 200** where the one-sentence reply used to average 60. The decision record
+#: predicted "room twice over" and the real headroom was 1.46x, which is not
+#: headroom — a longer title or a denser summary crosses it, and a reply cut off
+#: at the cap is a parse failure the digest turns into `score=0` on an item it
+#: would otherwise have shown me. The cap costs nothing until it is reached:
+#: output tokens are billed as generated.
+JUDGE_MAX_TOKENS = 400
 #: The prefill that forces JSON out. Prepended to the reply before parsing,
 #: because the reply *is* the prefill plus the completion.
 JUDGE_PREFILL = "{"
@@ -84,6 +92,11 @@ class Item:
 
 @dataclass
 class Judgement:
+    #: What the item is, from the title and summary alone. Descriptive, and
+    #: separated from `reason` on purpose: this is the half that can be checked
+    #: against the item, and `reason` is the half that cannot. See
+    #: `decisions/0001-about-beside-reason.md`.
+    about: str
     score: int
     reason: str
     cost_usd: float = 0.0
@@ -258,6 +271,7 @@ class BriefJudge(JudgeBase):
         try:
             data = self._ask(prompt)
             return Judgement(
+                about=str(data["about"]),
                 score=int(data["score"]),
                 reason=str(data["reason"]),
                 cost_usd=self.spent_usd - before,
@@ -270,6 +284,7 @@ class BriefJudge(JudgeBase):
         except (ValueError, KeyError, TypeError) as exc:
             # the digest must never crash over one malformed answer
             return Judgement(
+                about="",
                 score=0,
                 reason=f"[parse failed] {exc}"[:120],
                 cost_usd=self.spent_usd - before,
@@ -345,6 +360,7 @@ def run_brief() -> None:
             "title": item.title,
             "link": item.link,
             "score": j.score,
+            "about": j.about,
             "reason": j.reason,
             "cost_usd": j.cost_usd,
             "judged_at": now,
@@ -365,6 +381,9 @@ def run_brief() -> None:
     for n, (item, j) in enumerate(top, start=1):
         filler = " (below threshold)" if j.score < SCORE_THRESHOLD else ""
         print(f"{n}. [{j.score}]{filler} {item.title}  ({item.source})")
+        # Both sentences, description first: it is what tells me what the thing
+        # *is*, and the judgement reads differently once I know that.
+        print(f"     {j.about}")
         print(f"     {j.reason}")
         print(f"     {item.link}\n")
 

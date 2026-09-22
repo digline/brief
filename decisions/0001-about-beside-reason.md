@@ -100,11 +100,45 @@ last live run there is room — **60 output tokens per reply against a cap of
 it to work, not a reason to skip the check: the cap is verified against a real
 reply before anything downstream is believed.
 
-**`economics` may come back.** Its item is the single word *Economics*, and it
-is suspended in `reason.py` because a sentence about an empty item makes no
-claims. But `about` for that item — *"un articolo intitolato Economics, senza
-sommario"* — is a claim, it is decomposable, and the item supports it. The
-suspension is re-tested rather than kept out of habit.
+> **Measured 2026-09-22, and the prediction was wrong in the direction that
+> matters.** `probe.py` against a real item returned **137 output tokens**, not
+> the ~120 "twice over" implied: the headroom was **1.46x, not 2x**. A longer
+> title or a denser summary crosses 200, and what is on the other side of that
+> line is `score=0` on an item the digest would otherwise have shown me. So the
+> cap is raised to **400** — output tokens are billed as generated, so a cap
+> that is never reached costs nothing — and it is now declared once, in
+> `brief.py`, with `suite.py` and `probe.py` importing it. They each kept their
+> own `200`, which is the drift `probe.py`'s own docstring warns about for the
+> prompt and had quietly acquired for the cap.
+
+**`economics` may come back**, and it gets a prediction of its own, written
+here before it is re-tested. It was the headline case of digline's ADR 0024 §1
+twice over — the 1.000 range on 0.15.1 and the 11-of-15 decline on 0.18 — so a
+third reading of it owes the same discipline as the first two.
+
+Its item is `{source: "Anthropic Research", title: "Economics", summary:
+"Economics"}`. The prediction:
+
+- **Judgeable: yes.** A description of a degenerate item is still a description.
+  `about` for it has real claims in it — who published it, what it is called —
+  and a claim judge can decompose those. Expect **0 abstentions of 5**, against
+  11 of 15 on the old field.
+- **Score: 0.6 or better**, and most likely 0.67 to 1.0. Source and title are
+  both stated in the context verbatim, so they are supported claims; the only
+  place a point can be lost is the third clause.
+- **The named failure mode is that third clause.** If the model writes *"senza
+  sommario"* — without a summary — that is the one thing in the sentence the
+  item **contradicts**: there is a `Summary:` line and it says `Economics`. A
+  faithful `about` has to say the summary is uninformative, not that it is
+  absent. If the score lands at 0.5 or 0.67 this is almost certainly why, and
+  the fix is in `prompts/judge.txt`, not in the band.
+
+**What would falsify the whole decision, not just this case:** if `about` for
+`economics` still draws an abstention. That would mean the judge declines
+because the *item* is degenerate rather than because the *sentence* is
+evaluative — and the diagnosis in this record, that the field was doing two
+jobs, would be the wrong diagnosis. The suspension would stand, but on grounds
+this record does not currently claim, and the text would need amending.
 
 ## Both suites re-baseline, and why
 

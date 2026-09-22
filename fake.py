@@ -49,17 +49,21 @@ def _keywords(bullet: str) -> set[str]:
     return {w for w in words if w not in STOPWORDS}
 
 
-def _title(prompt: str) -> str:
-    """The `Title:` line of a rendered `prompts/item.txt`, or the empty string.
+def _field(prompt: str, label: str) -> str:
+    """One labelled line of a rendered `prompts/item.txt`, or the empty string.
 
     Read out of the prompt rather than passed in, because that is the only
-    thing this fake is ever given — and reading it is what lets the sentence it
-    writes be about the item, the way the real one is.
+    thing this fake is ever given — and reading it is what lets the sentences it
+    writes be about the item, the way the real ones are.
     """
     for line in prompt.splitlines():
-        if line.startswith("Title:"):
-            return line[len("Title:") :].strip()
+        if line.startswith(f"{label}:"):
+            return line[len(label) + 1 :].strip()
     return ""
+
+
+def _title(prompt: str) -> str:
+    return _field(prompt, "Title")
 
 
 def _bullets(system: str, heading: str) -> list[set[str]]:
@@ -126,8 +130,16 @@ class _Messages:
             bool(kw & _keywords(text)) for kw in _bullets(system, "He does NOT want")
         )
         score = max(1, min(5, 3 + wanted - avoided))
-        # The sentence names the item, because the real one does. `reason.py`
-        # measures how much of the sentence the item supports, and a fake whose
+        # Two fields since decision 0001, and they are faked to the same split
+        # the real prompt asks for: `about` says only what the item states and
+        # nothing else, `reason` carries the bookkeeping that is this fake's
+        # judgement. A fake that put its own words in `about` would make the
+        # faithfulness suite score the fake instead of the shape.
+        about = (
+            f"Articolo di {_field(prompt, 'Source')} intitolato "
+            f"{_title(prompt)}."
+        )
+        # The sentence names the item, because the real one does. A fake whose
         # words were the same whatever it had been shown would score identically
         # on all 21 cases — the "every prompt looks equally good" failure this
         # file exists to avoid, moved one field along.
@@ -145,7 +157,9 @@ class _Messages:
         # carrying a quote — `Quoting ...` posts are a whole category in these
         # feeds — would otherwise produce a reply that is not JSON, and the
         # fake would fail for a reason the real provider never has.
-        answer = json.dumps({"reason": reason, "score": score}, ensure_ascii=False)[1:]
+        answer = json.dumps(
+            {"about": about, "reason": reason, "score": score}, ensure_ascii=False
+        )[1:]
         return _Reply(
             content=[_Block(answer)],
             usage=_Usage(
