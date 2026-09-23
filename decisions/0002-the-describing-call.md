@@ -74,6 +74,19 @@ which is what 0001 wanted in the first place and could not honestly have.
 > prediction. *"Inside 2–6"* is a band, and a band will one day be broken from
 > the good side by something you were hoping for. The next prediction written in
 > this repository will be a band unless this paragraph stops it.
+>
+> **And a prediction that says AND is two predictions.** 0002 predicted
+> *"Faithfulness at or above the 0.725 measured under 0001, **and** abstentions
+> near zero"*. The score went to a median of 1.000 and the abstentions went to
+> twenty-six: the first half confirmed emphatically, the second falsified, and
+> no single verdict is true of the pair. It was written as one line and could
+> not be scored as one.
+>
+> This is the same failure as the band, not a second one. A band hides a
+> direction; an `and` hides a second claim. Both produce a prediction that
+> cannot come back as *right* or *wrong*, which is the only thing a prediction
+> is for. One claim, one direction, one line — and if that takes three lines,
+> write three.
 
 
 1. **`brief-judge` returns to its old behaviour exactly.** Per-case disagreement

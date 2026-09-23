@@ -82,157 +82,28 @@ The suite calls the judge through the same two files the application does —
 every run, which is why the committed baseline carries the prompt that produced
 it.
 
-## The sentence
+## The sentence, and the suite that retired
 
-`suite.py` measures the score. Nothing measured the sentence printed under the
-title, and the sentence is what decides whether I open the article.
+The reason printed under each title is what decides whether I open the article,
+and the model writes it from the title and summary alone — it has not read the
+piece. `about.py` measured whether that sentence invented anything, with
+`Faithfulness` over a claim judge. **It is retired**, and
+`decisions/0003-a-check-that-cannot-fail.md` is why: the describing prompt
+forbids invention and the check detected invention, so the constraint prevented
+exactly what the check looked for. Median 1.000. A check that keeps running
+after its failure mode has been designed out is a green light wired to nothing.
 
-The model writes it from the source, the title and the summary — **it has not
-read the piece.** So a sentence that names a benchmark, a comparison or a
-conclusion the summary never mentions is not a florid answer; it is a decision I
-took on something that does not exist. Until `about.py` the only thing checked
-about it was that it was not empty.
+What stays is the shape it bought. The digest makes **two calls** per shown
+item — one that judges and scores, one that only describes — because a single
+call asked to do both was measurably a worse judge: accuracy 16, 16, 16, 16 over
+four runs split, against 13, 15, 15, 17 combined. That is
+`decisions/0002-the-describing-call.md`, and it holds whether or not anything
+checks the description afterwards.
 
-```console
-$ uv run digline run     --suite about.py            # $0.20: 21 cases x 5 samples, two models each
-$ uv run digline compare --suite about.py --run latest --locale en
-```
-
-The check is `Faithfulness`, and it needs no label I would have to invent: the
-ground truth is the item, which `cases/brief.json` already holds. A claim judge
-is asked to decompose the sentence and count how many of its claims the item
-supports; digline does the division. The context is **both** prompt files, not
-just the item — the model was given the taste in `prompts/judge.txt` too, and a
-context holding only the item marks every "rilevante per ..." clause unsupported
-by construction. That mistake was in the first draft and cost 0.19 of mean score.
-
-The first run measured a mean of 0.725 over the 21 cases, median 0.733, and it
-is not higher because `prompts/judge.txt` asks for a sentence that *judges*: a
-characterisation is a claim neither prompt states, the judge counts it
-unsupported, and it is right to. The threshold is 0.35 — under the pack, over
-the floor. One case sits below it and stays there:
-`controlling-reasoning-effort-in-llms`, where the item says only that LLMs learn
-low-, medium- and high-effort reasoning modes and the sentence keeps promising
-cost and latency optimisation for RAG and agents in production. That is the
-failure this suite was written for, sitting in the reference with its name on
-it.
-
-A blank reason **errors** rather than fails, and that is correct: with no claims
-there is no fraction, and 0/0 is not 0. The first exit 2 reading "the judge found
-no claims in the output" is a contentless sentence from the model, and the fix is
-in `prompts/judge.txt`.
-
-`about.py` sets `record_responses=True`. It is the first suite here that does,
-which makes its runs the first that can ever be re-judged — see below.
-
-### What it costs, and which part of that is watched
-
-A run of this suite is **$0.2047**, and since digline 0.16.0 the run says so
-itself rather than being reconstructed: `Run.usage` carries two lines.
-
-```console
-digline: target: 105 calls, 38485 in / 6330 out, 0.070135 USD
-digline: judge:  110 calls, 89059 in /  9108 out, 0.134599 USD
-```
-
-**The judge is 1.92x the target and 66% of the bill**, and `CostBudget` gates
-none of it: it reads the target's per-case cost, which is the other 34%. That is
-deliberate on digline's side — a recorded total with no threshold is a fact, not
-a vacuously green assertion — but it means the green `cost_budget` in `suite.py`
-has seen a third of what a judged morning costs. `suite.py`'s own run writes
-`judge: 0 calls, $0.0`, which is the honest line for a suite with nothing judged
-in it.
-
-### What is not checkable, and the fix chapter 0 prescribes
-
-This suite does not gate yet, and the reason is in the sentence it measures.
-`prompts/judge.txt` asks for one sentence that does two jobs: it *describes* the
-item and it *judges* it. Only the first is checkable. "Ricerca Anthropic su
-misalignment negli agenti" is a claim the item supports or does not; "ma carente
-di profondità tecnica" is not a claim about the article at all, and a claim judge
-asked to decompose it either counts it unsupported or declines to count it.
-
-Both of those have now happened, and the second is the one that bites. digline
-0.16.0 gave the judge licence to decline instead of guessing, and on live runs it
-declines **8–10.5%** of judgements — enough that at least one case per run tips
-past `min_agreement` and the run cannot be promoted. `economics` is suspended for
-a harder version of the same thing; the rest is not a bad case, it is the shape
-of the question.
-
-**The fix is to stop asking one field to do two jobs**, and it is prescribed by
-[Handbook chapter 0](https://digline.dev/handbook/00-before-the-prompt/),
-published 2026-09-22. Its first decision is *"Emit the decision, not only the
-prose"*: a system that returns what it chose beside the sentence it wrote can be
-asserted on mechanically, and one that returns only the sentence cannot,
-whatever you bolt on later. Here that is one more field — `about` beside
-`reason` — one that describes and can be checked against the item, one that
-judges and cannot be checked against anything.
-
-Which makes this repository a slightly strange case: brief is one of the systems
-the Handbook reads, and it is about to demonstrate that chapter on itself, the
-same day the chapter was published. The work is not in this branch. It changes
-`prompts/judge.txt`, so it moves `suite.py`'s baseline as well as this one, and
-it is a change to the digest before it is a change to the suite.
-
-Two things ruled out on the way, recorded because the reasoning is the useful
-part. Raising `samples` would dilute the abstentions and is a legitimate interim
-if the gate is wanted back sooner — it roughly doubles the run and is a
-deliberate re-baseline. Lowering `min_agreement` is refused: it buys a green
-gate by caring less.
-
-## Re-judging, and the two measurements it unlocks
-
-Recording is opt-in and was off, so the eighteen stored runs of `brief-judge`
-hold verdicts and no answers. A run already produced cannot gain answers nobody
-kept, so none of them can be replayed, and none ever will be. `brief-about`'s
-runs can:
-
-```console
-$ uv run digline rejudge --suite about.py --run latest                  # the judge alone; no call to the target
-$ uv run digline rejudge --suite about.py --run latest --judge-samples 5
-```
-
-`rejudge` re-runs the assertions over the recorded answers and writes a run that
-declares where they came from, so nothing can mistake it for a measurement — and
-`promote` refuses it outright. It costs the judging and not the target, which is
-what makes moving a threshold or swapping a judge affordable.
-
-`--judge-samples M` asks each judged check M times per recorded answer and
-reports the judge's own range beside the calibration result. It runs only on a
-replay, because on a live target the range would mix the target's variance into
-the judge's — and that isolation has a price worth knowing: a replay judges
-answers you already have, which are not a sample of the answers you will get.
-Measured here, the judge declines 2.0% of judgements on replayed answers and
-8–10.5% on live ones, so the printed range is a **floor** on the judge's noise
-and never a reading of it. Both of these need a check whose `KIND` is `judged`, and
-`Faithfulness` is the first one in this repository: `suite.py`'s
-`agrees_with_mark` is declared `deterministic`, because the model there produces
-the *answer* and a threshold comparison produces the *verdict*.
-
-The third is the calibration case, declared in `about.py` and judged on every
-run with no call to the target. It is a sentence I wrote myself about a real
-item, with two claims — one the summary states, one invented — so a judge that
-still has a scale puts it in the middle, and its band is 0.30–0.70. The canary
-watches whether the model is still that model; this watches whether the scale is
-still a scale, which repetition cannot see: a judge that has gone binary is
-*more* repeatable, not less. A run whose calibration case lands outside its band
-cannot be promoted.
-
-What the three of them measured, the first time they were run:
-
-| measurement | what it said |
-| --- | --- |
-| `rejudge` | the same 105 answers judged again move the per-case score by 0.073 on average, 0.200 at most — and `promote` refuses the result, because its interval is the judge's wobble with the target taken out |
-| `--judge-samples 3` | on a *fixed* answer the judge's range reaches **1.000**, and 13 of 21 cases range 0.5 or more |
-| the calibration case | **0.500**, five times out of five, inside its band |
-
-Read together they say something the first two could not say alone. The judge
-has not lost its scale — the calibration case is dead stable in the middle of
-it. The range is `total` being the judge's own decision on sentences that are
-genuinely ambiguous to decompose: "rilevante per RAG in produzione" is one claim
-or two depending on the reading. The five-sample fold already suppresses that
-from 0.5 to 0.073, which is why the suite works at all; the repair if a case
-starts chattering is `Repeated` around the check, not a wider tolerance.
+The records are the point of that directory. Three decisions, twelve live runs
+and about $1.36 to establish that a second field cannot live in one reply, that
+moving it does not help, and that the check written to guard it had nothing left
+to guard.
 
 ## report.html
 
@@ -285,8 +156,7 @@ brief.py            the digest: fetch, judge, print, ask, remember
 prompts/judge.txt   the system prompt — the taste being encoded
 prompts/item.txt    the user prompt, one item, rendered by app and suite alike
 suite.py            the score suite: does the model still agree with me
-about.py            the sentence suite: is the description faithful to the item
-prompts/describer.txt  the second call's system prompt — describes, never judges
+prompts/describer.txt  the describing call's system prompt — describes, never judges
 cases/brief.json    21 cases with my own marks as the expected answer
 make_cases.py       seen.json -> cases/brief.json
 fake.py             both providers, faked, for CI — the target and the claim judge
