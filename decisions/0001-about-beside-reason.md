@@ -329,6 +329,27 @@ cheaper-and-shorter than reality. That is a bias worth naming: a prediction
 about my own prose is a prediction about a model's, and I keep reading my own
 instructions as tighter than the model treats them.
 
+> ### What to do about it, which is not "try harder"
+>
+> **Naming it here did not stop it.** It happened twice more after this
+> paragraph was written: the three clauses saved 9% where 23% was predicted, and
+> 0002's describing call measured $0.000632 against an estimate of $0.00035 —
+> 1.8x. Three optimistic estimates, one direction, one of them made *by the
+> person who had just written this warning*.
+>
+> So the warning is not the fix and a reader should not conclude that the answer
+> is more care. **The mechanism is measuring afterwards, and it is already in
+> place**: every one of the three was caught, none of them reached a decision,
+> and each was corrected in the record within the hour. The prediction being
+> wrong costs nothing as long as it is written down first and read against a
+> number second — which is the discipline these records already run on for other
+> reasons.
+>
+> That is the shape to remember. A rule against a habit failed twice; a
+> mechanism caught it three times out of three. Keep writing the estimate — it
+> is what makes the measurement mean something — and keep expecting it to be
+> low.
+
 **The JSON clause: zero errors, 105 of 105 calls, and that is not proof.** At
 the ~2% rate measured over the previous four runs, a clean run of 105 happens by
 luck about 12% of the time. It is the right sign and nothing more; two or three

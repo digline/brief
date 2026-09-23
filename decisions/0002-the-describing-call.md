@@ -345,3 +345,48 @@ actually caught any of these is measuring afterwards.
 shown: 50 x $0.000663 + 8 x $0.000632 = **$0.0382**, against $0.0334 for the
 old single-call digest. **Up 15%**, not the 52% a per-item reading of this
 record would have predicted.
+
+
+## `economics`, third reading — the prediction, written first
+
+It has been the headline case twice and meant something different each time. A
+third reading arriving without a prediction is the one that gets believed
+because it is the latest, so this is written before the call is made.
+
+| reading | what it said | what it turned out to be |
+|---|---|---|
+| 0.15.1, `--judge-samples 3` | range **1.000** on a fixed answer, the widest in the suite; and the case **passed at 1.000**, five samples of five | a judge guessing on a sentence it could not decompose, and a fold hiding it |
+| 0.18, live | **11 of 15 judgements declined**, case `error`, `promote` refused the run | the abstention path working, on a sentence that makes no claims — suspended |
+| 0002, about to be read | ? | ? |
+
+Its item is `{source: "Anthropic Research", title: "Economics", summary:
+"Economics"}` — one word, twice.
+
+**What changes for it under 0002.** The sentence being checked is no longer a
+judgement of a contentless item. It is a *description* of one, written by a call
+that was never asked to judge. "Un articolo di Anthropic Research intitolato
+Economics, con un sommario che non ne descrive il contenuto" makes claims:
+who published it, what it is called, that the summary is uninformative. All
+three are in the item.
+
+**The prediction, with its direction named** — the rule this round put in both
+records:
+
+1. **Judgeable: yes. Abstentions 0 of 5**, and the direction that matters is
+   *fewer than one*, not "inside a band". Anything above zero is a surprise and
+   anything at zero or below is the prediction holding.
+2. **Score at or above 0.6**, and again the direction: I am predicting a floor,
+   not a range. Higher is the prediction holding, not a second surprise.
+3. **The suspension is lifted.** If 1 and 2 hold, `economics` returns to the
+   suite as an ordinary case and the `UNJUDGEABLE` map in the suite file goes
+   with it.
+4. **The named failure mode is unchanged from 0001**: the describer claiming
+   there is *no* summary when the item carries one. The describing prompt has a
+   clause against exactly this, written before any of these three readings, and
+   this is the first reading that can test it.
+
+**What would falsify more than this case.** An abstention here means the judge
+declines because the *item* is degenerate rather than because the *sentence*
+judged — which is 0001's diagnosis failing at the last case that can test it,
+and it would mean the describing call inherits the problem rather than solving
+it.
