@@ -160,9 +160,7 @@ class _Messages:
         # `about` field through decision 0001; 0002 moved the description to a
         # call of its own, so this fake stops inventing one. `_field` stays —
         # the describing fake will want it.
-        answer = json.dumps(
-            {"reason": reason, "score": score, "ack": "ok"}, ensure_ascii=False
-        )[1:]
+        answer = json.dumps({"reason": reason, "score": score}, ensure_ascii=False)[1:]
         return _Reply(
             content=[_Block(answer)],
             usage=_Usage(
