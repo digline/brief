@@ -132,3 +132,107 @@ nothing.
 Estimated spend: four `brief-judge` runs at $0.107 is $0.43, plus two or three
 `brief-reason` cycles. Call it **$0.90–$1.20**, and say so before starting
 rather than after.
+
+
+## Step 3, measured (2026-09-23)
+
+`prompts/judge.txt` byte-identical to pre-0001, `max_tokens` back to 200,
+`config_hash` back to `98fc65b1e49e930e`. Four runs. No re-promotion.
+
+### The hash, proven rather than asserted
+
+```
+brief-judge  config_hash 98fc65b1e49e930e   suite, now
+baseline     config_hash 98fc65b1e49e930e   promoted 2026-09-22T12:41
+git diff a82e9ee -- prompts/judge.txt       0 lines
+```
+
+and `compare` against that untouched baseline:
+
+> Nothing got worse compared with the reference. … Every case could be judged.
+> **The suite is unchanged from the reference. The files under test are the same
+> as the reference. The system under test answered under the same configuration
+> as the reference.**
+
+Three sentences that could not have been produced by anything but a genuine
+restoration. **Nothing was re-promoted.** The reference has been sitting in
+`.digline/` since yesterday morning and became correct again by the
+configuration returning to it.
+
+### Prediction 1 — read first, and read honestly
+
+| | cases of 21 whose five samples disagree |
+|---|---|
+| old prompt, 19 runs before 0001 | median 4, band **2–6** |
+| 0001 v2, `about` first | **7, 7, 7, 8** |
+| 0001 v3, `about` last | **7, 7, 7, 8** |
+| **0002, prompt restored** | **1, 2, 2, 4** — median **2** |
+
+**The literal test I wrote — "back inside 2–6" — fails, on one run of four.** It
+fails because that run scored **1**, quieter than any of the nineteen old runs.
+The check counted "outside the band" without caring which side, and the side is
+the whole point: the falsifier existed to catch the disagreement *staying* at
+7–8, and it did not stay. It collapsed.
+
+So: **the direction is confirmed emphatically and the band test is a bad test.**
+Written down that way rather than quietly rescored, because the sentence "0 of 4
+inside the band" appeared on screen and a reader of this record deserves to know
+it did, and why it means the opposite of what it says.
+
+Whether the restored runs are genuinely *quieter* than the old ones — median 2
+against 4 — is not something four runs can say. Noted, not theorised.
+
+### Predictions 2 and 3
+
+| | accuracy /21 | precision | $/judgement |
+|---|---|---|---|
+| old prompt, 19 runs | median 16, range 14–16 | 0.667 | 0.000668 |
+| 0001 v2 | 13, 15, 15, 17 → 15.0 | 0.683 | 0.001063 |
+| 0001 v3 | 14, 15, 16, 16 → 15.5 | 0.655 | 0.001022 |
+| **0002 restored** | **16, 16, 16, 16** | **0.667** | **0.000663** |
+
+Prediction 2 confirmed, and more exactly than it was written: not a median near
+16 but **16 in every one of four runs**, which the old prompt itself managed in
+eighteen of nineteen. Prediction 3 confirmed: $0.000663 against $0.000668, a
+difference of 0.7%. Zero errored verdicts.
+
+### The correction this forces, and it is mine
+
+I told you `frontier-red-teampatterns` was a real disagreement with the mark
+that *survived the wording*, below the line in 7 of 8 runs, and should be left
+alone as a separate question. **It is not separate and it does not survive.**
+
+| case | baseline | 0001 (8 runs) | 0002 restored |
+|---|---|---|---|
+| `frontier-red-teampatterns` | 0.80 | below the line 7 of 8 | **1.00, 1.00, 1.00, 1.00** |
+| `how-we-built-auto-mode` | 0.60 | below 3 of 8 | 1.00, 0.80, 1.00, 0.80 |
+| `alignment…whyne` | 0.40 | **above** in 8 of 8 | **0.20, 0.00, 0.00, 0.00** |
+
+All three "findings" about individual cases were artefacts of the split prompt.
+The regression that repeated seven times out of eight is gone the moment the
+field leaves the reply; the improvement that repeated eight times out of eight
+is gone with it. What looked like the judge changing its mind about three
+articles was the judge being asked a different question.
+
+*"It survives the wording"* was true and useless: it survived every wording I
+tried **inside** the split, which is not the same as surviving the split, and I
+should not have offered it as a separate question before the split had been
+undone.
+
+### What it cost, and why it was not waste
+
+**$0.8761** — two prompt versions, eight runs — to establish that a second field
+cannot live in that reply. **$1.3608** in total under the split prompt.
+
+A round that ends by restoring a file byte-for-byte reads like a wasted round.
+It was not, and the reason is narrow: **the only way to know the field was the
+cause was to put it there and take it out.** Nothing in the first four runs
+could separate *the field is the problem* from *the field is in the wrong
+place* — the two hypotheses predict the same numbers. That took the second four,
+and the answer was identical numbers. And nothing in either set could separate
+*the prompt is the cause* from *something else moved* — that took this third
+set, and the answer is 16, 16, 16, 16.
+
+Three sets of four runs, three questions, each one unanswerable without the one
+before it. The file being identical at the end is the result, not the absence of
+one.

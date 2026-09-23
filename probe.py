@@ -90,14 +90,15 @@ print()
 raw = "{" + response.content[0].text
 data = json.loads(raw)
 print("--- the reply, field by field ---")
-print("   `about` arrived with decision 0001. It is printed here for the rule")
-print("   this whole file rests on: whatever the probe does not show is what")
-print("   the fake will not have, and so what the checks will never see.")
-for key in ("about", "reason", "score"):
+print("   the rule this whole file rests on: whatever the probe does not show")
+print("   is what the fake will not have, and so what the checks never see.")
+print("   `about` was here under decision 0001 and left with 0002, which moved")
+print("   the description into a call of its own.")
+for key in ("reason", "score"):
     print(f"   {key:8} = {data.get(key, '<ABSENT>')!r}")
 print()
 print("--- did it fit? ---")
-print("   three fields, two of them Italian sentences, against JUDGE_MAX_TOKENS.")
+print("   the reply against JUDGE_MAX_TOKENS.")
 print("   a reply cut off at the cap is a parse failure the digest turns into")
 print("   score=0, so the cap is verified here rather than assumed.")
 print(f"   output_tokens {response.usage.output_tokens} of the "

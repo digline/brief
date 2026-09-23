@@ -74,12 +74,8 @@ class AgreesWithMark(AssertionBase):
 
 SCHEMA = {
     "type": "object",
-    # `about` is required, which moves `config_hash` — the schema is part of the
-    # assertion's identity — and that is the point: a reply without it is a
-    # reply from the old prompt, and this suite must not quietly accept one.
-    "required": ["about", "score", "reason"],
+    "required": ["score", "reason"],
     "properties": {
-        "about": {"type": "string", "minLength": 1},
         "score": {"type": "integer", "minimum": 1, "maximum": 5},
         "reason": {"type": "string", "minLength": 1},
     },
@@ -101,17 +97,8 @@ class JudgeTarget(AnthropicTarget):
     """
 
     def parse(self, text: str) -> dict[str, object]:
-        # Rebuilt field by field rather than returned whole, so the shape the
-        # assertions judge is the shape this file declares. The cost of that is
-        # that a field added to `prompts/judge.txt` is invisible here until it
-        # is added on this line too — `about` was, for one faked run, and every
-        # `json_schema` verdict went red at once, which is the right way round.
         data = json.loads(text)
-        return {
-            "about": str(data["about"]),
-            "score": int(data["score"]),
-            "reason": str(data["reason"]),
-        }
+        return {"score": int(data["score"]), "reason": str(data["reason"])}
 
 
 target = JudgeTarget(

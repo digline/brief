@@ -46,12 +46,10 @@ SEEN_PATH = HERE / "seen.json"
 SEEN_EXAMPLE_PATH = HERE / "seen.example.json"
 
 MODEL = "claude-haiku-4-5"
-#: Raised from 200 to 400 when decision 0001 split the reply in two. Measured,
-#: not guessed: `probe.py` against a real item returned **137 output tokens of
-#: 200** where the one-sentence reply used to average 60. The record predicted
-#: "room twice over"; the real headroom was 1.46x, which is not headroom. The
-#: cap costs nothing until it is reached, because output tokens are billed as
-#: generated.
+#: Back to 200 under decision 0002: the reply is one sentence again, and the
+#: baseline this suite is measured against was produced at 200. It went to 400
+#: for the two-field reply of 0001, where `probe.py` measured 137 output tokens
+#: against it — headroom of 1.46x where the record had predicted 2x.
 #:
 #: **What is on the other side of this number is worse than an error.** A reply
 #: cut off at the cap is invalid JSON, `__call__` catches the parse failure, and
@@ -68,11 +66,10 @@ MODEL = "claude-haiku-4-5"
 #: marker in prose, in a field nothing counts. `stats()` reads `"score" in r`
 #: and counts the row as judged.
 #:
-#: Not fixed here. Giving a failure its own state changes what `seen.json`
-#: holds and what `make_cases.py` reads out of it, which is its own piece of
-#: work and its own record. Raising the cap makes it rarer; it does not make it
-#: visible.
-JUDGE_MAX_TOKENS = 400
+#: Not fixed here, and not by 0002 either: giving a failure its own state
+#: changes what `seen.json` holds and what `make_cases.py` reads out of it. It
+#: is 0003's, and it is named in 0002 as explicitly left alone.
+JUDGE_MAX_TOKENS = 200
 #: The prefill that forces JSON out. Prepended to the reply before parsing,
 #: because the reply *is* the prefill plus the completion.
 JUDGE_PREFILL = "{"
@@ -110,11 +107,6 @@ class Item:
 
 @dataclass
 class Judgement:
-    #: What the item is, from the title and summary alone. Descriptive, and
-    #: separated from `reason` on purpose: this is the half that can be checked
-    #: against the item, and `reason` is the half that cannot. See
-    #: `decisions/0001-about-beside-reason.md`.
-    about: str
     score: int
     reason: str
     cost_usd: float = 0.0
@@ -289,7 +281,6 @@ class BriefJudge(JudgeBase):
         try:
             data = self._ask(prompt)
             return Judgement(
-                about=str(data["about"]),
                 score=int(data["score"]),
                 reason=str(data["reason"]),
                 cost_usd=self.spent_usd - before,
@@ -302,7 +293,6 @@ class BriefJudge(JudgeBase):
         except (ValueError, KeyError, TypeError) as exc:
             # the digest must never crash over one malformed answer
             return Judgement(
-                about="",
                 score=0,
                 reason=f"[parse failed] {exc}"[:120],
                 cost_usd=self.spent_usd - before,
@@ -378,7 +368,6 @@ def run_brief() -> None:
             "title": item.title,
             "link": item.link,
             "score": j.score,
-            "about": j.about,
             "reason": j.reason,
             "cost_usd": j.cost_usd,
             "judged_at": now,
@@ -399,9 +388,6 @@ def run_brief() -> None:
     for n, (item, j) in enumerate(top, start=1):
         filler = " (below threshold)" if j.score < SCORE_THRESHOLD else ""
         print(f"{n}. [{j.score}]{filler} {item.title}  ({item.source})")
-        # Both sentences, description first: it is what tells me what the thing
-        # *is*, and the judgement reads differently once I know that.
-        print(f"     {j.about}")
         print(f"     {j.reason}")
         print(f"     {item.link}\n")
 

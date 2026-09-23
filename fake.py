@@ -135,10 +135,6 @@ class _Messages:
         # nothing else, `reason` carries the bookkeeping that is this fake's
         # judgement. A fake that put its own words in `about` would make the
         # faithfulness suite score the fake instead of the shape.
-        about = (
-            f"Articolo di {_field(prompt, 'Source')} intitolato "
-            f"{_title(prompt)}."
-        )
         # The sentence names the item, because the real one does. A fake whose
         # words were the same whatever it had been shown would score identically
         # on all 21 cases — the "every prompt looks equally good" failure this
@@ -157,13 +153,11 @@ class _Messages:
         # carrying a quote — `Quoting ...` posts are a whole category in these
         # feeds — would otherwise produce a reply that is not JSON, and the
         # fake would fail for a reason the real provider never has.
-        # Same key order as `prompts/judge.txt` asks for, and that is not
-        # cosmetic: a field's position is part of what the real model is being
-        # asked, so a fake that ordered them differently would be faking a
-        # different question. (decision 0001, "the general fact")
-        answer = json.dumps(
-            {"reason": reason, "score": score, "about": about}, ensure_ascii=False
-        )[1:]
+        # The shape `prompts/judge.txt` asks for, and only that. It carried an
+        # `about` field through decision 0001; 0002 moved the description to a
+        # call of its own, so this fake stops inventing one. `_field` stays —
+        # the describing fake will want it.
+        answer = json.dumps({"reason": reason, "score": score}, ensure_ascii=False)[1:]
         return _Reply(
             content=[_Block(answer)],
             usage=_Usage(

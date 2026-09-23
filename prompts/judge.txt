@@ -22,17 +22,4 @@ time on a 1-5 scale:
 1 = skip
 
 Respond with ONLY a JSON object, no other text:
-{"reason": "<one concise sentence in Italian>", "score": <int 1-5>, "about": "<one sentence in Italian>"}
-
-Answer in that order. "reason" judges, "about" describes, and each is ONE short
-sentence.
-
-"reason": why it does or does not deserve his time. One concise sentence.
-
-"about": only what the title and summary state. No verdict on relevance, depth
-or quality — you have already given that. Add no detail they do not contain:
-you have not read the article. If the summary says too little, say it is
-uninformative; do not guess, and do not claim there is no summary when there is
-one. Describe the item, not your own judgement of it.
-
-Never use a double quote inside the values. Quote with « » or not at all.
+{"reason": "<one concise sentence in Italian>", "score": <int 1-5>}
