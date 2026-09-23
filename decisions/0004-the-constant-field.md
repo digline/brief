@@ -1,11 +1,13 @@
 # 0004 — The constant field: the field, or the describing?
 
-- **Credit: TODO — HANDLE NOT YET RECORDED.** This control was proposed by
-  **u/TODO-HANDLE** on the r/LLMDevs thread for *"Adding a field to a JSON reply
-  changed the rest of the answer, and moving it didn't help"* (2026-09-23).
-  **Nothing on this branch is pushed, merged or quoted until this line names
-  them.** It was their idea and not ours: we had tested where the field sits,
-  and never whether it matters what the field contains
+- Credit: **the control is u/aofu_dev's**, proposed on the r/LLMDevs thread
+  for *"Adding a field to a JSON reply changed the rest of the answer, and
+  moving it didn't help"* (2026-09-23). They proposed exactly the arm run here:
+  a dummy field that always returns "ok", to see whether the disagreement still
+  goes up on the same cases without asking for a description. The design below
+  is theirs. What this record adds is the predictions, the counting and the
+  limits. We had tested where the field sits, and never whether it matters
+  what the field contains
 - Status: **pre-registered**, 2026-09-23. Written and committed before the
   prompt is touched, so the run can contradict it
 - Is a control for: [0001](0001-about-beside-reason.md), whose eight runs say
