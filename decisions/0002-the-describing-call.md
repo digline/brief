@@ -390,3 +390,101 @@ declines because the *item* is degenerate rather than because the *sentence*
 judged — which is 0001's diagnosis failing at the last case that can test it,
 and it would mean the describing call inherits the problem rather than solving
 it.
+
+
+## Step 5, measured (2026-09-23) — the threshold was not set, and why
+
+One full run of `brief-about`, 22 cases. **11 of them errored**, the calibration
+case among them.
+
+### `economics`, third reading: the prediction is falsified
+
+Predicted: **0 abstentions of 5, score at or above 0.6, suspension lifted.**
+Measured: **2 abstentions of 5**, per-sample scores `[1.0, 0.0, 1.0]`, status
+`error`. The suspension is not lifted.
+
+Its five descriptions are all of one shape — *"Il titolo e il sommario non
+forniscono informazioni sufficienti per descrivere l'articolo."* That is what
+`prompts/describer.txt` asks for when a summary says too little, so the
+describer did as it was told, and the claim judge declines to count claims in it
+about half the time. A statement that an item cannot be described is still not a
+claim about an article.
+
+**But this is not a clean reading of that case, and it must not be recorded as
+one.** Eleven of twenty-two cases errored in the same run, including the
+calibration case. Whatever is wrong is wrong across the suite, so `economics`
+failing its prediction tells us about the suite before it tells us about
+`economics`. The falsifier written in this record — *an abstention here means
+0001's diagnosis fails at the last case that can test it* — **does not fire**,
+because it assumed the rest of the run was sound. It was not.
+
+### The threshold was not set, and refusing to set it is the finding
+
+The distribution over the 11 cases that scored: min 0.833, median **1.000**,
+mean 0.979, max 1.000.
+
+A bar could be read off that. **It must not be**, and the reason is written in
+`digline`'s own guide two hours before this run: *a probe drawn from the head of
+a file is not a sample*, and its sibling, *a finding drawn from what survived is
+not a finding about the population*. Eleven cases scored because they were the
+ones the judge would answer about; the eleven that errored are exactly the
+sentences it would not. Setting a threshold from the survivors would be the
+denominator trap with a threshold on the end of it — chosen from the cases that
+were easy to judge, then applied to all of them.
+
+So: no threshold, no promotion, and `brief-about` has no baseline.
+
+### 0002's prediction 2 split in half, and the halves point opposite ways
+
+It said *"Faithfulness at or above the 0.725 measured under 0001, and
+abstentions near zero"*. Two claims in one prediction:
+
+- **The score half is confirmed emphatically**: 0.725 → median 1.000.
+- **The abstention half is falsified**: 26 abstentions across the run against
+  "near zero", and 11 errored cases against 0001's worst of 2.
+
+A compound prediction can be half right, and this one is — which is the band
+lesson again in a different costume. *"At or above X and near zero Y"* cannot be
+scored with one verdict, and it should have been written as two.
+
+### Where the abstentions come from: measured, not guessed
+
+Six recorded descriptions, judged twice, same text, only the context changed —
+12 calls, $0.0126:
+
+| context | declined |
+|---|---|
+| the item alone (this decision's) | **4 of 6** |
+| the item and the taste (0001's) | **1 of 6** |
+
+**The more honest context is the one the instrument copes with worst.** The taste
+has nothing to do with whether a description of an item is true, and including
+it makes the judge four times more willing to answer — it gives it more text to
+relate a claim to. That is an artefact of the instrument, not a fact about the
+descriptions, and it puts 0002's context reversal in tension with being able to
+measure anything at all.
+
+**And the scores cluster at 1.000 under either context.** That is the deeper
+problem and it is not about abstention: a description constrained to say only
+what the item states is a near-restatement of the item, and a near-restatement
+is trivially faithful. The check has kept its correctness and lost its
+discriminating power. It cannot catch an invention that the describing prompt
+has already forbidden.
+
+### Also: the JSON failure is back, in a new shape
+
+Two target calls raised `JSONDecodeError: Expecting value: line 2 column 10` and
+`… column 12`. `prompts/describer.txt` carries the no-double-quote clause that
+closed the previous one at 3.2e-4, and this is a different fault at a different
+position, so that clause is not reopened — as this record said it would not be.
+Undiagnosed, and named rather than folded into the abstention count.
+
+### What this leaves
+
+Not a decision to take while writing up the run that produced it. The options
+are real and they point in different directions — loosen the context back and
+lose the honesty that motivated it, accept a check that is correct and
+undiscriminating, or ask whether `Faithfulness` is the right instrument for a
+sentence this constrained. The one thing measured today is that the describing
+call did what it was told, and doing what it was told is what made it hard to
+measure.
