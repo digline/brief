@@ -184,3 +184,86 @@ low as well.
    `decisions/`. The drift check runs on that commit: the old prompt, once.
 5. The result, read against 1–7, appended below. Nothing above this line is
    edited after the run, except the credit line.
+
+
+## Result, 2026-09-23: the field does not cost. Predictions 4 and 5 hold
+
+Four runs of the arm at `7d5d269`, `config_hash 6b36822dfb5114f3`, `judge.txt`
+`e34a074b`. The same count and the same script as the table above.
+
+| | old prompt (23 runs) | `about`, first or last (8) | **`"ack": "ok"` (4)** |
+|---|---|---|---|
+| **cases whose samples disagree** | median 4, range 1–6 | 7, 7, 8, 7, 7, 7, 8, 7 | **5, 3, 5, 4** |
+| `frontier-red-teampatterns` splits | 1 of 23 | 7 of 8 | **1 of 4** |
+| `don-t-classify-hallucinate` splits | 12 of 23 | 1 of 8 | **3 of 4** |
+| accuracy numerator /21 | median 16 | median 15 | **16, 16, 15, 16** |
+| input tokens a call | 366.5 | 508.5 / 528.5 | **372.5** |
+
+Against the predictions, one line each:
+
+1. **Falsified.** No run reached 7. The largest count was 5.
+2. **Falsified.** `frontier-red-teampatterns` split in 1 of 4.
+3. **Falsified.** `don-t-classify-hallucinate` split in 3 of 4, back to what it
+   does under the old prompt.
+4. **Holds.** All four runs are at 6 or fewer, inside the old prompt's band.
+5. **Holds.** 1 of 4.
+6. Does not arise. The counts are not mixed.
+7. Does not arise. The count did not grow.
+
+The estimate held as well: 4 and 5. It is the first estimate in this series
+that did not come back optimistic. With four runs that is one data point, not a
+recalibration.
+
+**The control was a control.** All 420 replies returned `"ack": "ok"`. Zero
+`json_schema` failures, zero errored samples. The largest reply was 91 output
+tokens against the cap of 200, so the cap that differs from v3 never came into
+play. The arm added **6 input tokens a call**, measured (366.5 → 372.5), against
+the 7 estimated. It also added about 11 output tokens: 70 a call against 59 for
+the old prompt on the same day. The constant costs tokens to write, and it is
+the only thing the arm costs: $0.00072 a judgement against $0.00066.
+
+**No drift.** The old prompt, run once on `1ab516a` after the arm was reverted:
+**4** cases, accuracy 16/21. That is its median, on the same afternoon.
+
+### What this says, within the limits written above
+
+**The shape of the reply is ruled out, at this dose.** One more key in the JSON,
+with no work in it, left the judge exactly as stable as it was. So 0001's
+finding narrows: what loosened the judge was not *asking for a field*, it was
+asking for **that** field.
+
+**What is left is the half this control said it could not settle.** Reading 4
+and 5 as the section above requires: *the cost is in the describing, or in the
+162 tokens of instructions that asked for it.* This control cannot tell those
+two apart, and it said so before it ran. It is still a sharper result than
+it looks, because those two are **exactly the post's two guesses**: "asking for
+a description changes what the model thinks the job is", and "maybe it's just a
+longer prompt". The reader's control removed the third explanation, the shape,
+which the post did not even list. It leaves the post's own two standing, and it
+names the arm that separates them: the old prompt plus about 160 tokens of
+neutral text, with no field.
+
+**What changes for the post's advice.** *"The new field doesn't belong in that
+reply at all, first or last"* was written about a field with content. A field
+with no content was harmless here. The advice stands for a field the model has
+to work to fill. It does not stand as *any key costs you*, and nobody should
+read it that way now that it has been measured.
+
+**Not a third piece on its own.** The dummy did not move the verdicts, so the
+condition for a third piece in the series did not fire. It is a correction to
+the second piece, and it is the most useful kind: it narrows a finding in public,
+on a reader's design.
+
+### An accident, recorded rather than tidied away
+
+A fifth run of the arm was taken by mistake. A failed `git revert` left the arm
+in place, and the run meant as the drift check ran the arm instead. Its
+document names `680a4ce`, an amended copy of `7d5d269` with the same tree
+(`81d1325`), no longer on any branch. It gave **4**. It is **not part of the
+reading**: the four were fixed in advance, and prediction 6 forbids a fifth run
+from deciding anything. It is reported because it was taken, and because
+dropping a run that agrees is no more honest than dropping one that does not.
+The real drift check is the run on `1ab516a` above.
+
+Spent: **$0.45**. $0.30 on the four runs, $0.07 on the drift check, and
+$0.08 on the accidental fifth.
