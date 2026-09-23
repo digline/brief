@@ -1,7 +1,13 @@
 # 0001 — `about` beside `reason`
 
-- Status: **proposed** — the text first, checkpointed before any code, the way
-  digline's own records are written
+- Status: **superseded in its implementation by
+  [0002](0002-the-describing-call.md)**, 2026-09-23. The premise stands — the
+  sentence mixes description with judgement and only the first is checkable —
+  and the single-call implementation of it is refuted below, twice, by
+  measurement. Read this record for how that was found; read 0002 for what
+  replaces it
+- Status was: **proposed** — the text first, checkpointed before any code, the
+  way digline's own records are written
 - Date: 2026-09-22
 - Prescribed by: [Handbook chapter 0](https://digline.dev/handbook/00-before-the-prompt/),
   decision 1, *"Emit the decision, not only the prose"*
