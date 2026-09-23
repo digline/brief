@@ -402,14 +402,41 @@ model conditions on what it has already written and `about` varies. Measured:
 per-case sample disagreement went from a 2–6 band over nineteen runs of the old
 prompt to 7–8 over four of the new one, with no overlap at all.
 
+> ### Corrected 2026-09-23 — the evidence above does not support the claim
+>
+> The reorder was run, four times, with `about` written **last**, and the
+> disagreement count was **[7, 7, 7, 8] — identical to [7, 7, 7, 8] with `about`
+> written first.** Position changed it by nothing at all.
+>
+> So the sentence above is wrong where it says the score moved *by position*.
+> It moved because the field was **added**, and where it sits made no difference
+> to the judge's stability. Model drift is ruled out: the old prompt run on the
+> same day gave 6 of 21, inside its usual band.
+>
+> What position **did** change, measured on the same eight runs: the reply got
+> shorter when `about` moved last (111.0 → 98.8 output tokens per call) and the
+> accuracy median moved 15.0 → 15.5. Both small, neither the thing that was
+> claimed.
+>
+> The claim is therefore narrowed to what the data carries, and the narrower
+> version is more useful than the one it replaces:
+
 So the thing to carry out of this decision, for anyone adding a field to a JSON
 reply a model produces:
 
-> **Adding a field is not additive.** It is a change to every field after it,
-> and the fields after it may be the ones you are measuring. If you need the
-> existing behaviour preserved, the new field goes **last** — and if it must go
-> first, expect to re-measure everything below it and budget for that rather
-> than be surprised by it.
+> **Adding a field is not additive.** Asking one call for one more thing
+> changes how it does everything else, and *moving the field does not undo it*.
+> Measured here: the judge's per-case stability left a 2–6 band and sat at 7–8
+> whether the new field was written first or last. If the existing behaviour has
+> to be preserved, the new field does not belong in that reply at all — it
+> belongs in a second call. Re-measure everything, and budget for it rather than
+> be surprised by it.
+
+The first version of this box said the change was positional and prescribed
+putting the new field last. That was written from four runs and falsified by the
+next four. It is left visible above rather than tidied away, because the
+prescription it gave — *move it to the end and you are safe* — is the one a
+reader would most want to believe, and the one the data refuses.
 
 This is a fact about how these models answer, not about this prompt. It is
 written here because the record already existed; it belongs anywhere someone
@@ -426,3 +453,68 @@ the one part of this decision that is done. **Nothing about the reorder touches
 it**: the clause constrains what may appear inside a value, and moving a field
 changes neither the clause nor any value it governs. If a later run shows a
 parse failure, it is a new fault and not this one returning.
+
+
+## The reorder, run four times: prediction 1 falsified (2026-09-23)
+
+`{"reason": …, "score": …, "about": …}`, four runs, `config_hash` unchanged at
+`61333b9d823c1ed7` so the prompt file was the only variable.
+
+| | old prompt (21 runs) | v2, `about` first | v3, `about` last |
+|---|---|---|---|
+| **cases whose 5 samples disagree** | median 4, range **2–6** | **7, 7, 7, 8** | **7, 7, 7, 8** |
+| accuracy numerator /21 | median 16, range 14–16 | 13, 15, 15, 17 → 15.0 | 14, 15, 16, 16 → **15.5** |
+| precision | median 0.667 | 0.683 | 0.655 |
+| output tok/call | 59.9 | 111.0 | **98.8** |
+| $/judgement | 0.000666 | 0.001063 | 0.001022 |
+
+**Prediction 1 was the falsifier and it is falsified.** Not "moved a little" —
+*identical*, to the value. 0 of 4 runs inside the old band. Whatever pushed the
+judge from a 2–6 band to 7–8 has nothing to do with where the field sits.
+
+Model drift is ruled out: the old prompt, run on 2026-09-22 alongside all of
+this, gave 6 of 21 — inside its usual band. The cause is the prompt, and it is
+not the order.
+
+Prediction 2 half-held (accuracy median 15.0 → 15.5, still under the old 16).
+Prediction 3 held — cost roughly unchanged, in fact slightly down. Prediction 4
+is **untested**: whether `about` written after a judgement now describes the
+score instead of the item is a question only `reason.py` can answer, and it has
+not been run against v3.
+
+And the JSON clause stayed closed: 420 calls, 0 errored verdicts.
+
+### So the decision is rethought, not reordered again
+
+The rule this record set was that a failed reorder is rethought, and the
+temptation it named was to reorder again. Taking that seriously: two reorderings
+of one reply are two samples of the same idea, and the idea is refuted.
+
+What the data says is narrower and harder than "wrong field order". **Asking one
+call to judge and describe makes it a worse judge, wherever the description
+sits.** The old prompt returned 16/21 in eighteen of twenty-one runs — very
+nearly deterministic. Nothing that keeps both jobs in one call has come close.
+
+**The rethink: two calls.**
+
+- The judging call becomes **byte-identical to the old prompt** — the one whose
+  behaviour is measured over twenty-one runs, whose baseline is already
+  promoted, and whose `config_hash` is `98fc65b1e49e930e`. Its stability is not
+  recovered by argument; it is recovered by not touching it.
+- A second, short call produces `about` from the same item. It is a describing
+  task with no judgement in it, so it is the thing `Faithfulness` was always
+  meant to check, and it can have a prompt of four lines instead of fourteen.
+
+Estimated cost: the judging call is $0.000666 as before; a describing call at
+roughly 120 input and 45 output tokens is about $0.00035. **Around $0.00101 an
+item — within a whisker of the $0.001022 the single-call v3 already costs**,
+and it buys back the judge that agreed with me 16 times out of 21, eighteen runs
+running.
+
+What it costs instead: two API calls per item rather than one, so twice the
+latency and twice the failure surface on a morning; and `seen.json` gains a
+field written by a different call, which is a bookkeeping change. Neither is
+free and both are smaller than a judge that cannot hold still.
+
+Not applied. It is a change to `brief.py`'s call structure, not to a prompt, and
+it wants its own record — 0002, with its own predictions written first.

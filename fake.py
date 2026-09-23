@@ -157,8 +157,12 @@ class _Messages:
         # carrying a quote — `Quoting ...` posts are a whole category in these
         # feeds — would otherwise produce a reply that is not JSON, and the
         # fake would fail for a reason the real provider never has.
+        # Same key order as `prompts/judge.txt` asks for, and that is not
+        # cosmetic: a field's position is part of what the real model is being
+        # asked, so a fake that ordered them differently would be faking a
+        # different question. (decision 0001, "the general fact")
         answer = json.dumps(
-            {"about": about, "reason": reason, "score": score}, ensure_ascii=False
+            {"reason": reason, "score": score, "about": about}, ensure_ascii=False
         )[1:]
         return _Reply(
             content=[_Block(answer)],
