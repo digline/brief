@@ -1,9 +1,14 @@
-"""The other half of the judge's answer: the sentence, measured against the item.
+"""The describing call, measured against the item it was given.
 
 `suite.py` measures the score — does the model still agree with me about what
-deserves my morning. Nothing measures the sentence beside it, and the sentence
-is the lever. It is what I read under the title, and it is what decides whether
-I open the article.
+deserves my morning. This measures the sentence I read under the title, which is
+what decides whether I open the article.
+
+**It was a field of the judge's reply and it is now a call of its own.** That is
+decision 0002, and it was not tidiness: a call asked to judge *and* describe was
+measurably a worse judge, wherever the description sat in the reply, and twelve
+runs were spent establishing it. `decisions/0002-the-describing-call.md` is the
+account.
 
 The model writes it from the source, the title and the summary. **It has not
 read the piece.** So a sentence that names a benchmark, a comparison or a
@@ -18,11 +23,9 @@ would have to invent. The ground truth is the item itself, which is already in
 decompose the sentence into claims and count how many of them the item
 supports; the core does the division.
 
-The suite is separate from `suite.py` rather than a fourth assertion in it
-because one target cannot return two shapes. `suite.py` needs the parsed object
-— `JsonSchema` and `AgreesWithMark` read `output["score"]` — and `Faithfulness`
-accepts text only. Same call, same two prompt files, same model, same price:
-what differs is which half of the answer is kept.
+The suite is separate from `suite.py` because it measures a different call. It
+used to be separate because one target could not return two shapes, which was
+true and turned out to be the smaller reason.
 
 `BRIEF_FAKE_JUDGE=1` swaps both providers for `fake.py`, as in `suite.py`. It
 measures the wiring and not the judge — see the note there.
@@ -40,7 +43,7 @@ from digline.targets import PromptTemplate
 from digline_anthropic import AnthropicClaimJudge, AnthropicTarget
 
 import fake
-from brief import JUDGE_MAX_TOKENS, JUDGE_PREFILL, JUDGE_SYSTEM, MODEL
+from brief import DESCRIBER_MAX_TOKENS, DESCRIBER_SYSTEM, JUDGE_PREFILL, MODEL
 
 HERE = Path(__file__).parent
 FAKE = os.environ.get("BRIEF_FAKE_JUDGE") == "1"
@@ -51,34 +54,31 @@ FAKE = os.environ.get("BRIEF_FAKE_JUDGE") == "1"
 ITEM = PromptTemplate(HERE / "prompts" / "item.txt")
 
 
-class ReasonTarget(AnthropicTarget):
-    """`suite.py`'s call, keeping the other field.
+class DescribeTarget(AnthropicTarget):
+    """`brief.BriefDescriber`'s call, as the suite makes it.
 
-    Byte for byte the same request as `JudgeTarget`: same `prompts/judge.txt`,
-    same `prompts/item.txt`, same model, same cap, same prefill. `parse` keeps
-    `reason` where that one keeps the whole object, because `Faithfulness`
-    accepts text and only text — in a structured output, deciding which field
-    holds the claims to be checked is a real decision, and digline refuses to
-    take it in silence.
+    Same `prompts/describer.txt`, same `prompts/item.txt`, same model, same cap,
+    same prefill — the application's second call, reproduced here so the two
+    cannot drift.
 
-    It raises on malformed JSON for `JudgeTarget`'s reason: in the digest a
-    broken answer must not bring the morning down, here it must become an
-    `error`. A missing `reason` key raises too rather than yielding `""` — the
-    empty sentence this suite gates on is one the model actually wrote, not one
-    a parser invented out of a `KeyError`.
+    It raises on malformed JSON where the application returns a stated failure:
+    in the digest a broken description must cost the sentence and not the item,
+    here it must become an `error`. A missing `about` key raises too rather than
+    yielding `""` — the empty description this suite gates on is one the model
+    actually wrote, not one a parser invented out of a `KeyError`.
     """
 
     def parse(self, text: str) -> str:
-        return str(json.loads(text)["reason"])
+        return str(json.loads(text)["about"])
 
 
-target = ReasonTarget(
+target = DescribeTarget(
     prompt_file=HERE / "prompts" / "item.txt",
-    system_file=HERE / "prompts" / "judge.txt",
+    system_file=HERE / "prompts" / "describer.txt",
     model=MODEL,
-    max_tokens=JUDGE_MAX_TOKENS,
+    max_tokens=DESCRIBER_MAX_TOKENS,
     prefill=JUDGE_PREFILL,
-    client=fake.FakeAnthropic() if FAKE else None,
+    client=fake.FakeDescriberAnthropic() if FAKE else None,
 )
 
 #: The instrument. `AnthropicClaimJudge` and not `AnthropicJudge`: the second
@@ -96,53 +96,37 @@ judge = AnthropicClaimJudge(
 )
 
 
-#: The one case this suite cannot ask its question of, set aside by id rather
-#: than by a rule, because a rule over summary length would be a filter nobody
-#: could read in a diff.
+#: `economics` was suspended here under 0001, when the sentence being checked
+#: was a *judgement* of an item with no content and the judge declined to count
+#: claims in it 11 times of 15. 0002 changes the sentence: it is now a
+#: *description* of that item, written by a call that was never asked to judge,
+#: and a description of a one-word item still makes claims — who published it,
+#: what it is called, that the summary says nothing.
 #:
-#: Its item is the single word "Economics" as both title and summary. There is
-#: nothing there for a sentence to be faithful *to*, so the model writes that
-#: the item is empty of content — which is the right answer and is not a claim
-#: about an article. digline 0.16.0 gave the judge the licence to decline, and
-#: it declines here 11 judgements out of 15; the case became `error`, and
-#: `promote` refused the run by name.
-#:
-#: Suspending it is the honest close, not a workaround. `Case.suspended` puts
-#: the exclusion in the run document, so it travels to the report and reads as
-#: coverage deliberately set aside rather than coverage that quietly shrank.
-#: And it is suspended **here only** — in `suite.py` the case is untouched and
-#: still counted, because "is this worth my morning" is a question a one-word
-#: item can be asked and answered about, while "does this sentence invent the
-#: article" is not.
-UNJUDGEABLE = {
-    "2026-08-25-economics": (
-        "the item is the single word 'Economics' as title and summary: there is "
-        "nothing for the sentence to be faithful to, and the judge declines "
-        "rather than counting claims in a sentence that makes none"
-    ),
-}
+#: So the suspension is lifted and the prediction is in
+#: `decisions/0002-the-describing-call.md`, written before this run: 0
+#: abstentions of 5 and a score at or above 0.6. If it abstains again, the
+#: suspension comes back and 0001's diagnosis has failed at the last case that
+#: can test it.
+UNJUDGEABLE: dict[str, str] = {}
 
 cases = [
     Case(
         id=c["id"],
         vars=c["vars"],
         suspended=UNJUDGEABLE.get(c["id"]),
-        # **Both prompts.** The context is what the model was given, and it was
-        # given two things: the taste in `prompts/judge.txt` and the item in
-        # `prompts/item.txt`. The first draft of this file passed the item
-        # alone, and six live cases said why that was wrong — every sentence
-        # here has the shape "<what the article is about>, rilevante per <why
-        # it matters to him>", and with the taste outside the context that
-        # second half is unsupported *by construction*. The judge was marking
-        # the model down for knowing what I asked it to know. Scores went from
-        # a mean of 0.28 to 0.47 on the same six cases when the taste went in,
-        # and that difference is my context being wrong, not the model being
-        # better.
+        # **The item alone, and this is the second time this line has moved.**
+        # 0001 passed the item, found every "rilevante per ..." clause
+        # unsupported by construction, and corrected the context to *both*
+        # prompt files, because the model had been given the taste and a context
+        # without it was marking it down for knowing what I asked it to know.
         #
-        # What it does not weaken is the thing this suite is for: the taste
-        # says nothing about any particular article, so a sentence that invents
-        # an article's content is still unsupported by both files together.
-        context=[JUDGE_SYSTEM, ITEM.render(c["vars"], case_id=c["id"])],
+        # 0002 reverses that correction, for the reason that made it: the
+        # describing call is never shown `prompts/judge.txt`. It does not know
+        # what I like, so there is no taste to be faithful to, and the item is
+        # the honest whole of what it was given. The context is what the model
+        # saw — that rule never changed; what it points at did.
+        context=[ITEM.render(c["vars"], case_id=c["id"])],
         metadata=c["metadata"],
         # No `expected`: `Faithfulness` compares the sentence with the item, not
         # with an answer of mine. And no `label`, because there is no run
@@ -197,7 +181,8 @@ cases.append(
     Case(
         id="calibration-half-supported",
         vars=CALIBRATION_VARS,
-        context=[JUDGE_SYSTEM, CALIBRATION_ITEM],
+        # The item alone here too, for the reason above.
+        context=[CALIBRATION_ITEM],
         calibration=Calibration(
             output=CALIBRATION_ANSWER,
             check="faithfulness",
@@ -229,7 +214,7 @@ cases.append(
 suite = Suite(
     tenant="alessandro",
     environment="dev",
-    name="brief-reason",
+    name="brief-about",
     assertions=[
         # An empty reason **errors** here, and that is correct, not a gap to be
         # closed later. `Faithfulness` asks the judge for two counts and divides

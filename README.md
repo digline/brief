@@ -90,12 +90,12 @@ title, and the sentence is what decides whether I open the article.
 The model writes it from the source, the title and the summary — **it has not
 read the piece.** So a sentence that names a benchmark, a comparison or a
 conclusion the summary never mentions is not a florid answer; it is a decision I
-took on something that does not exist. Until `reason.py` the only thing checked
+took on something that does not exist. Until `about.py` the only thing checked
 about it was that it was not empty.
 
 ```console
-$ uv run digline run     --suite reason.py            # $0.20: 21 cases x 5 samples, two models each
-$ uv run digline compare --suite reason.py --run latest --locale en
+$ uv run digline run     --suite about.py            # $0.20: 21 cases x 5 samples, two models each
+$ uv run digline compare --suite about.py --run latest --locale en
 ```
 
 The check is `Faithfulness`, and it needs no label I would have to invent: the
@@ -122,7 +122,7 @@ there is no fraction, and 0/0 is not 0. The first exit 2 reading "the judge foun
 no claims in the output" is a contentless sentence from the model, and the fix is
 in `prompts/judge.txt`.
 
-`reason.py` sets `record_responses=True`. It is the first suite here that does,
+`about.py` sets `record_responses=True`. It is the first suite here that does,
 which makes its runs the first that can ever be re-judged — see below.
 
 ### What it costs, and which part of that is watched
@@ -184,12 +184,12 @@ gate by caring less.
 
 Recording is opt-in and was off, so the eighteen stored runs of `brief-judge`
 hold verdicts and no answers. A run already produced cannot gain answers nobody
-kept, so none of them can be replayed, and none ever will be. `brief-reason`'s
+kept, so none of them can be replayed, and none ever will be. `brief-about`'s
 runs can:
 
 ```console
-$ uv run digline rejudge --suite reason.py --run latest                  # the judge alone; no call to the target
-$ uv run digline rejudge --suite reason.py --run latest --judge-samples 5
+$ uv run digline rejudge --suite about.py --run latest                  # the judge alone; no call to the target
+$ uv run digline rejudge --suite about.py --run latest --judge-samples 5
 ```
 
 `rejudge` re-runs the assertions over the recorded answers and writes a run that
@@ -209,7 +209,7 @@ and never a reading of it. Both of these need a check whose `KIND` is `judged`, 
 `agrees_with_mark` is declared `deterministic`, because the model there produces
 the *answer* and a threshold comparison produces the *verdict*.
 
-The third is the calibration case, declared in `reason.py` and judged on every
+The third is the calibration case, declared in `about.py` and judged on every
 run with no call to the target. It is a sentence I wrote myself about a real
 item, with two claims — one the summary states, one invented — so a judge that
 still has a scale puts it in the middle, and its band is 0.30–0.70. The canary
@@ -252,7 +252,7 @@ the honest reading; what it does say is that the cut cost nothing.
 
 `.github/workflows/check.yml` runs on every push with `BRIEF_FAKE_JUDGE=1`,
 which swaps both providers for `fake.py` — `FakeAnthropic` for the digest's
-judge, `FakeClaimAnthropic` for the instrument `reason.py` measures it with. No key, no network, no spend, and a
+judge, `FakeClaimAnthropic` for the instrument `about.py` measures it with. No key, no network, no spend, and a
 fork can run the checks too.
 
 The fake proves the wiring — the suite loads, both prompts compose, the
@@ -285,12 +285,14 @@ brief.py            the digest: fetch, judge, print, ask, remember
 prompts/judge.txt   the system prompt — the taste being encoded
 prompts/item.txt    the user prompt, one item, rendered by app and suite alike
 suite.py            the score suite: does the model still agree with me
-reason.py           the sentence suite: is the reason faithful to the item
+about.py            the sentence suite: is the description faithful to the item
+prompts/describer.txt  the second call's system prompt — describes, never judges
 cases/brief.json    21 cases with my own marks as the expected answer
 make_cases.py       seen.json -> cases/brief.json
 fake.py             both providers, faked, for CI — the target and the claim judge
 probe.py            one real call, printed field by field — how the fake stays honest
 report.html         one comparison, rendered — the one of 2026-08-27
+decisions/          the records: why the reply was split, and why it was unsplit
 fixtures/           runs kept out of the ignored run store, and what they show
 seen.example.json   ten records, standing in for the seen.json that is not here
 .digline/           the committed baseline (runs are ephemeral and ignored)

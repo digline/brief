@@ -48,9 +48,9 @@ jobs:
           BRIEF_FAKE_JUDGE: "1"
           ROOT: ${{ runner.temp }}/digline
         run: |
-          uv run digline run     --suite reason.py --root "$ROOT"
-          uv run digline promote --suite reason.py --root "$ROOT" --run latest
-          uv run digline compare --suite reason.py --root "$ROOT" --run latest --locale en
+          uv run digline run     --suite about.py --root "$ROOT"
+          uv run digline promote --suite about.py --root "$ROOT" --run latest
+          uv run digline compare --suite about.py --root "$ROOT" --run latest --locale en
 
   # The real thing, against the committed baseline. It spends, so it runs on
   # the schedule and when asked — never on a push.
@@ -86,11 +86,11 @@ jobs:
       # the claim judge measuring it — so it costs about $0.19 against
       # `suite.py`'s $0.07.
       - if: steps.key.outputs.present == 'true'
-        run: uv run digline run --suite reason.py
+        run: uv run digline run --suite about.py
 
       # The gates. Exit 1 if anything got worse than the committed baseline.
       - if: steps.key.outputs.present == 'true'
         run: uv run digline compare --suite suite.py --run latest --locale en
 
       - if: steps.key.outputs.present == 'true'
-        run: uv run digline compare --suite reason.py --run latest --locale en
+        run: uv run digline compare --suite about.py --run latest --locale en
