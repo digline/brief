@@ -317,3 +317,69 @@ worse. That is one run, and the finding of the previous round is that one run
 cannot tell a regression from a coin — the case that looked like a regression
 after run 1 turned out to be noise in 3 of the next 4. Reading this one would be
 making the mistake the round before it just documented.
+
+
+## Four v2 runs: one question settled, one answered against the decision (2026-09-23)
+
+### The JSON clause worked
+
+| | failed calls |
+|---|---|
+| v1, before the clause | 8 of 417 — **1.9%** |
+| v2, after | **0 of 420** |
+
+At the measured rate a clean 420 happens by luck with probability 3.2e-4. Settled:
+*"never a double quote inside the values"* closed it. The 105-of-105 after one
+run was 12% by luck and was correctly not believed.
+
+### Agreement got worse, and the noise got worse than the agreement did
+
+The baseline is one run, and comparing a median against one run is the mistake
+this decision already documented. So: the old prompt's own distribution, 21 runs
+at denominator 21, against v2's four.
+
+| | old prompt (21 runs) | v2 (4 runs) |
+|---|---|---|
+| accuracy numerator | median **16**, range 14–16 | median **15**, range 13–17 |
+| precision | median 0.667, range 0.600–0.667 | median 0.683, range 0.600–0.750 |
+| cases whose 5 samples disagree | median **4**, range **2–6** | median **7**, range **7–8** |
+
+**The last row is the finding.** Every one of the four v2 runs is above the
+worst of nineteen old ones. There is no overlap. The old prompt returned 16/21
+in eighteen of twenty-one runs — very nearly deterministic — and v2 returned
+13, 15, 15, 17. Neither 13 nor 17 occurred once in twenty-one runs of the old
+prompt, and both occurred in four of v2.
+
+So the split did not shift the judge so much as loosen it. Accuracy's median is
+one case lower; precision's small median gain sits inside a spread that now
+straddles the old value; and the per-case disagreement, which is the thing the
+tolerances were set against, is up by three cases with no overlap at all.
+
+**That is a worse digest, and by the rule this record set for itself the text is
+amended and not the threshold.**
+
+### The amendment this points at, with a prediction
+
+The reply is generated in the order the JSON declares it, so today the model
+writes `about` first and the score is conditioned on a description it has just
+invented and which varies run to run. The old prompt's prefix for the score was
+`reason` alone.
+
+**Proposal: move `about` after `score`** — `{"reason": …, "score": …, "about": …}`
+— restoring the exact generation prefix the score used to have, and leaving
+`about` as a post-hoc description that is still a description and still
+checkable.
+
+Predictions, before the run:
+
+1. **Cases whose samples disagree return to the old 2–6 band**, median near 4.
+   This is the one that would falsify the mechanism: if the noise stays at 7–8
+   with `about` generated last, then the noise is not conditioning and the
+   diagnosis is wrong.
+2. **Accuracy median returns toward 16/21.**
+3. **Cost is roughly unchanged** — same fields, same lengths, different order.
+4. `about` may become slightly worse as a description, because it is now written
+   after a judgement it can echo. That is the risk the reorder buys the
+   stability with, and `reason.py` is the instrument that would see it.
+
+Not applied. It re-baselines again, and it is a change to the digest.
