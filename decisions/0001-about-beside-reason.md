@@ -383,3 +383,46 @@ Predictions, before the run:
    stability with, and `reason.py` is the instrument that would see it.
 
 Not applied. It re-baselines again, and it is a change to the digest.
+
+
+## The general fact, which outlives this prompt
+
+**Where a field sits in a JSON reply is a change to everything after it.**
+
+A model generates the reply in the order the schema declares, token by token, so
+every field is written in the context of the fields above it. The old prompt's
+generation prefix for `score` was `reason` alone. Putting `about` above it added
+a freshly-invented sentence — different on every sample, by construction — to
+that prefix, and the score moved.
+
+It moved **by position, not by content.** Nothing in `about` is an instruction,
+an opinion or a score; it is a neutral description of the item, and the clauses
+around it forbid it from judging. It still changed the judgement, because a
+model conditions on what it has already written and `about` varies. Measured:
+per-case sample disagreement went from a 2–6 band over nineteen runs of the old
+prompt to 7–8 over four of the new one, with no overlap at all.
+
+So the thing to carry out of this decision, for anyone adding a field to a JSON
+reply a model produces:
+
+> **Adding a field is not additive.** It is a change to every field after it,
+> and the fields after it may be the ones you are measuring. If you need the
+> existing behaviour preserved, the new field goes **last** — and if it must go
+> first, expect to re-measure everything below it and budget for that rather
+> than be surprised by it.
+
+This is a fact about how these models answer, not about this prompt. It is
+written here because the record already existed; it belongs anywhere someone
+designs a structured reply, and Handbook chapter 0's first decision — *emit the
+decision as a structure* — is the place it would do the most good, since that is
+the page telling people to add exactly such a field.
+
+## What is finished, and stays finished
+
+**The JSON clause is settled.** *"Never use a double quote inside the values.
+Quote with « » or not at all."* — 0 failed calls in 420 against 8 in 417 before
+it, which is probability **3.2e-4** by luck at the measured 1.9% rate. That is
+the one part of this decision that is done. **Nothing about the reorder touches
+it**: the clause constrains what may appear inside a value, and moving a field
+changes neither the clause nor any value it governs. If a later run shows a
+parse failure, it is a new fault and not this one returning.
