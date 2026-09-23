@@ -74,10 +74,14 @@ class AgreesWithMark(AssertionBase):
 
 SCHEMA = {
     "type": "object",
-    "required": ["score", "reason"],
+    # Decision 0004's arm: a field with no work in it. `const` makes a reply
+    # that does not return the constant a failure, because the control is only
+    # a control if the field really is constant.
+    "required": ["score", "reason", "ack"],
     "properties": {
         "score": {"type": "integer", "minimum": 1, "maximum": 5},
         "reason": {"type": "string", "minLength": 1},
+        "ack": {"const": "ok"},
     },
 }
 
@@ -98,7 +102,11 @@ class JudgeTarget(AnthropicTarget):
 
     def parse(self, text: str) -> dict[str, object]:
         data = json.loads(text)
-        return {"score": int(data["score"]), "reason": str(data["reason"])}
+        return {
+            "score": int(data["score"]),
+            "reason": str(data["reason"]),
+            "ack": data.get("ack"),
+        }
 
 
 target = JudgeTarget(
