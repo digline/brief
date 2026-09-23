@@ -5,11 +5,14 @@ worth having; a run on every push is worth neither, and a repository whose
 checks only work for whoever holds the key is a repository nobody can send a
 patch to. `BRIEF_FAKE_JUDGE=1` puts this in place of the SDK (see `suite.py`).
 
-Two providers are faked, because there are two models in play. `FakeAnthropic`
+Three providers are faked, because there are three calls in play. `FakeAnthropic`
 stands in for the one being measured — the digest's own judge, scoring an item
 1-5. `FakeClaimAnthropic` stands in for the *instrument* `reason.py` measures it
 with: the claim judge that counts how much of the sentence the item supports.
-Different questions, different shapes, so they are two classes and not one.
+`FakeDescriberAnthropic` stands in for decision 0002's second call, the one
+that describes an item and is never shown the taste. Different questions,
+different shapes, so they are three classes and not one — and the reason 0002
+exists is precisely that they cannot be one call.
 
 What it proves is the wiring, not the judge: that the suite loads, that the
 target composes both prompt files, that the assertions evaluate, that a run and
@@ -241,3 +244,40 @@ class FakeClaimAnthropic:
 
     def __init__(self) -> None:
         self.messages = _ClaimMessages()
+
+
+# --- The describing call, faked -----------------------------------------------
+
+#: Decision 0002's second call answers to its own name, for `FAKE_MODEL`'s
+#: reason: a run in which the judge was faked and the describer was real, or the
+#: reverse, must be a run whose record says so.
+FAKE_DESCRIBER_MODEL = "brief-fake-describer"
+
+
+class _DescriberMessages:
+    def create(self, **request: Any) -> _Reply:
+        prompt: str = request["messages"][0]["content"]
+        # Built out of the item and nothing else, which is what the real
+        # describer is asked for and what makes this fake worth having: the
+        # faithfulness suite scores `about` against the item, so a fake that
+        # wrote its own words would score the fake and not the shape.
+        about = (
+            f"Articolo di {_field(prompt, 'Source')} intitolato "
+            f"{_title(prompt)}."
+        )
+        answer = json.dumps({"about": about}, ensure_ascii=False)[1:]
+        return _Reply(
+            content=[_Block(answer)],
+            usage=_Usage(
+                input_tokens=len(request.get("system", "") + prompt) // 4,
+                output_tokens=len(answer) // 4,
+            ),
+            model=FAKE_DESCRIBER_MODEL,
+        )
+
+
+class FakeDescriberAnthropic:
+    """Whatever `BriefDescriber` calls, and nothing else."""
+
+    def __init__(self) -> None:
+        self.messages = _DescriberMessages()

@@ -71,6 +71,23 @@ is a different suite that does not exist and is not proposed here.
 
 ## What it predicts
 
+> ### How to write a prediction here
+>
+> **A falsifier that does not name the direction is half a falsifier.**
+>
+> Prediction 1 of 0002 was *"back inside the old 2–6 band"*. It was refuted by a
+> run that scored **1** — quieter than any of the nineteen runs the band was
+> drawn from — and the check printed **`0 of 4 inside the band`** while meaning
+> the exact opposite of what it said. The falsifier existed to catch the
+> disagreement *staying high*. It could not tell high from low, because a band
+> has two sides and the prediction named neither.
+>
+> So: say which way. *"Below 6, and I do not care how far below"* is a
+> prediction. *"Inside 2–6"* is a band, and a band will one day be broken from
+> the good side by something you were hoping for. The next prediction written in
+> this repository will be a band unless this paragraph stops it.
+
+
 Written down before the run, so the run can contradict it:
 
 1. **Abstention goes to roughly zero.** A purely descriptive sentence is

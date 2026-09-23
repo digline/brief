@@ -85,6 +85,15 @@ SCORE_THRESHOLD = 4
 MIN_SHOWN = 5
 
 JUDGE_SYSTEM = (HERE / "prompts" / "judge.txt").read_text(encoding="utf-8")
+#: The describing call of decision 0002. A separate system prompt because it is
+#: a separate question: it is never shown the taste, so it cannot judge against
+#: it, and that is the property `reason.py` measures. Shorter than the judge's
+#: because describing is the smaller job.
+DESCRIBER_SYSTEM = (HERE / "prompts" / "describer.txt").read_text(encoding="utf-8")
+#: One Italian sentence. Measured at 60 output tokens for the judge's
+#: single-sentence reply, so 150 is headroom without being a place to hide —
+#: and what lies past a cap is written up at `JUDGE_MAX_TOKENS`.
+DESCRIBER_MAX_TOKENS = 150
 # The user prompt is a file, not an f-string: the suite renders it through the
 # same object (`AnthropicTarget(prompt_file=...)`), so the application and its
 # evaluation cannot drift apart. Change a line here and it changes there too —
@@ -110,6 +119,33 @@ class Judgement:
     score: int
     reason: str
     cost_usd: float = 0.0
+
+
+@dataclass
+class Description:
+    """What the describing call produced, or why it produced nothing.
+
+    **`about` and `failed` are two different absences and never one.** A morning
+    where the describing call fell over must not look like a morning where the
+    model described an item as nothing: the first is our outage and the second
+    would be a fact about the item. So exactly one of these is ever non-empty,
+    `run_brief` writes whichever it is under its own key, and no row in
+    `seen.json` carries an empty `about` that a later count would read as a
+    description. That is Handbook chapter 0's fourth decision, applied at the
+    one place decision 0002 creates a new way to fail.
+    """
+
+    about: str = ""
+    failed: str = ""
+    cost_usd: float = 0.0
+
+    def __post_init__(self) -> None:
+        if bool(self.about) == bool(self.failed):
+            raise ValueError(
+                "a Description carries an answer or a reason there is none, "
+                f"never both and never neither: about={self.about!r} "
+                f"failed={self.failed!r}"
+            )
 
 
 # --- State (seen.json) --------------------------------------------------------
@@ -299,6 +335,79 @@ class BriefJudge(JudgeBase):
             )
 
 
+
+class BriefDescriber(JudgeBase):
+    """The second call of decision 0002: what the item is, and nothing else.
+
+    A separate object rather than a second method on `BriefJudge`, because the
+    whole finding behind 0002 is that one call cannot be asked two questions
+    without becoming worse at the first. Two questions, two calls, two system
+    prompts — and this one is never given `prompts/judge.txt`, so there is no
+    taste in its context to judge against and nothing for a description to
+    smuggle a verdict in from.
+
+    It renders the same `prompts/item.txt` the judge does. That is the repo's
+    standing rule and it earns its keep here: the faithfulness suite checks this
+    call's output against that item, so the item the model saw and the item the
+    judge is shown have to be the same bytes or the measurement is of two
+    different things.
+    """
+
+    provider = "anthropic"
+    system = DESCRIBER_SYSTEM
+    prefill = JUDGE_PREFILL
+
+    def __init__(self, model: str = MODEL, *, client=None) -> None:
+        super().__init__(
+            model, max_tokens=DESCRIBER_MAX_TOKENS, pricing=ANTHROPIC_PRICING
+        )
+        self._injected = client
+
+    def _client(self):
+        if self._injected is None:
+            self._injected = build_client()
+        return self._injected
+
+    def _complete(self, system: str, prompt: str) -> Completion:
+        reply = completion_of(
+            self._client().messages.create(
+                model=self.model,
+                max_tokens=self.max_tokens,
+                system=system,
+                messages=[
+                    {"role": "user", "content": prompt},
+                    {"role": "assistant", "content": JUDGE_PREFILL},
+                ],
+            )
+        )
+        return replace(reply, text=JUDGE_PREFILL + reply.text)
+
+    def __call__(self, item: Item) -> Description:
+        prompt = JUDGE_PROMPT.render(
+            {"source": item.source, "title": item.title, "summary": item.summary}
+        )
+        before = self.spent_usd
+        try:
+            about = str(self._ask(prompt)["about"]).strip()
+        except UnknownModelError:
+            # A mispriced model is not a malformed answer, exactly as in
+            # `BriefJudge`: it would turn every description into a silent
+            # failure instead of stopping the run.
+            raise
+        except (ValueError, KeyError, TypeError) as exc:
+            return Description(
+                failed=f"{type(exc).__name__}: {exc}"[:120],
+                cost_usd=self.spent_usd - before,
+            )
+        if not about:
+            # An empty string is a reply, not a description. It becomes the
+            # stated absence rather than a row that reads as one.
+            return Description(
+                failed="the model returned an empty description",
+                cost_usd=self.spent_usd - before,
+            )
+        return Description(about=about, cost_usd=self.spent_usd - before)
+
 # --- Statistics ----------------------------------------------------------------
 
 
@@ -321,6 +430,16 @@ def stats() -> None:
         # count is printed beside it so the total is not read as lifetime.
         print(f"judged cost: ${sum(r['cost_usd'] for r in priced):.4f} over "
               f"{len(priced)} of {len(judged)} judged")
+    # The describing call is the other line of the same bill, and it is printed
+    # as its own: it is made only for the items that reach the digest, so adding
+    # the two would hide that they have different denominators. Two lines,
+    # two counts — digline's own `Run.usage` reads the same way.
+    described = [r for r in records if "about_cost_usd" in r]
+    if described:
+        failed = sum(1 for r in described if "about_failed" in r)
+        note = f", {failed} failed" if failed else ""
+        print(f"described cost: ${sum(r['about_cost_usd'] for r in described):.4f} "
+              f"over {len(described)} described{note}")
 
     print("\nScore distribution:")
     for score, n in sorted(Counter(r["score"] for r in judged).items(), reverse=True):
@@ -384,10 +503,43 @@ def run_brief() -> None:
     if len(top) < MIN_SHOWN:
         top = ranked[:MIN_SHOWN]
 
+    # Decision 0002's second call, and it is made **only for the items I am
+    # about to read**. The description exists to be read; an item that never
+    # reaches the digest is never described, so this is five to ten calls on an
+    # ordinary morning against up to fifty judgements. 0002 costed it per item
+    # and per item was the pessimistic reading — the honest figure is smaller,
+    # and so is the latency it warned about.
+    describer = BriefDescriber()
+    describer.preflight()
+    described: dict[str, Description] = {}
+    for item, _ in top:
+        d = describer(item)
+        described[item.id] = d
+        record = seen[item.id]
+        # One key or the other, never an empty `about`: see `Description`.
+        if d.about:
+            record["about"] = d.about
+        else:
+            record["about_failed"] = d.failed
+        record["about_cost_usd"] = d.cost_usd
+    if describer.calls:
+        print(f"{describer.calls} described for ${describer.spent_usd:.4f} "
+              f"(${describer.spent_usd / describer.calls:.6f} each)")
+        lost = [i.id for i, _ in top if not described[i.id].about]
+        if lost:
+            # Said out loud, because the alternative is a digest that is quietly
+            # shorter of a line and looks like a model with nothing to say.
+            print(f"  {len(lost)} description(s) failed; those items are shown "
+                  f"without one")
+
     print(f"\n=== Brief for {datetime.now():%Y-%m-%d} — {len(top)} items ===\n")
     for n, (item, j) in enumerate(top, start=1):
         filler = " (below threshold)" if j.score < SCORE_THRESHOLD else ""
         print(f"{n}. [{j.score}]{filler} {item.title}  ({item.source})")
+        # The description when there is one, and nothing at all when there is
+        # not: a failed second call costs me the sentence, never the item.
+        if described[item.id].about:
+            print(f"     {described[item.id].about}")
         print(f"     {j.reason}")
         print(f"     {item.link}\n")
 
