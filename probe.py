@@ -29,7 +29,15 @@ import anthropic
 import feedparser
 from digline_anthropic.client import completion_of
 
-from brief import JUDGE_PROMPT, JUDGE_SYSTEM, MODEL, SUMMARY_MAX_CHARS
+from brief import (
+    DESCRIBER_MAX_TOKENS,
+    DESCRIBER_SYSTEM,
+    JUDGE_MAX_TOKENS,
+    JUDGE_PROMPT,
+    JUDGE_SYSTEM,
+    MODEL,
+    SUMMARY_MAX_CHARS,
+)
 
 SOURCE = "Simon Willison"
 FEED = "https://simonwillison.net/atom/everything/"
@@ -46,7 +54,7 @@ prompt = JUDGE_PROMPT.render(
 client = anthropic.Anthropic()  # reads ANTHROPIC_API_KEY from the environment
 response = client.messages.create(
     model=MODEL,
-    max_tokens=200,
+    max_tokens=JUDGE_MAX_TOKENS,
     system=JUDGE_SYSTEM,
     messages=[
         {"role": "user", "content": prompt},
@@ -89,4 +97,51 @@ print()
 
 raw = "{" + response.content[0].text
 data = json.loads(raw)
-print("score:", data["score"], "| reason:", data["reason"])
+print("--- the reply, field by field ---")
+print("   the rule this whole file rests on: whatever the probe does not show")
+print("   is what the fake will not have, and so what the checks never see.")
+print("   `about` was here under decision 0001 and left with 0002, which moved")
+print("   the description into a call of its own.")
+for key in ("reason", "score"):
+    print(f"   {key:8} = {data.get(key, '<ABSENT>')!r}")
+print()
+print("--- did it fit? ---")
+print("   the reply against JUDGE_MAX_TOKENS.")
+print("   a reply cut off at the cap is a parse failure the digest turns into")
+print("   score=0, so the cap is verified here rather than assumed.")
+print(f"   output_tokens {response.usage.output_tokens} of the "
+      f"{JUDGE_MAX_TOKENS} sent as max_tokens")
+print(f"   stop_reason   {response.stop_reason!r}  (must be 'end_turn', never 'max_tokens')")
+
+
+# --- the second call, which decision 0002 added -------------------------------
+#
+# The rule this file rests on applies to it exactly as it does to the judge:
+# whatever is not printed here is what the fake will not have, and so what the
+# checks will never see. It is a separate call with its own system prompt and
+# its own cap, and it is never shown `prompts/judge.txt` — which is the property
+# `reason.py` measures, so a probe that only ever showed the judge would be
+# probing half the application.
+
+print()
+print("=" * 70)
+print("--- the describing call (decision 0002) ---")
+described = client.messages.create(
+    model=MODEL,
+    max_tokens=DESCRIBER_MAX_TOKENS,
+    system=DESCRIBER_SYSTEM,
+    messages=[
+        {"role": "user", "content": prompt},  # the same rendered item
+        {"role": "assistant", "content": "{"},
+    ],
+)
+print(f"   {'stop_reason':32} = {getattr(described, 'stop_reason', '<absent>')!r}")
+print(f"   {'model':32} = {getattr(described, 'model', '<absent>')!r}")
+completion = completion_of(described)
+print(f"   {'finish':32} = {completion.finish!r}")
+for field in sorted(type(described.usage).model_fields):
+    print(f"   {field:32} = {getattr(described.usage, field, '<absent>')!r}")
+about = json.loads("{" + described.content[0].text)
+print(f"   {'about':32} = {about.get('about', '<ABSENT>')!r}")
+print(f"   output_tokens {described.usage.output_tokens} of the "
+      f"{DESCRIBER_MAX_TOKENS} sent as max_tokens")

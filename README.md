@@ -82,6 +82,29 @@ The suite calls the judge through the same two files the application does —
 every run, which is why the committed baseline carries the prompt that produced
 it.
 
+## The sentence, and the suite that retired
+
+The reason printed under each title is what decides whether I open the article,
+and the model writes it from the title and summary alone — it has not read the
+piece. `about.py` measured whether that sentence invented anything, with
+`Faithfulness` over a claim judge. **It is retired**, and
+`decisions/0003-a-check-that-cannot-fail.md` is why: the describing prompt
+forbids invention and the check detected invention, so the constraint prevented
+exactly what the check looked for. Median 1.000. A check that keeps running
+after its failure mode has been designed out is a green light wired to nothing.
+
+What stays is the shape it bought. The digest makes **two calls** per shown
+item — one that judges and scores, one that only describes — because a single
+call asked to do both was measurably a worse judge: accuracy 16, 16, 16, 16 over
+four runs split, against 13, 15, 15, 17 combined. That is
+`decisions/0002-the-describing-call.md`, and it holds whether or not anything
+checks the description afterwards.
+
+The records are the point of that directory. Three decisions, twelve live runs
+and about $1.36 to establish that a second field cannot live in one reply, that
+moving it does not help, and that the check written to guard it had nothing left
+to guard.
+
 ## report.html
 
 `report.html` is committed, and it is a real one: the run of 2026-08-27 that
@@ -99,7 +122,8 @@ the honest reading; what it does say is that the cut cost nothing.
 ## The fake judge, and CI
 
 `.github/workflows/check.yml` runs on every push with `BRIEF_FAKE_JUDGE=1`,
-which swaps the provider for `fake.py`. No key, no network, no spend, and a
+which swaps both providers for `fake.py` — `FakeAnthropic` for the digest's
+judge, `FakeClaimAnthropic` for the instrument `about.py` measures it with. No key, no network, no spend, and a
 fork can run the checks too.
 
 The fake proves the wiring — the suite loads, both prompts compose, the
@@ -131,12 +155,14 @@ answers `brief-fake-judge` to "what model was that", because it is not
 brief.py            the digest: fetch, judge, print, ask, remember
 prompts/judge.txt   the system prompt — the taste being encoded
 prompts/item.txt    the user prompt, one item, rendered by app and suite alike
-suite.py            the suite: assertions, thresholds, cases
+suite.py            the score suite: does the model still agree with me
+prompts/describer.txt  the describing call's system prompt — describes, never judges
 cases/brief.json    21 cases with my own marks as the expected answer
 make_cases.py       seen.json -> cases/brief.json
-fake.py             the provider, faked, for CI
+fake.py             both providers, faked, for CI — the target and the claim judge
 probe.py            one real call, printed field by field — how the fake stays honest
 report.html         one comparison, rendered — the one of 2026-08-27
+decisions/          the records: why the reply was split, and why it was unsplit
 fixtures/           runs kept out of the ignored run store, and what they show
 seen.example.json   ten records, standing in for the seen.json that is not here
 .digline/           the committed baseline (runs are ephemeral and ignored)

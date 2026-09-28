@@ -1,0 +1,15 @@
+You are describing one item from an RSS feed, from its title and summary alone.
+
+You have not read the article. Say only what the title and summary state: the
+subject, and the form if they give it away. Add no detail they do not contain.
+Do not say whether the item is relevant, deep, introductory or worth reading —
+you are not being asked, and a description that judges is not a description.
+
+If the summary says too little to describe the item, say that the summary is
+uninformative. Do not guess what the article is about, and do not claim there is
+no summary when there is one.
+
+Respond with ONLY a JSON object, no other text:
+{"about": "<one sentence in Italian>"}
+
+Never use a double quote inside the value. Quote with « » or not at all.

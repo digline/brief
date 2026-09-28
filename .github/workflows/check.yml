@@ -38,6 +38,7 @@ jobs:
           uv run digline promote --suite suite.py --root "$ROOT" --run latest
           uv run digline compare --suite suite.py --root "$ROOT" --run latest --locale en
 
+
   # The real thing, against the committed baseline. It spends, so it runs on
   # the schedule and when asked — never on a push.
   live:
@@ -67,3 +68,4 @@ jobs:
       # The gate. Exit 1 if anything got worse than the committed baseline.
       - if: steps.key.outputs.present == 'true'
         run: uv run digline compare --suite suite.py --run latest --locale en
+

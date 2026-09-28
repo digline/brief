@@ -34,7 +34,7 @@ from digline.run import Case, Suite
 from digline_anthropic import AnthropicTarget
 
 import fake
-from brief import MODEL
+from brief import JUDGE_MAX_TOKENS, MODEL
 
 HERE = Path(__file__).parent
 FAKE = os.environ.get("BRIEF_FAKE_JUDGE") == "1"
@@ -105,7 +105,7 @@ target = JudgeTarget(
     prompt_file=HERE / "prompts" / "item.txt",
     system_file=HERE / "prompts" / "judge.txt",
     model=MODEL,
-    max_tokens=200,
+    max_tokens=JUDGE_MAX_TOKENS,
     prefill="{",  # forces JSON out, as in brief.judge()
     client=fake.FakeAnthropic() if FAKE else None,
 )
@@ -148,4 +148,11 @@ suite = Suite(
     cases=cases,
     samples=5,
     min_agreement="3/5",
+    # On since decision 0001, and for a question this suite could not otherwise
+    # answer: the split cost 1.77x per judgement, and *where* those tokens went
+    # cannot be read off a verdict. It is not in `config_hash` — recording
+    # changes no score and moves no bar — so it costs nothing in comparability,
+    # and it makes this suite's runs re-judgeable for the first time, which is
+    # the argument `reason.py` already makes for itself.
+    record_responses=True,
 )
