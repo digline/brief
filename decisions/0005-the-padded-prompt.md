@@ -230,3 +230,101 @@ $0.45, $0.08 of it on a run taken by mistake.
    check runs on that commit: the old prompt, once.
 5. The result, read against 1–9, appended below. Nothing above this line is
    edited after the run.
+
+
+## Result, 2026-09-28: mixed counts. Undecided at four runs, as ruled
+
+Four runs of the arm at `cf4c608`, `config_hash 98fc65b1e49e930e`, `judge.txt`
+`f9e57191`. The same count and the same script as the tables above.
+
+| run | cases whose samples disagree | `frontier` splits | `don-t-classify` splits | accuracy /21 | input tokens a call | spent |
+|---|---|---|---|---|---|---|
+| `2026-09-28T08-59-57-310671` | **5** | no | yes | 13 | 530.5 | $0.087920 |
+| `2026-09-28T09-02-36-000167` | **11** | no | yes | 13 | 530.5 | $0.088470 |
+| `2026-09-28T09-04-52-077592` | **9** | yes | yes | 14 | 530.5 | $0.087710 |
+| `2026-09-28T09-07-07-412090` | **9** | yes | yes | 13 | 530.5 | $0.087995 |
+
+Against the other arms:
+
+| | old prompt (25 runs) | `"ack": "ok"` (4) | `about`, first or last (8) | **padded (4)** |
+|---|---|---|---|---|
+| **cases whose samples disagree** | median 4, range 1–6 | 5, 3, 5, 4 | 7, 7, 8, 7, 7, 7, 8, 7 | **5, 11, 9, 9** |
+| `frontier-red-teampatterns` splits | 1 of 25 | 1 of 4 | 7 of 8 | **2 of 4** |
+| `don-t-classify-hallucinate` splits | 13 of 25 | 3 of 4 | 1 of 8 | **4 of 4** |
+
+Against the predictions, one line each:
+
+1. **Falsified.** Run 1 had 5.
+2. **Falsified.** 2 of 4, against 3 or more.
+3. **Falsified.** 4 of 4, against 1 or fewer.
+4. **Falsified.** Three of the four runs are above 6.
+5. **Falsified.** 2 of 4, against 1 or fewer.
+6. **This is the outcome.** One run at 6 or fewer, three at 7 or more.
+   **Undecided at four runs.** No fifth run was taken.
+7. Does not arise: 1 does not hold.
+8. Does not arise: 4 does not hold.
+9. Does not arise: the runs are not inside the band.
+
+The estimate, 4 and 5, was wrong. It expected the padding to be harmless, and
+three runs of four were not. That is the fourth optimistic estimate in five.
+
+**The arm was the arm.** Every run read **530.5 input tokens a call**, the
+figure predicted from `count_tokens` and inside 525–536. `config_hash` read
+`98fc65b1e49e930e` on all four, as predicted. Zero `json_schema` failures and
+zero errored samples. The largest reply was 88 output tokens against the cap of
+200. Mean output was 61–62 tokens, against the old prompt's 60 on the same
+day, so the padding cost input and nothing else. No reply among the 420
+mentions the padding: none contains *delta*, *river*, *fiume* or *sediment*.
+
+**No drift.** The old prompt, run once on `b31e078` after the arm was reverted
+and checked (`git log -1`, then a diff against `main` that shows only
+`decisions/`): **4** cases, accuracy 16/21, `2026-09-28T09-09-44-856825`. That
+is its median, on the same morning.
+
+### What this says, within the rule written above
+
+What 6 allows, and nothing more: **164 tokens in that place are neither
+reliably harmless nor reliably the whole effect.** The post's two guesses both
+stay standing, and neither is partly confirmed. The describing reading predicted
+every run at 6 or fewer, and three runs went higher. The token reading predicted
+every run at 7 or more, and one did not. Four runs that straddle the line do
+not divide the cost between two causes, and this record said so before the
+runs came in.
+
+**What does not stay standing is the practical reading of 0004.** 0004 showed
+that a key with no work in it is harmless. Nothing here shows that the words
+asking for it are harmless. Three runs of this arm went beyond every one of
+the old prompt's 25 runs, and beyond every run with `about` as well. It is not
+a finding about the mechanism. It is a reason not to read *"a constant key is
+harmless"* as *"adding to the prompt is harmless"*.
+
+### Observed, not predicted, and not read
+
+Two things moved that the pre-registration did not name. They are reported
+because they are in the run files, and they are not conclusions, because
+nothing was predicted about them:
+
+- **Accuracy fell to 13, 13, 14, 13.** The old prompt's 25 runs never went
+  below 14, and 23 of them are at 16. `about`'s eight runs went down to 13.
+- **Scores moved onto 3**, the value just under the digest's cut (≥ 4 is shown).
+  Replies scoring 3, out of 105 a run, in the runs that recorded responses:
+  old prompt 3–11 (six runs), `ack` 5–8 (five runs, the accidental one
+  included), v3 11–15, v2 18–30, **padded 18, 19, 24, 18**. A judge that says 3
+  more often is a judge whose samples straddle the line more often. It is a
+  candidate for *how* the disagreement grows. It is not evidence for *why*.
+
+Both would have to be predicted by a new record to count. Any new record would
+be written after these numbers had been seen, and would have to say so. It
+would not be a tie-break for this one.
+
+### Addendum, as ruled
+
+Outcome 6 overturns neither guess, so this is **an addendum to added-field,
+not a piece of its own**. Its content is what is above: the arm the post named
+was run and did not settle the question, and 0004's *"a constant key is
+harmless"* does not extend to adding text.
+
+Spent: **$0.42**. $0.35 on the four runs ($0.352095) and $0.07 on the drift
+check ($0.070040). The `count_tokens` calls that measured the dose are not
+billed. The one fake run that checked the wiring went to a scratch root and
+cost nothing. No run was taken by accident.
