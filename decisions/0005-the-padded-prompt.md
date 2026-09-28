@@ -317,12 +317,33 @@ Both would have to be predicted by a new record to count. Any new record would
 be written after these numbers had been seen, and would have to say so. It
 would not be a tie-break for this one.
 
-### Addendum, as ruled
+### An addendum, and what it carries
 
-Outcome 6 overturns neither guess, so this is **an addendum to added-field,
-not a piece of its own**. Its content is what is above: the arm the post named
-was run and did not settle the question, and 0004's *"a constant key is
-harmless"* does not extend to adding text.
+**An addendum to added-field, not a piece of its own.** Outcome 6 overturns
+neither guess.
+
+**Its content is the surprise, not the non-result.** Three runs of four went
+above everything measured before: above every run of the old prompt and above
+every run with `about`. Neutral padding that asks for nothing made the judge
+disagree with itself more than a field that asks for a description. That is
+what the addendum reports. It reports it as numbers, not as a mechanism: the
+rule above still forbids reading it as "the tokens cost", because run 1 came in
+at 5.
+
+The two movements nobody predicted, accuracy at 13–14 and replies scoring 3 up
+to 18–24 a run, go in as they are above: reported, not read.
+
+**The rule in "Addendum, or a piece of its own" was wrong, and it is corrected
+here rather than above the line.** It was written from Alessandro's
+instruction, *"that depends on whether it overturns one of the two
+hypotheses"*. The post holds its two guesses as equals and tested neither, so
+either decisive outcome would have overturned one of them. As written, the rule
+made every decided result a piece of its own, and only an undecided one could
+ever have been an addendum. That is not what the instruction meant. The rule
+said something different from what was intended, and nobody saw it until the
+result was read against it. The form here was not decided by the faulty rule:
+under it, outcome 6 gives an addendum as well, so the correction changes the
+record and not the outcome.
 
 Spent: **$0.42**. $0.35 on the four runs ($0.352095) and $0.07 on the drift
 check ($0.070040). The `count_tokens` calls that measured the dose are not
