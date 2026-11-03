@@ -2,7 +2,7 @@
   "mcpServers": {
     "digline-brief": {
       "command": "uv",
-      "args": ["run", "digline-mcp", "--root", ".", "--tenant", "alessandro"]
+      "args": ["run", "digline-mcp", "--root", ".", "--tenant", "alessandro", "--names", "clear"]
     }
   }
 }

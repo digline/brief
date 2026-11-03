@@ -32,11 +32,19 @@ jobs:
           # compose, the assertions evaluate and a comparison comes out — so
           # they are promoted and compared against themselves, over here, where
           # they cannot be mistaken for a measurement.
+          #
+          # Since digline 1.0 `--root` is also the perimeter: a prompt outside
+          # it is never read into a run (ADR 0042 §2). A bare scratch directory
+          # would leave `prompts/` outside, so the scratch root is a copy of
+          # the checkout without its `.digline/`.
           ROOT: ${{ runner.temp }}/digline
         run: |
-          uv run digline run     --suite suite.py --root "$ROOT"
-          uv run digline promote --suite suite.py --root "$ROOT" --run latest
-          uv run digline compare --suite suite.py --root "$ROOT" --run latest --locale en
+          rsync -a --exclude .digline --exclude .venv ./ "$ROOT"/
+          cd "$ROOT"
+          uv sync
+          uv run digline run     --suite suite.py --root .
+          uv run digline promote --suite suite.py --root . --run latest --replacing none
+          uv run digline compare --suite suite.py --root . --run latest --locale en
 
 
   # The real thing, against the committed baseline. It spends, so it runs on
