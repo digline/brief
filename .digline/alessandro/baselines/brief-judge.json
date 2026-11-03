@@ -76,6 +76,7 @@
   "git_commit": "51e8c52dece9ea2f01b60d0d506a1e1cee8baaea-dirty",
   "judge_config": {},
   "metadata": {},
+  "projected": false,
   "promoted_at": "2026-09-22T12:41:28.384733+00:00",
   "redacted": false,
   "results": [
@@ -2243,7 +2244,7 @@
       ]
     }
   ],
-  "schema_version": 15,
+  "schema_version": 22,
   "suite": "brief-judge",
   "target_config": {
     "values": {

@@ -43,8 +43,12 @@ that show the shape of the file. The first digest you run writes the real one.
 ```console
 $ uv run digline run     --suite suite.py            # ~$0.069: 21 cases x 5 samples
 $ uv run digline compare --suite suite.py --run latest --locale en
-$ uv run digline promote --suite suite.py --run latest   # only if the change is one you want
+$ uv run digline promote --suite suite.py --run latest --replacing <baseline>   # only if the change is one you want
 ```
+
+`--replacing` takes the baseline key `compare` prints on its last line
+(`against baseline …`): since digline 1.0 a promotion has to name the
+reference it replaces, and is refused if that reference moved in the meantime.
 
 About **$0.069** a run, because a run is 21 cases times five samples: 105
 judgements at about $0.00066 each. One judgement per case would be $0.014, and
@@ -128,7 +132,9 @@ fork can run the checks too.
 
 The fake proves the wiring — the suite loads, both prompts compose, the
 assertions evaluate, a run and a comparison come out. It proves nothing about
-the judge, so it runs against a scratch `--root` and is compared with itself:
+the judge, so it runs against a scratch `--root` — a copy of the checkout
+without `.digline/`, because since digline 1.0 the root is also the perimeter
+the prompts must sit inside — and is compared with itself:
 the committed baseline came from the real model, and putting the fake's numbers
 next to it would be comparing two different judges.
 
